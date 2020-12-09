@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vot.ahgz.mapper.InRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.vot.ahgz.entity.InRecord">
+        <id column="id" property="id" />
+        <result column="part_name" property="partName" />
+        <result column="part_specification" property="partSpecification" />
+        <result column="figure_number" property="figureNumber" />
+        <result column="supplier" property="supplier" />
+        <result column="category" property="category" />
+        <result column="quantity" property="quantity" />
+        <result column="location" property="location" />
+        <result column="operator" property="operator" />
+        <result column="operation_time" property="operationTime" />
+        <result column="mark" property="mark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, part_name, part_specification, figure_number, supplier, category, quantity, location, operator, operation_time, mark
+    </sql>
+
+</mapper>
