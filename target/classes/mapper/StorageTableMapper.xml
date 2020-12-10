@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vot.ahgz.mapper.StorageTableMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.vot.ahgz.entity.StorageTable">
+        <id column="id" property="id" />
+        <result column="part_name" property="partName" />
+        <result column="category" property="category" />
+        <result column="part_specification" property="partSpecification" />
+        <result column="figure_number" property="figureNumber" />
+        <result column="number" property="number" />
+        <result column="supplier" property="supplier" />
+        <result column="location" property="location" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="updated_name" property="updatedName" />
+        <result column="mark" property="mark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, part_name, category, part_specification, figure_number, number, supplier, location, updated_time, updated_name, mark
+    </sql>
+
+</mapper>
