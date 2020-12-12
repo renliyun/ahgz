@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -68,6 +69,56 @@ public class DeliveryRecord implements Serializable {
     //  备注
     private String mark;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeliveryRecord that = (DeliveryRecord) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(partName, that.partName) &&
+                Objects.equals(partSpecification, that.partSpecification) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(figureNumber, that.figureNumber) &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(deliveryName, that.deliveryName) &&
+                Objects.equals(deliveryAddress, that.deliveryAddress) &&
+                Objects.equals(deliveryTime, that.deliveryTime) &&
+                Objects.equals(borrowName, that.borrowName) &&
+                Objects.equals(telephone, that.telephone) &&
+                Objects.equals(supplier, that.supplier) &&
+                Objects.equals(borrowAddress, that.borrowAddress) &&
+                Objects.equals(operator, that.operator) &&
+                Objects.equals(operationTime, that.operationTime) &&
+                Objects.equals(mark, that.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, partName, partSpecification, category, figureNumber, number, deliveryName, deliveryAddress, deliveryTime, borrowName, telephone, supplier, borrowAddress, operator, operationTime, mark);
+    }
+
+    public DeliveryRecord() {
+    }
+
+    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Long number, String deliveryName, String deliveryAddress, LocalDateTime deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String operator, LocalDateTime operationTime, String mark) {
+        this.id = id;
+        this.partName = partName;
+        this.partSpecification = partSpecification;
+        this.category = category;
+        this.figureNumber = figureNumber;
+        this.number = number;
+        this.deliveryName = deliveryName;
+        this.deliveryAddress = deliveryAddress;
+        this.deliveryTime = deliveryTime;
+        this.borrowName = borrowName;
+        this.telephone = telephone;
+        this.supplier = supplier;
+        this.borrowAddress = borrowAddress;
+        this.operator = operator;
+        this.operationTime = operationTime;
+        this.mark = mark;
+    }
 
     public Integer getId() {
         return id;

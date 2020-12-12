@@ -19,8 +19,60 @@
     <sql id="Base_Column_List">
         id, name, telephone, address, mark, created_name, created_time, updated_name, update_time
     </sql>
-
-    <select id="getById" resultMap="BaseResultMap">
-        select * from address_list where  id = #{id}
+    <!--  是否设定默认的条数，避免一次性倒出太多数据库奔溃  -->
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from address_list
     </select>
+
+    <select id="getByName" resultMap="BaseResultMap" >
+        select * from address_lis where name = #{name}
+    </select>
+
+    <insert id="insertAddressList" useGeneratedKeys="true">
+        insert into address_list
+         'name' , telephone ,address ,created_name ,
+         created_time , updated_name , update_time ,mark value (
+         'name' = #{addressList.name},
+         telephone = #{addressList.telephone},
+         address = #{addressList.address}  ,
+         created_name = #{addressList.createdName},
+         created_time = #{addressList.createdTime} ,
+         updated_name = #{addressList.updatedName}  ,
+         update_time = #{addressList.updateTime} ,
+         mark = #{addressList.mark}
+        );
+    </insert>
+
+    <update id="updateByName" useGeneratedKeys="true">
+      update address_list set
+        <if test="addressList.name != null">
+           and  address_list.name = #{addressList.name}
+        </if>
+        <if test="addressList.telephone != null">
+            and  addressList.telephone = #{addressList.telephone}
+        </if>
+        <if test="addressList.address != null">
+            and  addressList.address = #{addressList.address}
+        </if>
+        <if test="addressList.createdName != null">
+            and  addressList.createdName = #{addressList.createdName}
+        </if>
+        <if test="addressList.createdTime != null">
+            and  addressList.createdTime = #{addressList.createdTime}
+        </if>
+        <if test="addressList.updatedName != null">
+            and  addressList.updatedName = #{addressList.updatedName}
+        </if>
+        <if test="addressList.updateTime != null">
+            and  addressList.updateTime = #{addressList.updateTime}
+        </if>
+        <if test="addressList.mark != null">
+            and  addressList.mark = #{addressList.mark}
+        </if>
+        where addressList.name = # {addressList.name};
+    </update>
+
+    <delete id="deleteByName" parameterType="java.lang.String">
+        delete from address_list where 'name' = {name}
+    </delete>
 </mapper>

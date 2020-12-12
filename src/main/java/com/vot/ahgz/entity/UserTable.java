@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <p>
@@ -43,6 +44,40 @@ public class UserTable implements Serializable {
     //  备注
     private String mark;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserTable userTable = (UserTable) o;
+        return Objects.equals(id, userTable.id) &&
+                Objects.equals(username, userTable.username) &&
+                Objects.equals(password, userTable.password) &&
+                Objects.equals(role, userTable.role) &&
+                Objects.equals(authority, userTable.authority) &&
+                Objects.equals(createdTime, userTable.createdTime) &&
+                Objects.equals(createdName, userTable.createdName) &&
+                Objects.equals(mark, userTable.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, role, authority, createdTime, createdName, mark);
+    }
+
+    public UserTable() {
+    }
+
+    public UserTable(Integer id, String username, String password, String role, String authority, LocalDateTime createdTime, String createdName, String mark) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.authority = authority;
+        this.createdTime = createdTime;
+        this.createdName = createdName;
+        this.mark = mark;
+    }
 
     public Integer getId() {
         return id;

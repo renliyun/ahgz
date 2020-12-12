@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -32,6 +33,9 @@ public class NonConforming implements Serializable {
     //  规格
     private String partSpecification;
 
+    //  材料
+    private String material;
+
     //  图号
     private String figureNumber;
 
@@ -50,6 +54,53 @@ public class NonConforming implements Serializable {
     //  备注
     private String mark;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NonConforming that = (NonConforming) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(partName, that.partName) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(partSpecification, that.partSpecification) &&
+                Objects.equals(material, that.material) &&
+                Objects.equals(figureNumber, that.figureNumber) &&
+                Objects.equals(quantity, that.quantity) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(operator, that.operator) &&
+                Objects.equals(operationTime, that.operationTime) &&
+                Objects.equals(mark, that.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, partName, category, partSpecification, material, figureNumber, quantity, location, operator, operationTime, mark);
+    }
+
+    public NonConforming() {
+    }
+
+    public NonConforming(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Long quantity, String location, String operator, LocalDateTime operationTime, String mark) {
+        this.id = id;
+        this.partName = partName;
+        this.category = category;
+        this.partSpecification = partSpecification;
+        this.material = material;
+        this.figureNumber = figureNumber;
+        this.quantity = quantity;
+        this.location = location;
+        this.operator = operator;
+        this.operationTime = operationTime;
+        this.mark = mark;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
     public Integer getId() {
         return id;
@@ -132,20 +183,20 @@ public class NonConforming implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "NonConforming{" +
-        "id=" + id +
-        ", partName=" + partName +
-        ", category=" + category +
-        ", partSpecification=" + partSpecification +
-        ", figureNumber=" + figureNumber +
-        ", quantity=" + quantity +
-        ", location=" + location +
-        ", operator=" + operator +
-        ", operationTime=" + operationTime +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", partName='" + partName + '\'' +
+                ", category='" + category + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", material='" + material + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", quantity=" + quantity +
+                ", location='" + location + '\'' +
+                ", operator='" + operator + '\'' +
+                ", operationTime=" + operationTime +
+                ", mark='" + mark + '\'' +
+                '}';
     }
 }

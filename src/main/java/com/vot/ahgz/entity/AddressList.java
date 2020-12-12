@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <p>
@@ -46,6 +47,41 @@ public class AddressList implements Serializable {
     //  更新时间
     private LocalDate updateTime;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressList that = (AddressList) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(telephone, that.telephone) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(mark, that.mark) &&
+                Objects.equals(createdName, that.createdName) &&
+                Objects.equals(createdTime, that.createdTime) &&
+                Objects.equals(updatedName, that.updatedName) &&
+                Objects.equals(updateTime, that.updateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, telephone, address, mark, createdName, createdTime, updatedName, updateTime);
+    }
+
+    public AddressList() {
+    }
+
+    public AddressList(Integer id, String name, String telephone, String address, String mark, String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime) {
+        this.id = id;
+        this.name = name;
+        this.telephone = telephone;
+        this.address = address;
+        this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
 
     public Integer getId() {
         return id;

@@ -3,13 +3,15 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author renlirong
@@ -32,6 +34,9 @@ public class StorageTable implements Serializable {
     //  规格
     private String partSpecification;
 
+    //  材料
+    private String material;
+
     // 图号
     private String figureNumber;
 
@@ -53,6 +58,56 @@ public class StorageTable implements Serializable {
     //  备注
     private String mark;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StorageTable that = (StorageTable) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(partName, that.partName) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(partSpecification, that.partSpecification) &&
+                Objects.equals(material, that.material) &&
+                Objects.equals(figureNumber, that.figureNumber) &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(supplier, that.supplier) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(updatedTime, that.updatedTime) &&
+                Objects.equals(updatedName, that.updatedName) &&
+                Objects.equals(mark, that.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, partName, category, partSpecification, material, figureNumber, number, supplier, location, updatedTime, updatedName, mark);
+    }
+
+    public StorageTable() {
+    }
+
+    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, LocalDateTime updatedTime, String updatedName, String mark) {
+        this.id = id;
+        this.partName = partName;
+        this.category = category;
+        this.partSpecification = partSpecification;
+        this.material = material;
+        this.figureNumber = figureNumber;
+        this.number = number;
+        this.supplier = supplier;
+        this.location = location;
+        this.updatedTime = updatedTime;
+        this.updatedName = updatedName;
+        this.mark = mark;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
     public Integer getId() {
         return id;
@@ -143,21 +198,21 @@ public class StorageTable implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "StorageTable{" +
-        "id=" + id +
-        ", partName=" + partName +
-        ", category=" + category +
-        ", partSpecification=" + partSpecification +
-        ", figureNumber=" + figureNumber +
-        ", number=" + number +
-        ", supplier=" + supplier +
-        ", location=" + location +
-        ", updatedTime=" + updatedTime +
-        ", updatedName=" + updatedName +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", partName='" + partName + '\'' +
+                ", category='" + category + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", material='" + material + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", number=" + number +
+                ", supplier='" + supplier + '\'' +
+                ", location='" + location + '\'' +
+                ", updatedTime=" + updatedTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", mark='" + mark + '\'' +
+                '}';
     }
 }

@@ -20,7 +20,17 @@
         id, name, telephone, address, mark, created_name, created_time, updated_name, update_time
     </sql>
 
-    <select id="getById" resultMap="BaseResultMap">
-        select * from address_list where  id = #{id}
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from address_list
     </select>
+
+    <select id="getByName" resultMap="BaseResultMap" >
+        select * from address_lis where name = #{name}
+    </select>
+
+    <insert id="insertAddressList" useGeneratedKeys="true">
+        
+    </insert>
+
+
 </mapper>

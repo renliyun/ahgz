@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -32,6 +33,8 @@ public class InRecord implements Serializable {
     //  图号
     private String figureNumber;
 
+    //  材料
+    private String material;
     //  供货商
     private String supplier;
 
@@ -53,6 +56,57 @@ public class InRecord implements Serializable {
     //  备注
     private String mark;
 
+    public InRecord() {
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InRecord inRecord = (InRecord) o;
+        return Objects.equals(id, inRecord.id) &&
+                Objects.equals(partName, inRecord.partName) &&
+                Objects.equals(partSpecification, inRecord.partSpecification) &&
+                Objects.equals(figureNumber, inRecord.figureNumber) &&
+                Objects.equals(material, inRecord.material) &&
+                Objects.equals(supplier, inRecord.supplier) &&
+                Objects.equals(category, inRecord.category) &&
+                Objects.equals(quantity, inRecord.quantity) &&
+                Objects.equals(location, inRecord.location) &&
+                Objects.equals(operator, inRecord.operator) &&
+                Objects.equals(operationTime, inRecord.operationTime) &&
+                Objects.equals(mark, inRecord.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, partName, partSpecification, figureNumber, material, supplier, category, quantity, location, operator, operationTime, mark);
+    }
+
+    public InRecord(Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String operator, LocalDateTime operationTime, String mark) {
+        this.id = id;
+        this.partName = partName;
+        this.partSpecification = partSpecification;
+        this.figureNumber = figureNumber;
+        this.material = material;
+        this.supplier = supplier;
+        this.category = category;
+        this.quantity = quantity;
+        this.location = location;
+        this.operator = operator;
+        this.operationTime = operationTime;
+        this.mark = mark;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
     public Integer getId() {
         return id;
@@ -146,17 +200,18 @@ public class InRecord implements Serializable {
     @Override
     public String toString() {
         return "InRecord{" +
-        "id=" + id +
-        ", partName=" + partName +
-        ", partSpecification=" + partSpecification +
-        ", figureNumber=" + figureNumber +
-        ", supplier=" + supplier +
-        ", category=" + category +
-        ", quantity=" + quantity +
-        ", location=" + location +
-        ", operator=" + operator +
-        ", operationTime=" + operationTime +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", partName='" + partName + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", material='" + material + '\'' +
+                ", supplier='" + supplier + '\'' +
+                ", category='" + category + '\'' +
+                ", quantity=" + quantity +
+                ", location='" + location + '\'' +
+                ", operator='" + operator + '\'' +
+                ", operationTime=" + operationTime +
+                ", mark='" + mark + '\'' +
+                '}';
     }
 }

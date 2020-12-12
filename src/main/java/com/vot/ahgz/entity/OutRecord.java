@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <p>
@@ -34,6 +35,9 @@ public class OutRecord  implements Serializable{
     //  图号
     private String figureNumber;
 
+    //  材料
+    private String material;
+
     //  领用数量
     private Integer number;
 
@@ -55,6 +59,57 @@ public class OutRecord  implements Serializable{
     //  备注
     private String mark;
 
+    public OutRecord() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OutRecord outRecord = (OutRecord) o;
+        return Objects.equals(id, outRecord.id) &&
+                Objects.equals(partName, outRecord.partName) &&
+                Objects.equals(category, outRecord.category) &&
+                Objects.equals(partSpecification, outRecord.partSpecification) &&
+                Objects.equals(figureNumber, outRecord.figureNumber) &&
+                Objects.equals(material, outRecord.material) &&
+                Objects.equals(number, outRecord.number) &&
+                Objects.equals(receiveName, outRecord.receiveName) &&
+                Objects.equals(receiveTime, outRecord.receiveTime) &&
+                Objects.equals(operator, outRecord.operator) &&
+                Objects.equals(operationTime, outRecord.operationTime) &&
+                Objects.equals(supplier, outRecord.supplier) &&
+                Objects.equals(mark, outRecord.mark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, partName, category, partSpecification, figureNumber, material, number, receiveName, receiveTime, operator, operationTime, supplier, mark);
+    }
+
+    public OutRecord(Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String operator, LocalDateTime operationTime, String supplier, String mark) {
+        this.id = id;
+        this.partName = partName;
+        this.category = category;
+        this.partSpecification = partSpecification;
+        this.figureNumber = figureNumber;
+        this.material = material;
+        this.number = number;
+        this.receiveName = receiveName;
+        this.receiveTime = receiveTime;
+        this.operator = operator;
+        this.operationTime = operationTime;
+        this.supplier = supplier;
+        this.mark = mark;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
 
     public Integer getId() {
         return id;
@@ -156,18 +211,19 @@ public class OutRecord  implements Serializable{
     @Override
     public String toString() {
         return "OutRecord{" +
-        "id=" + id +
-        ", partName=" + partName +
-        ", category=" + category +
-        ", partSpecification=" + partSpecification +
-        ", figureNumber=" + figureNumber +
-        ", number=" + number +
-        ", receiveName=" + receiveName +
-        ", receiveTime=" + receiveTime +
-        ", operator=" + operator +
-        ", operationTime=" + operationTime +
-        ", supplier=" + supplier +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", partName='" + partName + '\'' +
+                ", category='" + category + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", material='" + material + '\'' +
+                ", number=" + number +
+                ", receiveName='" + receiveName + '\'' +
+                ", receiveTime=" + receiveTime +
+                ", operator='" + operator + '\'' +
+                ", operationTime=" + operationTime +
+                ", supplier='" + supplier + '\'' +
+                ", mark='" + mark + '\'' +
+                '}';
     }
 }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -20,8 +22,34 @@ public class AddressListService  implements IAddressListService {
 
     @Autowired
     private AddressListMapper addressListMapper;
+
+    @Override
+    public List<AddressList> getAll() {
+        return null;
+    }
+
     @Override
     public AddressList getById(Integer id) {
-        return addressListMapper.getById(id);
+        return null;
+    }
+
+    @Override
+    public List<AddressList> getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public Integer insertAddressList(AddressList addressList) {
+        return null;
+    }
+
+    @Override
+    public Integer deleteByName(String name) {
+        return null;
+    }
+
+    @Override
+    public AddressList updateByName(String name, AddressList addressList) {
+        return null;
     }
 }
