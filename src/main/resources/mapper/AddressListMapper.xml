@@ -73,6 +73,6 @@
     </update>
 
     <delete id="deleteByName" parameterType="java.lang.String">
-        delete from address_list where 'name' = {name}
+        delete from address_list where 'name' = #{name}
     </delete>
 </mapper>
