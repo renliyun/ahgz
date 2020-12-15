@@ -25,31 +25,29 @@ public class AddressListService  implements IAddressListService {
 
     @Override
     public List<AddressList> getAll() {
-        return null;
+        return addressListMapper.getAll();
     }
 
-    @Override
-    public AddressList getById(Integer id) {
-        return null;
-    }
+
 
     @Override
     public List<AddressList> getByName(String name) {
-        return null;
+        return addressListMapper.getByName(name);
     }
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
-        return null;
+        return addressListMapper.insertAddressList(addressList);
     }
 
     @Override
     public Integer deleteByName(String name) {
-        return null;
+
+        return addressListMapper.deleteByName(name);
     }
 
     @Override
     public AddressList updateByName(String name, AddressList addressList) {
-        return null;
+        return addressListMapper.updateByName(name,addressList);
     }
 }

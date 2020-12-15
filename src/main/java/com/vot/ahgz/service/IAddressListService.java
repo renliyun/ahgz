@@ -19,8 +19,7 @@ public interface IAddressListService  {
     //获取全部数据
     List<AddressList> getAll();
 
-    //  根据id获取地址
-    AddressList getById( Integer id);
+
 
     //  根据用户名 name名称获取
     List<AddressList> getByName( String name);
