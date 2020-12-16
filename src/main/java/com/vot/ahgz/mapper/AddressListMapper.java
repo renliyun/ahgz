@@ -25,7 +25,7 @@ public interface AddressListMapper {
     List<AddressList> getByName(@Param("name") String name);
 
     //  插入用户快递
-    Integer insertAddressList(@Param("addressList") AddressList addressList);
+    Integer insertAddressList( AddressList addressList);
 
     //  根据名称删除数据
     Integer deleteByName(@Param("name") String name);

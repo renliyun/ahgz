@@ -43,12 +43,12 @@ public class AddressListController {
         return CommonResult.sucess(iAddressListService.getByName(name), "获取用户" + name + "数据成功");
     }
 
-    @PostMapping("insertDate")
-    public CommonResult<Integer> insertAddressList(@RequestParam("addressList") AddressList addressList) {
+    @PostMapping("/insertDate")
+    public CommonResult<Integer> insertAddressList(@ModelAttribute AddressList addressList) {
         return CommonResult.sucess(iAddressListService.insertAddressList(addressList), "用户数据插入成功");
     }
 
-    @RequestMapping("deleteByName")
+    @PostMapping("/deleteByName")
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iAddressListService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");

@@ -28,22 +28,17 @@
         select * from address_list where name = #{name}
     </select>
 
-    <insert id="insertAddressList" useGeneratedKeys="true">
+    <insert id="insertAddressList"  parameterType="com.vot.ahgz.entity.AddressList">
         insert into address_list
-         'name' , telephone ,address ,created_name ,
-         created_time , updated_name , update_time ,mark value (
-         'name' = #{addressList.name},
-         telephone = #{addressList.telephone},
-         address = #{addressList.address}  ,
-         created_name = #{addressList.createdName},
-         created_time = #{addressList.createdTime} ,
-         updated_name = #{addressList.updatedName}  ,
-         update_time = #{addressList.updateTime} ,
-         mark = #{addressList.mark}
+         (name , telephone ,address ,created_name ,
+         created_time , updated_name , update_time ,mark) value (
+         #{name}, #{telephone},#{address}  ,
+         #{createdName},#{createdTime} , #{updatedName}  ,
+         #{updateTime} , #{mark}
         );
     </insert>
 
-    <update id="updateByName" useGeneratedKeys="true">
+    <update id="updateByName" useGeneratedKeys="true" parameterType="com.vot.ahgz.entity.AddressList">
       update address_list set
         <if test="addressList.name != null">
            and  address_list.name = #{addressList.name}

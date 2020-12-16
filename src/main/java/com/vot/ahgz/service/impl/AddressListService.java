@@ -37,6 +37,7 @@ public class AddressListService  implements IAddressListService {
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
+        System.out.println("SERVICE层得数据==========="+addressList);
         return addressListMapper.insertAddressList(addressList);
     }
 
