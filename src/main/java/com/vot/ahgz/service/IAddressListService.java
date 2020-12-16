@@ -19,7 +19,8 @@ public interface IAddressListService  {
     //获取全部数据
     List<AddressList> getAll();
 
-
+    //  根据用户名 name名称获取
+    AddressList getOne( Integer  id);
 
     //  根据用户名 name名称获取
     List<AddressList> getByName( String name);
@@ -31,7 +32,6 @@ public interface IAddressListService  {
     Integer deleteByName( String name);
 
     //  更新用户数据
-    AddressList updateByName(String name,
-                              AddressList addressList);
+    AddressList updateByName(AddressList addressList);
 
 }

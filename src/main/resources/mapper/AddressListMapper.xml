@@ -28,6 +28,12 @@
         select * from address_list where name = #{name}
     </select>
 
+   <select id="getOne" resultMap="BaseResultMap" >
+       SELECT  * FROM address_list where id = #{id}
+   </select>
+
+
+
     <insert id="insertAddressList"  parameterType="com.vot.ahgz.entity.AddressList">
         insert into address_list
          (name , telephone ,address ,created_name ,
@@ -70,4 +76,7 @@
     <delete id="deleteByName" parameterType="java.lang.String" >
         delete from address_list where name = #{name}
     </delete>
+
+
+
 </mapper>

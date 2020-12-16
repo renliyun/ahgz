@@ -23,11 +23,18 @@ public class AddressListService  implements IAddressListService {
     @Autowired
     private AddressListMapper addressListMapper;
 
+    @Autowired
+    private IAddressListService iAddressListService;
+
     @Override
     public List<AddressList> getAll() {
         return addressListMapper.getAll();
     }
 
+    @Override
+    public AddressList getOne(Integer id) {
+        return addressListMapper.getOne(id);
+    }
 
 
     @Override
@@ -48,7 +55,20 @@ public class AddressListService  implements IAddressListService {
     }
 
     @Override
-    public AddressList updateByName(String name, AddressList addressList) {
-        return addressListMapper.updateByName(name,addressList);
+    public AddressList updateByName( AddressList addressList) {
+
+        // 根据id获取数据
+        AddressList addressList1 = iAddressListService.getOne(addressList.getId());
+        System.out.println(addressList1);
+        // 更新用户数据  根据用户得名称更新
+       addressList1.setAddress(null == addressList.getAddress() ? null : addressList.getAddress() );
+       addressList1.setCreatedName(null == addressList.getCreatedName()? null : addressList.getCreatedName());
+       addressList1.setCreatedTime(null == addressList.getCreatedTime()? null : addressList.getCreatedTime());
+       addressList1.setName(null == addressList.getName() ? null : addressList.getName());
+       addressList1.setTelephone(null == addressList.getTelephone() ? null : addressList.getTelephone() );
+       addressList1.setUpdatedName(null == addressList.getUpdatedName() ? null : addressList.getUpdatedName() );
+       addressList1.setMark( null == addressList.getMark() ? null : addressList.getMark());
+       addressList1.setUpdateTime(null == addressList.getUpdateTime() ? null : addressList.getUpdateTime() );
+        return addressListMapper.updateByName(addressList1);
     }
 }
