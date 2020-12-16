@@ -16,7 +16,7 @@ import java.util.List;
  * @author renlirong
  * @since 2020-12-08
  */
-@Repository
+
 public interface AddressListMapper {
 
     //获取全部数据
