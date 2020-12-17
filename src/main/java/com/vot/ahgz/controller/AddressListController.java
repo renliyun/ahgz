@@ -42,11 +42,7 @@ public class AddressListController {
 
         return CommonResult.sucess(iAddressListService.getByName(name), "获取用户" + name + "数据成功");
     }
-    @RequestMapping("/getOne")
-    public CommonResult<AddressList> getOne(@RequestParam("id") Integer id) {
 
-        return CommonResult.sucess(iAddressListService.getOne(id), "获取数据成功");
-    }
     @PostMapping("/insertDate")
     public CommonResult<Integer> insertAddressList(@ModelAttribute AddressList addressList) {
         return CommonResult.sucess(iAddressListService.insertAddressList(addressList), "用户数据插入成功");

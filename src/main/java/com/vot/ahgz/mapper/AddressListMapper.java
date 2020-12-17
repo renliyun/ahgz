@@ -24,7 +24,7 @@ public interface AddressListMapper {
 
 
     //获取全部数据
-    AddressList getOne(@Param("id") Integer id);
+    Integer deleteById(@Param("id") Integer id);
 
     //  根据用户名 name名称获取
     List<AddressList> getByName(@Param("name") String name);

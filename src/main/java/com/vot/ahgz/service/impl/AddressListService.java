@@ -11,14 +11,14 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author renlirong
  * @since 2020-12-08
  */
 @Service
-public class AddressListService  implements IAddressListService {
+public class AddressListService implements IAddressListService {
 
     @Autowired
     private AddressListMapper addressListMapper;
@@ -31,11 +31,6 @@ public class AddressListService  implements IAddressListService {
         return addressListMapper.getAll();
     }
 
-    @Override
-    public AddressList getOne(Integer id) {
-        return addressListMapper.getOne(id);
-    }
-
 
     @Override
     public List<AddressList> getByName(String name) {
@@ -44,7 +39,7 @@ public class AddressListService  implements IAddressListService {
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
-        System.out.println("SERVICE层得数据==========="+addressList);
+        System.out.println("SERVICE层得数据===========" + addressList);
         return addressListMapper.insertAddressList(addressList);
     }
 
@@ -55,20 +50,22 @@ public class AddressListService  implements IAddressListService {
     }
 
     @Override
-    public AddressList updateByName( AddressList addressList) {
+    public AddressList updateByName(AddressList addressList) {
 
-        // 根据id获取数据
-        AddressList addressList1 = iAddressListService.getOne(addressList.getId());
-        System.out.println(addressList1);
+        addressListMapper.deleteById(addressList.getId());
+        AddressList addressList1 = new AddressList();
+        // System.out.println(addressList.getId());
+        // System.out.println(addressList1);
         // 更新用户数据  根据用户得名称更新
-       addressList1.setAddress(null == addressList.getAddress() ? null : addressList.getAddress() );
-       addressList1.setCreatedName(null == addressList.getCreatedName()? null : addressList.getCreatedName());
-       addressList1.setCreatedTime(null == addressList.getCreatedTime()? null : addressList.getCreatedTime());
-       addressList1.setName(null == addressList.getName() ? null : addressList.getName());
-       addressList1.setTelephone(null == addressList.getTelephone() ? null : addressList.getTelephone() );
-       addressList1.setUpdatedName(null == addressList.getUpdatedName() ? null : addressList.getUpdatedName() );
-       addressList1.setMark( null == addressList.getMark() ? null : addressList.getMark());
-       addressList1.setUpdateTime(null == addressList.getUpdateTime() ? null : addressList.getUpdateTime() );
-        return addressListMapper.updateByName(addressList1);
+        addressList1.setAddress(null == addressList.getAddress() ? null : addressList.getAddress());
+        addressList1.setCreatedName(null == addressList.getCreatedName() ? null : addressList.getCreatedName());
+        addressList1.setCreatedTime(null == addressList.getCreatedTime() ? null : addressList.getCreatedTime());
+        addressList1.setName(null == addressList.getName() ? null : addressList.getName());
+        addressList1.setTelephone(null == addressList.getTelephone() ? null : addressList.getTelephone());
+        addressList1.setUpdatedName(null == addressList.getUpdatedName() ? null : addressList.getUpdatedName());
+        addressList1.setMark(null == addressList.getMark() ? null : addressList.getMark());
+        addressList1.setUpdateTime(null == addressList.getUpdateTime() ? null : addressList.getUpdateTime());
+        addressListMapper.insertAddressList(addressList1);
+        return addressList1;
     }
 }

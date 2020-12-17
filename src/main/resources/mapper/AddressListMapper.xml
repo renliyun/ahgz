@@ -28,13 +28,13 @@
         select * from address_list where name = #{name}
     </select>
 
-   <select id="getOne" resultMap="BaseResultMap" >
+   <select id="getOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
        SELECT  * FROM address_list where id = #{id}
    </select>
 
 
 
-    <insert id="insertAddressList"  parameterType="com.vot.ahgz.entity.AddressList">
+    <insert id="insertAddressList" useGeneratedKeys="true" keyProperty="id" parameterType="com.vot.ahgz.entity.AddressList" >
         insert into address_list
          (name , telephone ,address ,created_name ,
          created_time , updated_name , update_time ,mark) value (
@@ -44,7 +44,7 @@
         );
     </insert>
 
-    <update id="updateByName" useGeneratedKeys="true" parameterType="com.vot.ahgz.entity.AddressList">
+    <update id="updateByName"  parameterType="com.vot.ahgz.entity.AddressList">
       update address_list set
         <if test="addressList.name != null">
            and  address_list.name = #{addressList.name}
@@ -77,6 +77,9 @@
         delete from address_list where name = #{name}
     </delete>
 
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+        delete from address_list where id = #{id}
+    </delete>
 
 
 </mapper>
