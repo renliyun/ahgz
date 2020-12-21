@@ -37,8 +37,18 @@ public class AddressListController {
         return commonResult;
     }
 
+    @RequestMapping("/getOne")
+    public CommonResult<AddressList> getOne(@RequestParam("id") Integer id) {
+        System.out.println("进入controller层了！");
+        CommonResult commonResult = new CommonResult();
+        commonResult.setData(iAddressListService.getOne(id));
+        commonResult.setCode(ResultCode.SUCCESS.getCode());
+        commonResult.setMessage("获取数据成功！");
+        return commonResult;
+    }
+
     @RequestMapping("/getOneByName")
-    public CommonResult<List<AddressList>> getByName(@RequestParam("name") String name) {
+    public CommonResult<AddressList> getByName(@RequestParam("name") String name) {
 
         return CommonResult.sucess(iAddressListService.getByName(name), "获取用户" + name + "数据成功");
     }

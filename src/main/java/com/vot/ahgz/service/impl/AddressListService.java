@@ -1,5 +1,8 @@
 package com.vot.ahgz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.vot.ahgz.entity.AddressList;
 import com.vot.ahgz.mapper.AddressListMapper;
 import com.vot.ahgz.service.IAddressListService;
@@ -28,30 +31,39 @@ public class AddressListService implements IAddressListService {
 
     @Override
     public List<AddressList> getAll() {
-        return addressListMapper.getAll();
+        return null;
+    }
+
+    @Override
+    public AddressList getOne(Integer id) {
+        System.out.println("mp3获取的数据是：：：：：：：：：：：："+addressListMapper.selectById(id));
+        return addressListMapper.selectById(id);
     }
 
 
     @Override
-    public List<AddressList> getByName(String name) {
-        return addressListMapper.getByName(name);
+    public AddressList getByName(String name) {
+         QueryWrapper<AddressList> wrapper = new QueryWrapper<AddressList>();
+         wrapper.eq("name",name);
+        System.out.println(addressListMapper.selectOne(wrapper));
+        return addressListMapper.selectOne(wrapper);
     }
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
         System.out.println("SERVICE层得数据===========" + addressList);
-        return addressListMapper.insertAddressList(addressList);
+        return null;
     }
 
     @Override
     public Integer deleteByName(String name) {
 
-        return addressListMapper.deleteByName(name);
+        return null;
     }
 
     @Override
     public AddressList updateByName(AddressList addressList) {
-
+        //  直接删除重新插入  应该没有得信息补齐
         addressListMapper.deleteById(addressList.getId());
         AddressList addressList1 = new AddressList();
         // System.out.println(addressList.getId());
@@ -65,7 +77,7 @@ public class AddressListService implements IAddressListService {
         addressList1.setUpdatedName(null == addressList.getUpdatedName() ? null : addressList.getUpdatedName());
         addressList1.setMark(null == addressList.getMark() ? null : addressList.getMark());
         addressList1.setUpdateTime(null == addressList.getUpdateTime() ? null : addressList.getUpdateTime());
-        addressListMapper.insertAddressList(addressList1);
+        // addressListMapper.insertAddressList(addressList1);
         return addressList1;
     }
 }

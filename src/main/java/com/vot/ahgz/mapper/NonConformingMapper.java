@@ -2,6 +2,7 @@ package com.vot.ahgz.mapper;
 
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vot.ahgz.entity.NonConforming;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author renlirong
  * @since 2020-12-08
  */
-public interface NonConformingMapper {
+public interface NonConformingMapper extends BaseMapper<NonConforming> {
 
 
     //获取全部数据

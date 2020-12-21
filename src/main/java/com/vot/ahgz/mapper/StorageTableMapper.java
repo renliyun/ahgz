@@ -2,6 +2,7 @@ package com.vot.ahgz.mapper;
 
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vot.ahgz.entity.StorageTable;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author renlirong
  * @since 2020-12-08
  */
-public interface StorageTableMapper {
+public interface StorageTableMapper extends BaseMapper<StorageTable> {
 
 
     //获取全部数据

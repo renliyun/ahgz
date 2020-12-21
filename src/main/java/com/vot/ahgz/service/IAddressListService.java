@@ -19,10 +19,11 @@ public interface IAddressListService  {
     //获取全部数据
     List<AddressList> getAll();
 
+    AddressList getOne(Integer id);
 
 
     //  根据用户名 name名称获取
-    List<AddressList> getByName( String name);
+    AddressList getByName( String name);
 
     //  插入用户快递
     Integer insertAddressList( AddressList addressList);

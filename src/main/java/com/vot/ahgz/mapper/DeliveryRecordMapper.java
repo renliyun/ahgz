@@ -2,6 +2,7 @@ package com.vot.ahgz.mapper;
 
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vot.ahgz.entity.DeliveryRecord;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author renlirong
  * @since 2020-12-08
  */
-public interface DeliveryRecordMapper  {
+public interface DeliveryRecordMapper  extends BaseMapper<DeliveryRecord> {
 
     //获取全部数据
     List<DeliveryRecord> getAll();
