@@ -31,20 +31,22 @@ public class AddressListService implements IAddressListService {
 
     @Override
     public List<AddressList> getAll() {
-        return null;
+        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.le("id",1000);
+        return addressListMapper.selectList(queryWrapper);
     }
 
     @Override
     public AddressList getOne(Integer id) {
-        System.out.println("mp3获取的数据是：：：：：：：：：：：："+addressListMapper.selectById(id));
+        System.out.println("mp3获取的数据是：：：：：：：：：：：：" + addressListMapper.selectById(id));
         return addressListMapper.selectById(id);
     }
 
 
     @Override
     public AddressList getByName(String name) {
-         QueryWrapper<AddressList> wrapper = new QueryWrapper<AddressList>();
-         wrapper.eq("name",name);
+        QueryWrapper<AddressList> wrapper = new QueryWrapper<AddressList>();
+        wrapper.eq("name", name);
         System.out.println(addressListMapper.selectOne(wrapper));
         return addressListMapper.selectOne(wrapper);
     }
@@ -52,32 +54,22 @@ public class AddressListService implements IAddressListService {
     @Override
     public Integer insertAddressList(AddressList addressList) {
         System.out.println("SERVICE层得数据===========" + addressList);
-        return null;
+        Integer result = addressListMapper.insert(addressList);
+        return result;
     }
 
     @Override
     public Integer deleteByName(String name) {
-
-        return null;
+        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        Integer result = addressListMapper.delete(queryWrapper);
+        return result;
     }
 
     @Override
     public AddressList updateByName(AddressList addressList) {
-        //  直接删除重新插入  应该没有得信息补齐
-        addressListMapper.deleteById(addressList.getId());
-        AddressList addressList1 = new AddressList();
-        // System.out.println(addressList.getId());
-        // System.out.println(addressList1);
-        // 更新用户数据  根据用户得名称更新
-        addressList1.setAddress(null == addressList.getAddress() ? null : addressList.getAddress());
-        addressList1.setCreatedName(null == addressList.getCreatedName() ? null : addressList.getCreatedName());
-        addressList1.setCreatedTime(null == addressList.getCreatedTime() ? null : addressList.getCreatedTime());
-        addressList1.setName(null == addressList.getName() ? null : addressList.getName());
-        addressList1.setTelephone(null == addressList.getTelephone() ? null : addressList.getTelephone());
-        addressList1.setUpdatedName(null == addressList.getUpdatedName() ? null : addressList.getUpdatedName());
-        addressList1.setMark(null == addressList.getMark() ? null : addressList.getMark());
-        addressList1.setUpdateTime(null == addressList.getUpdateTime() ? null : addressList.getUpdateTime());
-        // addressListMapper.insertAddressList(addressList1);
-        return addressList1;
+        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
+        addressListMapper.update(addressList, queryWrapper.eq("id", addressList.getId()));
+        return addressListMapper.selectOne(queryWrapper);
     }
 }
