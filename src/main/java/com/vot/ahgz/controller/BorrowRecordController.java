@@ -31,7 +31,7 @@ public class BorrowRecordController {
     private IBorrowRecordService iBorrowRecordService;
 
     @GetMapping("/getAll")
-    @ApiOperation(value = "获取所有的借用信息")
+    @ApiOperation(value = "获取所有的借用记录")
     public CommonResult<List<BorrowRecord>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -43,7 +43,7 @@ public class BorrowRecordController {
 
 
     @GetMapping("/getOneByName")
-    @ApiOperation(value = "获取name的所有的借用信息")
+    @ApiOperation(value = "获取name的所有的借用记录")
     public CommonResult<List<BorrowRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iBorrowRecordService.getByName(name), "获取用户" + name + "数据成功");
     }
@@ -62,7 +62,7 @@ public class BorrowRecordController {
     }
 
     @PatchMapping("/updateByName")
-    @ApiOperation(value = "更新一条借用")
+    @ApiOperation(value = "更新一条借用记录")
     public CommonResult<Integer> updateByName(@ModelAttribute BorrowRecord borrowRecord) {
         iBorrowRecordService.updateByName(borrowRecord);
         return CommonResult.sucess(iBorrowRecordService.updateByName(borrowRecord),"用户数据修改成功");

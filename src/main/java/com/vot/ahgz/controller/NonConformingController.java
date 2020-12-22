@@ -7,6 +7,7 @@ import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.service.INonConformingService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class NonConformingController {
     private INonConformingService iNonConformingService;
 
     @GetMapping("/getAll")
+    @ApiOperation(value = "不良品的所有记录")
     public CommonResult<List<NonConforming>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -42,22 +44,26 @@ public class NonConformingController {
 
 
     @GetMapping("/getOneByName")
+    @ApiOperation(value = "获取零部件name的所有不良品记录")
     public CommonResult<List<NonConforming>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iNonConformingService.getByName(name), "获取用户" + name + "数据成功");
     }
 
     @PostMapping("/insertDate")
+    @ApiOperation(value = "插入不良品记录")
     public CommonResult<Integer> insertAddressList(@ModelAttribute NonConforming nonConforming) {
         return CommonResult.sucess(iNonConformingService.insertNonConforming(nonConforming), "用户数据插入成功");
     }
 
     @PostMapping("/deleteByName")
+    @ApiOperation(value = "删除name的所有不良品记录")
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iNonConformingService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");
     }
 
     @PatchMapping("/updateByName")
+    @ApiOperation(value = "更新不良品记录")
     public CommonResult<Integer> updateByName(@ModelAttribute NonConforming nonConforming) {
         iNonConformingService.updateByName(nonConforming);
         return CommonResult.sucess(iNonConformingService.updateByName(nonConforming),"用户数据修改成功");

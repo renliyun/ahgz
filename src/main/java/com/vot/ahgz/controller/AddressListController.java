@@ -35,7 +35,7 @@ public class AddressListController {
     private IAddressListService iAddressListService;
 
     @GetMapping("/getAll")
-    @ApiOperation(value = "获取全部的数据")
+    @ApiOperation(value = "获取全部的地址列表")
     public CommonResult<List<AddressList>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -46,7 +46,7 @@ public class AddressListController {
     }
 
     @GetMapping("/getOne")
-    @ApiOperation(value = "根据id获取一条数据")
+    @ApiOperation(value = "根据id获取一条地址信息")
     public CommonResult<AddressList> getOne(@RequestParam("id") Integer id) {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -63,7 +63,7 @@ public class AddressListController {
     }
 
     @PostMapping("/insertDate")
-    @ApiOperation(value = "添加数据")
+    @ApiOperation(value = "添加地址信息")
     public CommonResult<Integer> insertAddressList(@ModelAttribute AddressList addressList) {
         return CommonResult.sucess(iAddressListService.insertAddressList(addressList), "用户数据插入成功");
     }
@@ -76,7 +76,7 @@ public class AddressListController {
     }
 
     @PatchMapping("/updateByName")
-    @ApiOperation(value = "更新一条数据")
+    @ApiOperation(value = "更新一条一条地址信息")
     public CommonResult<AddressList> updateByName(@ModelAttribute AddressList addressList) {
         iAddressListService.updateByName(addressList);
         return CommonResult.sucess(iAddressListService.updateByName(addressList),"用户数据修改成功");

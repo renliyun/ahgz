@@ -44,19 +44,19 @@ public class DeliveryRecordController {
 
 
     @GetMapping("/getOneByName")
-    @ApiOperation(value = "name的所有发货记录")
+    @ApiOperation(value = "零部件名称的所有发货记录")
     public CommonResult<List<DeliveryRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iDeliveryRecordService.getByName(name), "获取用户" + name + "数据成功");
     }
 
     @PostMapping("/insertDate")
-    @ApiOperation(value = "添加发货")
+    @ApiOperation(value = "添加一条发货记录")
     public CommonResult<Integer> insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
         return CommonResult.sucess(iDeliveryRecordService.insertDeliveryRecord(deliveryRecord), "用户数据插入成功");
     }
 
     @PostMapping("/deleteByName")
-    @ApiOperation(value = "删除name的发货记录")
+    @ApiOperation(value = "删除零部件的发货记录")
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iDeliveryRecordService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");

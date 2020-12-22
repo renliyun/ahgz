@@ -32,7 +32,7 @@ public class InRecordController {
     private IInRecordService iInRecordService;
 
     @GetMapping("/getAll")
-    @ApiOperation(value = "获取所有的入库信息")
+    @ApiOperation(value = "获取所有的入库记录")
     public CommonResult<List<InRecord>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -44,7 +44,7 @@ public class InRecordController {
 
 
     @GetMapping("/getOneByName")
-    @ApiOperation(value = "获取name的所有入库信息")
+    @ApiOperation(value = "获取零件name的所有入库记录")
     public CommonResult<List<InRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iInRecordService.getByName(name), "获取用户" + name + "数据成功");
     }
@@ -56,12 +56,14 @@ public class InRecordController {
     }
 
     @PostMapping("/deleteByName")
+    @ApiOperation(value = "删除零部件name的所有记录---不开放")
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iInRecordService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");
     }
 
     @PatchMapping("/updateByName")
+    @ApiOperation(value = "更新零部件的入库记录")
     public CommonResult<Integer> updateByName(@ModelAttribute InRecord inRecord) {
         iInRecordService.updateByName(inRecord);
         return CommonResult.sucess(iInRecordService.updateByName(inRecord),"用户数据修改成功");
