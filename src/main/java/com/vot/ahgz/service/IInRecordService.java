@@ -8,31 +8,33 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author renlirong
  * @since 2020-12-08
  */
-public interface IInRecordService  {
+public interface IInRecordService {
 
     //获取全部数据
     List<InRecord> getAll();
 
     //  根据id获取地址
-    InRecord getById( Integer id);
+    InRecord getById(Integer id);
 
     //  根据用户名 name名称获取
-    List<InRecord> getByName( String name);
+    List<InRecord> getByName(String name);
 
     //  插入用户快递
     Integer insertInRecord(InRecord inRecord);
 
     //  根据名称删除数据
-    Integer deleteByName( String name);
+    Integer deleteByName(String name);
+
+    //  根据名称删除数据
+    Integer deleteById(Integer id);
 
     //  更新用户数据
-    InRecord updateByName( String name,
-                          InRecord inRecord);
+    Integer updateByName(InRecord inRecord);
 
 }

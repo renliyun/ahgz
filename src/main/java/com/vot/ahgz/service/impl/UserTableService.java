@@ -1,9 +1,11 @@
 package com.vot.ahgz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.mapper.UserTableMapper;
 import com.vot.ahgz.service.IUserTableService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,33 +21,50 @@ import java.util.List;
 @Service
 public class UserTableService  implements IUserTableService {
 
+    @Autowired
+    private UserTableMapper userTableMapper;
+
+    public static QueryWrapper<UserTable> queryWrapper = null;
     @Override
     public List<UserTable> getAll() {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.le("id",1000);
+        return userTableMapper.selectList(queryWrapper);
     }
 
     @Override
     public UserTable getById(Integer id) {
-        return null;
+
+        return userTableMapper.selectById(id);
     }
 
     @Override
     public List<UserTable> getByName(String name) {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        return userTableMapper.selectList(queryWrapper);
     }
 
     @Override
     public Integer insertUserTable(UserTable userTable) {
-        return null;
+
+        return userTableMapper.insert(userTable);
     }
 
     @Override
     public Integer deleteByName(String name) {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        return userTableMapper.delete(queryWrapper);
     }
 
     @Override
-    public UserTable updateByName(String name, UserTable userTable) {
-        return null;
+    public Integer deleteById(Integer id) {
+        return userTableMapper.deleteById(id);
+    }
+
+    @Override
+    public Integer updateByName(UserTable userTable) {
+        return userTableMapper.updateById(userTable);
     }
 }

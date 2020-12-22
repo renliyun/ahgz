@@ -23,13 +23,16 @@ public interface IAddressListService  {
 
 
     //  根据用户名 name名称获取
-    AddressList getByName( String name);
+    List<AddressList> getByName( String name);
 
     //  插入用户快递
     Integer insertAddressList( AddressList addressList);
 
     //  根据名称删除数据
     Integer deleteByName( String name);
+
+    //  根据名称删除数据
+    Integer deleteById( Integer id);
 
     //  更新用户数据
    AddressList updateByName(AddressList addressList);

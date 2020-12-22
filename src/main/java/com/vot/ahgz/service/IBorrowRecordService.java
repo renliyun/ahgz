@@ -28,7 +28,9 @@ public interface IBorrowRecordService  {
     //  根据借用人名称删除数据
     Integer deleteByName( String name);
 
+    //  根据名称删除数据
+    Integer deleteById( Integer id);
+
     //  更新数据
-    BorrowRecord updateByName(String name,
-                               BorrowRecord borrowRecord);
+    Integer updateByName(BorrowRecord borrowRecord);
 }

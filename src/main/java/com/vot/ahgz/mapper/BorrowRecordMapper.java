@@ -4,7 +4,9 @@ package com.vot.ahgz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vot.ahgz.entity.BorrowRecord;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
  * @author renlirong
  * @since 2020-12-08
  */
+@Repository
 public interface BorrowRecordMapper extends BaseMapper<BorrowRecord> {
 
     //获取全部数据

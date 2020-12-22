@@ -8,32 +8,34 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author renlirong
  * @since 2020-12-08
  */
-public interface IUserTableService  {
+public interface IUserTableService {
 
     //获取全部数据
     List<UserTable> getAll();
 
     //  根据id获取地址
-    UserTable getById( Integer id);
+    UserTable getById(Integer id);
 
     //  根据用户名 name名称获取
     List<UserTable> getByName(String name);
 
     //  插入用户快递
-    Integer insertUserTable( UserTable userTable);
+    Integer insertUserTable(UserTable userTable);
 
     //  根据名称删除数据
-    Integer deleteByName( String name);
+    Integer deleteByName(String name);
+
+    //  根据名称删除数据
+    Integer deleteById(Integer id);
 
     //  更新用户数据
-    UserTable updateByName( String name,
-                            UserTable userTable);
+    Integer updateByName(UserTable userTable);
 
 
 }

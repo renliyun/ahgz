@@ -26,49 +26,50 @@ public class AddressListService implements IAddressListService {
     @Autowired
     private AddressListMapper addressListMapper;
 
-    @Autowired
-    private IAddressListService iAddressListService;
+    public static QueryWrapper<AddressList> queryWrapper = null;
 
     @Override
     public List<AddressList> getAll() {
-        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id",1000);
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.le("id", 1000);
         return addressListMapper.selectList(queryWrapper);
     }
 
     @Override
     public AddressList getOne(Integer id) {
-        System.out.println("mp3获取的数据是：：：：：：：：：：：：" + addressListMapper.selectById(id));
         return addressListMapper.selectById(id);
     }
 
 
     @Override
-    public AddressList getByName(String name) {
-        QueryWrapper<AddressList> wrapper = new QueryWrapper<AddressList>();
-        wrapper.eq("name", name);
-        System.out.println(addressListMapper.selectOne(wrapper));
-        return addressListMapper.selectOne(wrapper);
+    public List<AddressList> getByName(String name) {
+        queryWrapper = new QueryWrapper<AddressList>();
+        queryWrapper.eq("name", name);
+        return addressListMapper.selectList(queryWrapper);
     }
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
-        System.out.println("SERVICE层得数据===========" + addressList);
         Integer result = addressListMapper.insert(addressList);
         return result;
     }
 
     @Override
     public Integer deleteByName(String name) {
-        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
+        queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", name);
         Integer result = addressListMapper.delete(queryWrapper);
         return result;
     }
 
     @Override
+    public Integer deleteById(Integer id) {
+        return addressListMapper.deleteById(id);
+    }
+
+    @Override
     public AddressList updateByName(AddressList addressList) {
-        QueryWrapper<AddressList> queryWrapper = new QueryWrapper<>();
+        queryWrapper = new QueryWrapper<>();
         addressListMapper.update(addressList, queryWrapper.eq("id", addressList.getId()));
         return addressListMapper.selectOne(queryWrapper);
     }

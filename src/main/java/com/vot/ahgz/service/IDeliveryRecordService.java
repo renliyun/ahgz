@@ -31,8 +31,10 @@ public interface IDeliveryRecordService  {
     //  根据名称删除数据
     Integer deleteByName( String name);
 
+    //  根据名称删除数据
+    Integer deleteById( Integer id);
+
     //  更新用户数据
-    DeliveryRecord updateByName( String name,
-                                DeliveryRecord deliveryRecord);
+    Integer updateByName( DeliveryRecord deliveryRecord);
 
 }

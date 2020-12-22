@@ -1,16 +1,18 @@
 package com.vot.ahgz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.mapper.OutRecordMapper;
 import com.vot.ahgz.service.IOutRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author renlirong
@@ -19,33 +21,52 @@ import java.util.List;
 @Service
 public class OutRecordService implements IOutRecordService {
 
+    @Autowired
+    private OutRecordMapper outRecordMapper;
+
+    public static QueryWrapper<OutRecord> queryWrapper = null;
+
     @Override
     public List<OutRecord> getAll() {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.le("id", 1000);
+        return outRecordMapper.selectList(queryWrapper);
     }
 
     @Override
     public OutRecord getById(Integer id) {
-        return null;
+
+        return outRecordMapper.selectById(id);
     }
 
     @Override
     public List<OutRecord> getByName(String name) {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        return outRecordMapper.selectList(queryWrapper);
     }
 
     @Override
     public Integer insertOutRecord(OutRecord outRecord) {
-        return null;
+
+        return outRecordMapper.insert(outRecord);
     }
 
     @Override
     public Integer deleteByName(String name) {
-        return null;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        return outRecordMapper.delete(queryWrapper);
     }
 
     @Override
-    public OutRecord updateByName(String name, OutRecord outRecord) {
-        return null;
+    public Integer deleteById(Integer id) {
+        return outRecordMapper.deleteById(id);
+    }
+
+    @Override
+    public Integer updateByName(OutRecord outRecord) {
+
+        return outRecordMapper.updateById(outRecord);
     }
 }

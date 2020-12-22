@@ -32,8 +32,10 @@ public interface IStorageTableService  {
     //  根据名称删除数据
     Integer deleteByName( String name);
 
+    //  根据名称删除数据
+    Integer deleteById( Integer id);
+
     //  更新用户数据
-    StorageTable updateByName( String name,
-                              StorageTable storageTable);
+    Integer updateByName(StorageTable storageTable);
 
 }
