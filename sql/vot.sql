@@ -15,6 +15,9 @@ CREATE TABLE  address_list (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+
+
 DROP TABLE IF EXISTS  borrow_record;
 
 CREATE TABLE borrow_record (
@@ -24,6 +27,7 @@ CREATE TABLE borrow_record (
   category varchar(20)  COMMENT "所属类别",
   figure_number varchar(50)  COMMENT "图号",
   number int  COMMENT "数量",
+  material  varchar(20)  COMMENT "材料",
   borrow_name varchar(20)  COMMENT "借用人",
   borrow_time datetime  COMMENT "借用时间",
   operator varchar(20)  COMMENT "系统操作人",

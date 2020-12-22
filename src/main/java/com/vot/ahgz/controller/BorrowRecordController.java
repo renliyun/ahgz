@@ -5,6 +5,7 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.service.IBorrowRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("/borrowRecord")
 public class BorrowRecordController {
 
+    @Autowired
     private IBorrowRecordService iBorrowRecordService;
 
     @RequestMapping("/getAll")
