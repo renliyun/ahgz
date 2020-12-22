@@ -6,6 +6,7 @@ CREATE TABLE  address_list (
   name varchar(20) COMMENT "姓名",
   telephone varchar(20)  COMMENT "联系方式",
   address varchar(50)  COMMENT "联系地址",
+  sex int(1) COMMENT "性别",
   mark varchar(255)  COMMENT "备注",
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
