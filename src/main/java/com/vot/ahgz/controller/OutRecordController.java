@@ -6,6 +6,7 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.service.IOutRecordService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/outRecord")
+@Api("出库记录")
 public class OutRecordController {
 
     @Autowired
     private IOutRecordService iOutRecordService;
 
-    @RequestMapping("/getAll")
+    @GetMapping("/getAll")
     public CommonResult<List<OutRecord>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -39,7 +41,7 @@ public class OutRecordController {
     }
 
 
-    @RequestMapping("/getOneByName")
+    @GetMapping("/getOneByName")
     public CommonResult<List<OutRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iOutRecordService.getByName(name), "获取用户" + name + "数据成功");
     }

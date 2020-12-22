@@ -6,6 +6,8 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IStorageTableService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +25,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/storageTable")
+@Api("库存列表")
 public class StorageTableController {
 
     @Autowired
     private IStorageTableService iStorageTableService;
 
-    @RequestMapping("/getAll")
+    @GetMapping("/getAll")
+    @ApiOperation(value = "获取所有的库存信息")
     public CommonResult<List<StorageTable>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -39,23 +43,27 @@ public class StorageTableController {
     }
 
 
-    @RequestMapping("/getOneByName")
+    @GetMapping("/getOneByName")
+    @ApiOperation(value = "获取name的库存信息")
     public CommonResult<List<StorageTable>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iStorageTableService.getByName(name), "获取用户" + name + "数据成功");
     }
 
     @PostMapping("/insertDate")
+    @ApiOperation(value = "入库")
     public CommonResult<Integer> insertAddressList(@ModelAttribute StorageTable storageTable) {
         return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
     }
 
     @PostMapping("/deleteByName")
+    @ApiOperation(value = "删除name库存")
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iStorageTableService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");
     }
 
     @PatchMapping("/updateByName")
+    @ApiOperation(value = "更新一条记录")
     public CommonResult<Integer> updateByName(@ModelAttribute StorageTable storageTable) {
         iStorageTableService.updateByName(storageTable);
         return CommonResult.sucess(iStorageTableService.updateByName(storageTable),"用户数据修改成功");

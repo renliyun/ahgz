@@ -6,6 +6,7 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.service.INonConformingService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/nonConforming")
+@Api("关于不良品的信息")
 public class NonConformingController {
 
     @Autowired
     private INonConformingService iNonConformingService;
 
-    @RequestMapping("/getAll")
+    @GetMapping("/getAll")
     public CommonResult<List<NonConforming>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -39,7 +41,7 @@ public class NonConformingController {
     }
 
 
-    @RequestMapping("/getOneByName")
+    @GetMapping("/getOneByName")
     public CommonResult<List<NonConforming>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iNonConformingService.getByName(name), "获取用户" + name + "数据成功");
     }

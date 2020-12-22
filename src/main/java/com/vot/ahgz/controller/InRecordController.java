@@ -6,6 +6,8 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.service.IInRecordService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +25,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/inRecord")
+@Api("入库信息")
 public class InRecordController {
 
     @Autowired
     private IInRecordService iInRecordService;
 
-    @RequestMapping("/getAll")
+    @GetMapping("/getAll")
+    @ApiOperation(value = "获取所有的入库信息")
     public CommonResult<List<InRecord>> getAll() {
         System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
@@ -39,12 +43,14 @@ public class InRecordController {
     }
 
 
-    @RequestMapping("/getOneByName")
+    @GetMapping("/getOneByName")
+    @ApiOperation(value = "获取name的所有入库信息")
     public CommonResult<List<InRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iInRecordService.getByName(name), "获取用户" + name + "数据成功");
     }
 
     @PostMapping("/insertDate")
+    @ApiOperation(value = "插入一条入库记录")
     public CommonResult<Integer> insertAddressList(@ModelAttribute InRecord inRecord) {
         return CommonResult.sucess(iInRecordService.insertInRecord(inRecord), "用户数据插入成功");
     }
