@@ -48,8 +48,7 @@ public class AddressListController {
     }
 
     @RequestMapping("/getOneByName")
-    public CommonResult<AddressList> getByName(@RequestParam("name") String name) {
-
+    public CommonResult<List<AddressList>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iAddressListService.getByName(name), "获取用户" + name + "数据成功");
     }
 
