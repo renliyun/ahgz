@@ -47,7 +47,7 @@ public class OutRecord  implements Serializable{
     private String receiveName;
 
     //  领用时间
-    private LocalDateTime receiveTime;
+    private String receiveTime;
 
     //  供货商
     private String supplier;
@@ -67,7 +67,10 @@ public class OutRecord  implements Serializable{
     //  更新时间
     private String updateTime;
 
-    public OutRecord(Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
+    public OutRecord() {
+    }
+
+    public OutRecord(Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, String receiveTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -153,11 +156,11 @@ public class OutRecord  implements Serializable{
         this.receiveName = receiveName;
     }
 
-    public LocalDateTime getReceiveTime() {
+    public String getReceiveTime() {
         return receiveTime;
     }
 
-    public void setReceiveTime(LocalDateTime receiveTime) {
+    public void setReceiveTime(String receiveTime) {
         this.receiveTime = receiveTime;
     }
 

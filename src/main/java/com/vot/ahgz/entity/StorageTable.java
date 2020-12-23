@@ -65,6 +65,9 @@ public class StorageTable  implements Serializable {
     //  更新时间
     private String updateTime;
 
+    public StorageTable() {
+    }
+
     public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;

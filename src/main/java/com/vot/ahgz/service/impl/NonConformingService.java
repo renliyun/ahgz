@@ -47,6 +47,24 @@ public class NonConformingService implements INonConformingService {
 
     @Override
     public Integer insertNonConforming(NonConforming nonConforming) {
+        // 分为插入数据和在原来的基础上增加
+        try {
+            queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("part_name", nonConforming.getPartName());
+            queryWrapper.eq("figure_number", nonConforming.getFigureNumber());
+            NonConforming nonConforming1 = nonConformingMapper.selectOne(queryWrapper);
+            if (null == nonConforming1) {
+                // 直接插入
+                nonConformingMapper.insert(nonConforming);
+            } else {
+                //需要在原来的基础上更新
+                nonConforming1.setQuantity(nonConforming1.getQuantity() + nonConforming.getQuantity());
+                nonConformingMapper.updateById(nonConforming1);
+            }
+        } catch (Exception e) {
+            System.out.println("插入不良品失效");
+            e.printStackTrace();
+        }
         return nonConformingMapper.insert(nonConforming);
     }
 

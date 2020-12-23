@@ -3,6 +3,7 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.models.auth.In;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,7 +40,7 @@ public class DeliveryRecord  implements Serializable {
     private String figureNumber;
 
     //  发货数量
-    private Long number;
+    private Integer number;
 
     //  发货人
     private String deliveryName;
@@ -48,7 +49,7 @@ public class DeliveryRecord  implements Serializable {
     private String deliveryAddress;
 
     //  发货时间
-    private LocalDateTime deliveryTime;
+    private String deliveryTime;
 
     //  收货人姓名
     private String borrowName;
@@ -77,7 +78,7 @@ public class DeliveryRecord  implements Serializable {
     //  更新时间
     private String updateTime;
 
-    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Long number, String deliveryName, String deliveryAddress, LocalDateTime deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
+    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -142,11 +143,11 @@ public class DeliveryRecord  implements Serializable {
         this.figureNumber = figureNumber;
     }
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -166,11 +167,11 @@ public class DeliveryRecord  implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public LocalDateTime getDeliveryTime() {
+    public String getDeliveryTime() {
         return deliveryTime;
     }
 
-    public void setDeliveryTime(LocalDateTime deliveryTime) {
+    public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 

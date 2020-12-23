@@ -55,6 +55,7 @@ public class StorageTableController {
      */
     @PostMapping("/insertDate")
     @ApiOperation(value = "入库")
+    @ApiIgnore()
     public CommonResult<Integer> insertAddressList(@ModelAttribute StorageTable storageTable) {
         return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
     }

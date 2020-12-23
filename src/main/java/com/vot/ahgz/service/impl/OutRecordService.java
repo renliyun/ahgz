@@ -2,7 +2,9 @@ package com.vot.ahgz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.OutRecord;
+import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.mapper.OutRecordMapper;
+import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IOutRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class OutRecordService implements IOutRecordService {
 
     @Autowired
     private OutRecordMapper outRecordMapper;
+
+    @Autowired
+    private StorageTableMapper storageTableMapper;
 
     public static QueryWrapper<OutRecord> queryWrapper = null;
 
@@ -49,7 +54,19 @@ public class OutRecordService implements IOutRecordService {
     @Override
     public Integer insertOutRecord(OutRecord outRecord) {
         // TODO 需要处理库存 库里有才可以出库
-        return outRecordMapper.insert(outRecord);
+        QueryWrapper<StorageTable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("part_name", outRecord.getPartName());
+        queryWrapper.eq("figure_number", outRecord.getFigureNumber());
+        StorageTable storageTable = storageTableMapper.selectOne(queryWrapper);
+        if (null == storageTable || storageTable.getNumber() < outRecord.getNumber()) {
+            return 0;
+        } else {
+            // 减库存 出库
+            storageTable.setNumber(storageTable.getNumber() - outRecord.getNumber());
+            storageTableMapper.updateById(storageTable);
+            // 插入出库记录
+            return outRecordMapper.insert(outRecord);
+        }
     }
 
     @Override

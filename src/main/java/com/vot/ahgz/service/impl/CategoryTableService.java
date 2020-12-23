@@ -36,13 +36,14 @@ public class CategoryTableService implements ICategoryTableService {
     }
 
 
-
-
     @Override
     public Integer insertCategoryTable(CategoryTable categoryTable) {
         // todu不允许随意插入 需要判重
-        Integer result = categoryTableMapper.insert(categoryTable);
-        return result;
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", categoryTable.getName());
+        CategoryTable categoryTable1 = categoryTableMapper.selectOne(queryWrapper);
+        // 如果重名就不能够再重复添加 不重名就可以添加
+        return categoryTable1 != null ? 0 : categoryTableMapper.insert(categoryTable);
     }
 
 

@@ -47,8 +47,14 @@ public class UserTableService  implements IUserTableService {
 
     @Override
     public Integer insertUserTable(UserTable userTable) {
-
-        return userTableMapper.insert(userTable);
+        queryWrapper  = new QueryWrapper<>();
+        queryWrapper.eq("username",userTable.getUsername());
+        UserTable userTable1 = userTableMapper.selectOne(queryWrapper);
+        if (null == userTable1){
+            return userTableMapper.insert(userTable);
+        }else {
+            return 0;
+        }
     }
 
     @Override
