@@ -12,7 +12,7 @@ CREATE TABLE  address_list (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -35,7 +35,7 @@ CREATE TABLE borrow_record (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   supplier varchar(50) COMMENT "所属部门或者客户公司名称",
   mark varchar(255)  COMMENT "备注",
   PRIMARY KEY (id)
@@ -62,7 +62,7 @@ CREATE TABLE delivery_record (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   mark varchar(255) DEFAULT NULL COMMENT "备注",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -82,7 +82,7 @@ CREATE TABLE in_record (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   mark varchar(255)  COMMENT "备注",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -101,7 +101,7 @@ CREATE TABLE non_conforming (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   mark varchar(255)  COMMENT "备注",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -123,7 +123,7 @@ CREATE TABLE out_record (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   supplier varchar(50)  COMMENT "供货商",
   mark varchar(255)  COMMENT "备注",
   PRIMARY KEY (id)
@@ -146,7 +146,7 @@ CREATE TABLE storage_table (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   mark varchar(255)  COMMENT "备注",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -164,7 +164,7 @@ CREATE TABLE user_table (
   created_name varchar(20)  COMMENT "创建人",
   created_time date  COMMENT "创建时间",
   updated_name varchar(20) COMMENT "更新人",
-  update_time date  COMMENT "更新时间",
+  updated_time date  COMMENT "更新时间",
   mark varchar(255) COMMENT "备注",
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
