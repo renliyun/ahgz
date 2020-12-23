@@ -25,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/deliveryRecord")
-@Api("发货表格")
+@Api(value = "发货表格")
 public class DeliveryRecordController {
 
     @Autowired

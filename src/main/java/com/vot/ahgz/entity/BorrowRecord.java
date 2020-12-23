@@ -19,7 +19,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class BorrowRecord extends BaseEntity  implements Serializable {
+public class BorrowRecord  implements Serializable {
 
 
     private static final long serialVersionUID = -3683524450621282446L;
@@ -57,8 +57,19 @@ public class BorrowRecord extends BaseEntity  implements Serializable {
     //  备注
     private String mark;
 
-    public BorrowRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String supplier, String mark) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String updateTime;
+
+    public BorrowRecord(Integer id, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -70,6 +81,14 @@ public class BorrowRecord extends BaseEntity  implements Serializable {
         this.borrowTime = borrowTime;
         this.supplier = supplier;
         this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -160,6 +179,38 @@ public class BorrowRecord extends BaseEntity  implements Serializable {
         this.mark = mark;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "BorrowRecord{" +
@@ -174,6 +225,10 @@ public class BorrowRecord extends BaseEntity  implements Serializable {
                 ", borrowTime=" + borrowTime +
                 ", supplier='" + supplier + '\'' +
                 ", mark='" + mark + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

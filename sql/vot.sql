@@ -183,4 +183,9 @@ CREATE TABLE category_table (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('外购件', '2021-01-00', '任利荣', '2021-01-00', '任利荣');
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('镜片', '2021-01-00', '任利荣', '2021-01-00', '任利荣');
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('镜头', '2021-01-00', '任利荣', '2021-01-00', '任利荣');
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('半成品', '2021-01-00', '任利荣', '2021-01-00', '任利荣');
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('镜头机械部分', '2021-01-00', '任利荣', '2021-01-00', '任利荣');
+INSERT INTO category_table (name, created_time, created_name, updated_time, updated_name) VALUES ('外购件（）', '2021-01-00', '任利荣', '2021-01-00', '任利荣');

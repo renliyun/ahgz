@@ -42,7 +42,7 @@ public class OutRecordService implements IOutRecordService {
     @Override
     public List<OutRecord> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return outRecordMapper.selectList(queryWrapper);
     }
 
@@ -55,7 +55,7 @@ public class OutRecordService implements IOutRecordService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return outRecordMapper.delete(queryWrapper);
     }
 

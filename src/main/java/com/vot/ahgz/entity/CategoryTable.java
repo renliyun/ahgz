@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class CategoryTable extends BaseEntity implements Serializable {
+public class CategoryTable  implements Serializable {
 
 
     private static final long serialVersionUID = 6695126616117377921L;
@@ -30,11 +31,30 @@ public class CategoryTable extends BaseEntity implements Serializable {
     // 备注
     private String mark;
 
-    public CategoryTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String name, String mark) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String  updatedTime;
+
+    public CategoryTable(Integer id, String name, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.name = name;
         this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updatedTime = updatedTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -61,12 +81,48 @@ public class CategoryTable extends BaseEntity implements Serializable {
         this.mark = mark;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     @Override
     public String toString() {
         return "CategoryTable{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", mark='" + mark + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime='" + createdTime + '\'' +
+                ", updatedName='" + updatedName + '\'' +
+                ", updatedTime='" + updatedTime + '\'' +
+                '}';
     }
 }

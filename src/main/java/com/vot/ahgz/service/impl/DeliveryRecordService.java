@@ -41,7 +41,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
     @Override
     public List<DeliveryRecord> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return deliveryRecordMapper.selectList(queryWrapper);
     }
 
@@ -54,7 +54,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
     public Integer deleteByName(String name) {
         //  根据name删除不符合逻辑
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return deliveryRecordMapper.delete(queryWrapper);
     }
 

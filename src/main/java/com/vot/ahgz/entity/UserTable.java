@@ -18,7 +18,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class UserTable extends BaseEntity implements Serializable {
+public class UserTable implements Serializable {
 
 
     private static final long serialVersionUID = 8768401328109881348L;
@@ -40,14 +40,33 @@ public class UserTable extends BaseEntity implements Serializable {
     //  备注
     private String mark;
 
-    public UserTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String username, String password, String role, String authority, String mark) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String updateTime;
+
+    public UserTable(Integer id, String username, String password, String role, String authority, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
         this.authority = authority;
         this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -98,6 +117,38 @@ public class UserTable extends BaseEntity implements Serializable {
         this.mark = mark;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "UserTable{" +
@@ -107,6 +158,10 @@ public class UserTable extends BaseEntity implements Serializable {
                 ", role='" + role + '\'' +
                 ", authority='" + authority + '\'' +
                 ", mark='" + mark + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

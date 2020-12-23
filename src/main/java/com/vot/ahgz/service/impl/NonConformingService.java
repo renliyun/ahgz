@@ -41,7 +41,7 @@ public class NonConformingService implements INonConformingService {
     @Override
     public List<NonConforming> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return nonConformingMapper.selectList(queryWrapper);
     }
 
@@ -53,7 +53,7 @@ public class NonConformingService implements INonConformingService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return nonConformingMapper.delete(queryWrapper);
     }
 

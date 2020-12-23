@@ -42,7 +42,7 @@ public class StorageTableService implements IStorageTableService {
     @Override
     public List<StorageTable> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return storageTableMapper.selectList(queryWrapper);
     }
 
@@ -55,7 +55,7 @@ public class StorageTableService implements IStorageTableService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return storageTableMapper.delete(queryWrapper);
     }
 

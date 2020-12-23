@@ -36,7 +36,7 @@ public class BorrowRecordService implements IBorrowRecordService {
     @Override
     public List<BorrowRecord> getByName(String name) {
         QueryWrapper<BorrowRecord> queryWrapper = new QueryWrapper<>();
-        return borrowRecordMapper.selectList(queryWrapper.eq("name", name));
+        return borrowRecordMapper.selectList(queryWrapper.eq("part_name", name));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class BorrowRecordService implements IBorrowRecordService {
     @Override
     public Integer deleteByName(String name) {
         QueryWrapper<BorrowRecord> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return borrowRecordMapper.delete(queryWrapper);
     }
 

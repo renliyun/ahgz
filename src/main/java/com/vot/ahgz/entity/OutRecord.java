@@ -18,7 +18,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class OutRecord extends BaseEntity implements Serializable{
+public class OutRecord  implements Serializable{
 
 
     private static final long serialVersionUID = -2685902298254662333L;
@@ -55,8 +55,19 @@ public class OutRecord extends BaseEntity implements Serializable{
     //  备注
     private String mark;
 
-    public OutRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String supplier, String mark) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String updateTime;
+
+    public OutRecord(Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -68,6 +79,14 @@ public class OutRecord extends BaseEntity implements Serializable{
         this.receiveTime = receiveTime;
         this.supplier = supplier;
         this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -158,6 +177,38 @@ public class OutRecord extends BaseEntity implements Serializable{
         this.mark = mark;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "OutRecord{" +
@@ -172,6 +223,10 @@ public class OutRecord extends BaseEntity implements Serializable{
                 ", receiveTime=" + receiveTime +
                 ", supplier='" + supplier + '\'' +
                 ", mark='" + mark + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

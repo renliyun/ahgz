@@ -20,7 +20,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class AddressList extends BaseEntity implements Serializable {
+public class AddressList implements Serializable {
 
 
     private static final long serialVersionUID = -15807207303869219L;
@@ -46,8 +46,19 @@ public class AddressList extends BaseEntity implements Serializable {
     /* 所属公司 */
     private String company;
 
-    public AddressList(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String name, String telephone, String address, String mark, Integer sex, String company) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String updateTime;
+
+    public AddressList(Integer id, String name, String telephone, String address, String mark, Integer sex, String company, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.name = name;
         this.telephone = telephone;
@@ -55,6 +66,14 @@ public class AddressList extends BaseEntity implements Serializable {
         this.mark = mark;
         this.sex = sex;
         this.company = company;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -113,6 +132,39 @@ public class AddressList extends BaseEntity implements Serializable {
         this.company = company;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "AddressList{" +
@@ -123,6 +175,10 @@ public class AddressList extends BaseEntity implements Serializable {
                 ", mark='" + mark + '\'' +
                 ", sex=" + sex +
                 ", company='" + company + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

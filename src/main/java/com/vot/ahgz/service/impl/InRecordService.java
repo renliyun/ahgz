@@ -41,7 +41,7 @@ public class InRecordService implements IInRecordService {
     @Override
     public List<InRecord> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return inRecordMapper.selectList(queryWrapper);
     }
 
@@ -53,7 +53,7 @@ public class InRecordService implements IInRecordService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.eq("part_name", name);
         return inRecordMapper.delete(queryWrapper);
     }
 

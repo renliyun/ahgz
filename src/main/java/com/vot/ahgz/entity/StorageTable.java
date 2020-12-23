@@ -19,7 +19,7 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class StorageTable extends BaseEntity implements Serializable {
+public class StorageTable  implements Serializable {
 
 
     private static final long serialVersionUID = -8078691461613221658L;
@@ -53,8 +53,19 @@ public class StorageTable extends BaseEntity implements Serializable {
     //  备注
     private String mark;
 
-    public StorageTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark) {
-        super(createdName, createdTime, updatedName, updateTime);
+    //  创建人
+    private String createdName;
+
+    // 创建时间
+    private String createdTime;
+
+    // 更新人
+    private String updatedName;
+
+    //  更新时间
+    private String updateTime;
+
+    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -65,6 +76,14 @@ public class StorageTable extends BaseEntity implements Serializable {
         this.supplier = supplier;
         this.location = location;
         this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updateTime = updateTime;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -147,6 +166,38 @@ public class StorageTable extends BaseEntity implements Serializable {
         this.mark = mark;
     }
 
+    public String getCreatedName() {
+        return createdName;
+    }
+
+    public void setCreatedName(String createdName) {
+        this.createdName = createdName;
+    }
+
+    public String getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getUpdatedName() {
+        return updatedName;
+    }
+
+    public void setUpdatedName(String updatedName) {
+        this.updatedName = updatedName;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "StorageTable{" +
@@ -160,6 +211,10 @@ public class StorageTable extends BaseEntity implements Serializable {
                 ", supplier='" + supplier + '\'' +
                 ", location='" + location + '\'' +
                 ", mark='" + mark + '\'' +
-                "} " + super.toString();
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

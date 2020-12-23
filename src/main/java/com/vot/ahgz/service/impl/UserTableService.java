@@ -41,7 +41,7 @@ public class UserTableService  implements IUserTableService {
     @Override
     public List<UserTable> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name",name);
+        queryWrapper.eq("username",name);
         return userTableMapper.selectList(queryWrapper);
     }
 
@@ -54,7 +54,7 @@ public class UserTableService  implements IUserTableService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name",name);
+        queryWrapper.eq("username",name);
         return userTableMapper.delete(queryWrapper);
     }
 
