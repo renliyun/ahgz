@@ -50,6 +50,7 @@ public class AddressListService implements IAddressListService {
 
     @Override
     public Integer insertAddressList(AddressList addressList) {
+        // 不进行判断
         Integer result = addressListMapper.insert(addressList);
         return result;
     }

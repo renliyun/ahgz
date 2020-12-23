@@ -40,6 +40,7 @@ public class CategoryTableService implements ICategoryTableService {
 
     @Override
     public Integer insertCategoryTable(CategoryTable categoryTable) {
+        // todu不允许随意插入 需要判重
         Integer result = categoryTableMapper.insert(categoryTable);
         return result;
     }

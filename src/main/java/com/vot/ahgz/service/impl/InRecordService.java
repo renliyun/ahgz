@@ -47,6 +47,7 @@ public class InRecordService implements IInRecordService {
 
     @Override
     public Integer insertInRecord(InRecord inRecord) {
+        // todo 需要进行库存处理 然后插入入库记录内
         return inRecordMapper.insert(inRecord);
     }
 

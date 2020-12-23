@@ -48,7 +48,7 @@ public class OutRecordService implements IOutRecordService {
 
     @Override
     public Integer insertOutRecord(OutRecord outRecord) {
-
+        // TODO 需要处理库存 库里有才可以出库
         return outRecordMapper.insert(outRecord);
     }
 

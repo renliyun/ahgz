@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -48,7 +49,10 @@ public class StorageTableController {
     public CommonResult<List<StorageTable>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iStorageTableService.getByName(name), "获取用户" + name + "数据成功");
     }
-
+    /*
+    1、需要增加导出、导入excel表格
+    2、需要增加根据类别、图号、材料等的查询方法
+     */
     @PostMapping("/insertDate")
     @ApiOperation(value = "入库")
     public CommonResult<Integer> insertAddressList(@ModelAttribute StorageTable storageTable) {
@@ -64,6 +68,7 @@ public class StorageTableController {
 
     @PatchMapping("/updateByName")
     @ApiOperation(value = "更新一条记录")
+    @ApiIgnore()
     public CommonResult<Integer> updateByName(@ModelAttribute StorageTable storageTable) {
         iStorageTableService.updateByName(storageTable);
         return CommonResult.sucess(iStorageTableService.updateByName(storageTable),"用户数据修改成功");

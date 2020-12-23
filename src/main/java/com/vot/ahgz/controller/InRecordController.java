@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class InRecordController {
 
     @GetMapping("/getOneByName")
     @ApiOperation(value = "获取零件name的所有入库记录")
+    @ApiIgnore("TRUE")
     public CommonResult<List<InRecord>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iInRecordService.getByName(name), "获取用户" + name + "数据成功");
     }

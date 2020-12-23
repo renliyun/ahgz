@@ -47,6 +47,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
 
     @Override
     public Integer insertDeliveryRecord(DeliveryRecord deliveryRecord) {
+        // TODO 发货需要看库里是否有，然后先出库再进行发货
         return deliveryRecordMapper.insert(deliveryRecord);
     }
 
