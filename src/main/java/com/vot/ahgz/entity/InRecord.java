@@ -3,6 +3,8 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,10 +19,9 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class InRecord implements Serializable {
+public class InRecord extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 5004486118578832984L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -47,45 +48,11 @@ public class InRecord implements Serializable {
     //  库位
     private String location;
 
-    //  操作者
-    private String operator;
-
-    //  操作时间
-    private LocalDateTime operationTime;
-
     //  备注
     private String mark;
 
-    public InRecord() {
-    }
-
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InRecord inRecord = (InRecord) o;
-        return Objects.equals(id, inRecord.id) &&
-                Objects.equals(partName, inRecord.partName) &&
-                Objects.equals(partSpecification, inRecord.partSpecification) &&
-                Objects.equals(figureNumber, inRecord.figureNumber) &&
-                Objects.equals(material, inRecord.material) &&
-                Objects.equals(supplier, inRecord.supplier) &&
-                Objects.equals(category, inRecord.category) &&
-                Objects.equals(quantity, inRecord.quantity) &&
-                Objects.equals(location, inRecord.location) &&
-                Objects.equals(operator, inRecord.operator) &&
-                Objects.equals(operationTime, inRecord.operationTime) &&
-                Objects.equals(mark, inRecord.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, partName, partSpecification, figureNumber, material, supplier, category, quantity, location, operator, operationTime, mark);
-    }
-
-    public InRecord(Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String operator, LocalDateTime operationTime, String mark) {
+    public InRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -95,17 +62,7 @@ public class InRecord implements Serializable {
         this.category = category;
         this.quantity = quantity;
         this.location = location;
-        this.operator = operator;
-        this.operationTime = operationTime;
         this.mark = mark;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public Integer getId() {
@@ -140,6 +97,14 @@ public class InRecord implements Serializable {
         this.figureNumber = figureNumber;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
     public String getSupplier() {
         return supplier;
     }
@@ -172,22 +137,6 @@ public class InRecord implements Serializable {
         this.location = location;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public LocalDateTime getOperationTime() {
-        return operationTime;
-    }
-
-    public void setOperationTime(LocalDateTime operationTime) {
-        this.operationTime = operationTime;
-    }
-
     public String getMark() {
         return mark;
     }
@@ -195,7 +144,6 @@ public class InRecord implements Serializable {
     public void setMark(String mark) {
         this.mark = mark;
     }
-
 
     @Override
     public String toString() {
@@ -209,9 +157,7 @@ public class InRecord implements Serializable {
                 ", category='" + category + '\'' +
                 ", quantity=" + quantity +
                 ", location='" + location + '\'' +
-                ", operator='" + operator + '\'' +
-                ", operationTime=" + operationTime +
                 ", mark='" + mark + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

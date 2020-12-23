@@ -3,6 +3,8 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,10 +18,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class UserTable implements Serializable {
+public class UserTable extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 8768401328109881348L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -35,47 +37,16 @@ public class UserTable implements Serializable {
     //  权限
     private String authority;
 
-    //  创建时间
-    private LocalDateTime createdTime;
-
-    //  创建人
-    private String createdName;
-
     //  备注
     private String mark;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserTable userTable = (UserTable) o;
-        return Objects.equals(id, userTable.id) &&
-                Objects.equals(username, userTable.username) &&
-                Objects.equals(password, userTable.password) &&
-                Objects.equals(role, userTable.role) &&
-                Objects.equals(authority, userTable.authority) &&
-                Objects.equals(createdTime, userTable.createdTime) &&
-                Objects.equals(createdName, userTable.createdName) &&
-                Objects.equals(mark, userTable.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, role, authority, createdTime, createdName, mark);
-    }
-
-    public UserTable() {
-    }
-
-    public UserTable(Integer id, String username, String password, String role, String authority, LocalDateTime createdTime, String createdName, String mark) {
+    public UserTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String username, String password, String role, String authority, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
         this.authority = authority;
-        this.createdTime = createdTime;
-        this.createdName = createdName;
         this.mark = mark;
     }
 
@@ -119,22 +90,6 @@ public class UserTable implements Serializable {
         this.authority = authority;
     }
 
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public String getCreatedName() {
-        return createdName;
-    }
-
-    public void setCreatedName(String createdName) {
-        this.createdName = createdName;
-    }
-
     public String getMark() {
         return mark;
     }
@@ -143,19 +98,15 @@ public class UserTable implements Serializable {
         this.mark = mark;
     }
 
-
-
     @Override
     public String toString() {
         return "UserTable{" +
-        "id=" + id +
-        ", username=" + username +
-        ", password=" + password +
-        ", role=" + role +
-        ", authority=" + authority +
-        ", createdTime=" + createdTime +
-        ", createdName=" + createdName +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", authority='" + authority + '\'' +
+                ", mark='" + mark + '\'' +
+                "} " + super.toString();
     }
 }

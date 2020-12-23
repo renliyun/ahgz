@@ -16,9 +16,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class CategoryTable implements Serializable {
+public class CategoryTable extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 6695126616117377921L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -29,20 +30,11 @@ public class CategoryTable implements Serializable {
     // 备注
     private String mark;
 
-    //  创建人
-    private String createdName;
-
-    // 创建时间
-    private LocalDate createdTime;
-
-    // 更新人
-    private String updatedName;
-
-    //  更新时间
-    private LocalDate updateTime;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public CategoryTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String name, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
+        this.id = id;
+        this.name = name;
+        this.mark = mark;
     }
 
     public Integer getId() {
@@ -69,48 +61,12 @@ public class CategoryTable implements Serializable {
         this.mark = mark;
     }
 
-    public String getCreatedName() {
-        return createdName;
-    }
-
-    public void setCreatedName(String createdName) {
-        this.createdName = createdName;
-    }
-
-    public LocalDate getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDate createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public String getUpdatedName() {
-        return updatedName;
-    }
-
-    public void setUpdatedName(String updatedName) {
-        this.updatedName = updatedName;
-    }
-
-    public LocalDate getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDate updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
         return "CategoryTable{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", mark='" + mark + '\'' +
-                ", createdName='" + createdName + '\'' +
-                ", createdTime=" + createdTime +
-                ", updatedName='" + updatedName + '\'' +
-                ", updateTime=" + updateTime +
-                '}';
+                "} " + super.toString();
     }
 }

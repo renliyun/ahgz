@@ -3,6 +3,8 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,10 +19,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class DeliveryRecord implements Serializable {
+public class DeliveryRecord extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 5644924281653177805L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -51,57 +53,20 @@ public class DeliveryRecord implements Serializable {
     //  收货人姓名
     private String borrowName;
 
-    //  收货地址
+    //  收货人联系方式
     private String telephone;
 
     //  收货供应商
     private String supplier;
 
-    //  收获供地址
+    //  收获方地址
     private String borrowAddress;
-
-    //  系统操作者
-    private String operator;
-
-    //  系统操作时间
-    private LocalDateTime operationTime;
 
     //  备注
     private String mark;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DeliveryRecord that = (DeliveryRecord) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(partName, that.partName) &&
-                Objects.equals(partSpecification, that.partSpecification) &&
-                Objects.equals(category, that.category) &&
-                Objects.equals(figureNumber, that.figureNumber) &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(deliveryName, that.deliveryName) &&
-                Objects.equals(deliveryAddress, that.deliveryAddress) &&
-                Objects.equals(deliveryTime, that.deliveryTime) &&
-                Objects.equals(borrowName, that.borrowName) &&
-                Objects.equals(telephone, that.telephone) &&
-                Objects.equals(supplier, that.supplier) &&
-                Objects.equals(borrowAddress, that.borrowAddress) &&
-                Objects.equals(operator, that.operator) &&
-                Objects.equals(operationTime, that.operationTime) &&
-                Objects.equals(mark, that.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, partName, partSpecification, category, figureNumber, number, deliveryName, deliveryAddress, deliveryTime, borrowName, telephone, supplier, borrowAddress, operator, operationTime, mark);
-    }
-
-    public DeliveryRecord() {
-    }
-
-    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Long number, String deliveryName, String deliveryAddress, LocalDateTime deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String operator, LocalDateTime operationTime, String mark) {
+    public DeliveryRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String partSpecification, String category, String figureNumber, Long number, String deliveryName, String deliveryAddress, LocalDateTime deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -115,8 +80,6 @@ public class DeliveryRecord implements Serializable {
         this.telephone = telephone;
         this.supplier = supplier;
         this.borrowAddress = borrowAddress;
-        this.operator = operator;
-        this.operationTime = operationTime;
         this.mark = mark;
     }
 
@@ -224,22 +187,6 @@ public class DeliveryRecord implements Serializable {
         this.borrowAddress = borrowAddress;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public LocalDateTime getOperationTime() {
-        return operationTime;
-    }
-
-    public void setOperationTime(LocalDateTime operationTime) {
-        this.operationTime = operationTime;
-    }
-
     public String getMark() {
         return mark;
     }
@@ -248,26 +195,23 @@ public class DeliveryRecord implements Serializable {
         this.mark = mark;
     }
 
-
     @Override
     public String toString() {
         return "DeliveryRecord{" +
-        "id=" + id +
-        ", partName=" + partName +
-        ", partSpecification=" + partSpecification +
-        ", category=" + category +
-        ", figureNumber=" + figureNumber +
-        ", number=" + number +
-        ", deliveryName=" + deliveryName +
-        ", deliveryAddress=" + deliveryAddress +
-        ", deliveryTime=" + deliveryTime +
-        ", borrowName=" + borrowName +
-        ", telephone=" + telephone +
-        ", supplier=" + supplier +
-        ", borrowAddress=" + borrowAddress +
-        ", operator=" + operator +
-        ", operationTime=" + operationTime +
-        ", mark=" + mark +
-        "}";
+                "id=" + id +
+                ", partName='" + partName + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", category='" + category + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", number=" + number +
+                ", deliveryName='" + deliveryName + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", deliveryTime=" + deliveryTime +
+                ", borrowName='" + borrowName + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", supplier='" + supplier + '\'' +
+                ", borrowAddress='" + borrowAddress + '\'' +
+                ", mark='" + mark + '\'' +
+                "} " + super.toString();
     }
 }

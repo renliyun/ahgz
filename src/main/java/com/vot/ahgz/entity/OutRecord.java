@@ -3,6 +3,8 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,10 +18,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class OutRecord  implements Serializable{
+public class OutRecord extends BaseEntity implements Serializable{
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -2685902298254662333L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -47,47 +49,14 @@ public class OutRecord  implements Serializable{
     //  领用时间
     private LocalDateTime receiveTime;
 
-    //  操作者
-    private String operator;
-
-    //  操作时间
-    private LocalDateTime operationTime;
-
     //  供货商
     private String supplier;
 
     //  备注
     private String mark;
 
-    public OutRecord() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OutRecord outRecord = (OutRecord) o;
-        return Objects.equals(id, outRecord.id) &&
-                Objects.equals(partName, outRecord.partName) &&
-                Objects.equals(category, outRecord.category) &&
-                Objects.equals(partSpecification, outRecord.partSpecification) &&
-                Objects.equals(figureNumber, outRecord.figureNumber) &&
-                Objects.equals(material, outRecord.material) &&
-                Objects.equals(number, outRecord.number) &&
-                Objects.equals(receiveName, outRecord.receiveName) &&
-                Objects.equals(receiveTime, outRecord.receiveTime) &&
-                Objects.equals(operator, outRecord.operator) &&
-                Objects.equals(operationTime, outRecord.operationTime) &&
-                Objects.equals(supplier, outRecord.supplier) &&
-                Objects.equals(mark, outRecord.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, partName, category, partSpecification, figureNumber, material, number, receiveName, receiveTime, operator, operationTime, supplier, mark);
-    }
-
-    public OutRecord(Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String operator, LocalDateTime operationTime, String supplier, String mark) {
+    public OutRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, LocalDateTime receiveTime, String supplier, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -97,18 +66,8 @@ public class OutRecord  implements Serializable{
         this.number = number;
         this.receiveName = receiveName;
         this.receiveTime = receiveTime;
-        this.operator = operator;
-        this.operationTime = operationTime;
         this.supplier = supplier;
         this.mark = mark;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public Integer getId() {
@@ -151,6 +110,14 @@ public class OutRecord  implements Serializable{
         this.figureNumber = figureNumber;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
     public Integer getNumber() {
         return number;
     }
@@ -175,22 +142,6 @@ public class OutRecord  implements Serializable{
         this.receiveTime = receiveTime;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public LocalDateTime getOperationTime() {
-        return operationTime;
-    }
-
-    public void setOperationTime(LocalDateTime operationTime) {
-        this.operationTime = operationTime;
-    }
-
     public String getSupplier() {
         return supplier;
     }
@@ -207,7 +158,6 @@ public class OutRecord  implements Serializable{
         this.mark = mark;
     }
 
-
     @Override
     public String toString() {
         return "OutRecord{" +
@@ -220,10 +170,8 @@ public class OutRecord  implements Serializable{
                 ", number=" + number +
                 ", receiveName='" + receiveName + '\'' +
                 ", receiveTime=" + receiveTime +
-                ", operator='" + operator + '\'' +
-                ", operationTime=" + operationTime +
                 ", supplier='" + supplier + '\'' +
                 ", mark='" + mark + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

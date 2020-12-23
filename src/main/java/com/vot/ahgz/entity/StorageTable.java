@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,10 +19,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class StorageTable implements Serializable {
+public class StorageTable extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -8078691461613221658L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -49,44 +50,11 @@ public class StorageTable implements Serializable {
     //  库位
     private String location;
 
-    //  更新时间
-    private LocalDateTime updatedTime;
-
-    //  跟新人
-    private String updatedName;
-
     //  备注
     private String mark;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StorageTable that = (StorageTable) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(partName, that.partName) &&
-                Objects.equals(category, that.category) &&
-                Objects.equals(partSpecification, that.partSpecification) &&
-                Objects.equals(material, that.material) &&
-                Objects.equals(figureNumber, that.figureNumber) &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(supplier, that.supplier) &&
-                Objects.equals(location, that.location) &&
-                Objects.equals(updatedTime, that.updatedTime) &&
-                Objects.equals(updatedName, that.updatedName) &&
-                Objects.equals(mark, that.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, partName, category, partSpecification, material, figureNumber, number, supplier, location, updatedTime, updatedName, mark);
-    }
-
-    public StorageTable() {
-    }
-
-    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, LocalDateTime updatedTime, String updatedName, String mark) {
+    public StorageTable(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -96,17 +64,7 @@ public class StorageTable implements Serializable {
         this.number = number;
         this.supplier = supplier;
         this.location = location;
-        this.updatedTime = updatedTime;
-        this.updatedName = updatedName;
         this.mark = mark;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public Integer getId() {
@@ -141,6 +99,14 @@ public class StorageTable implements Serializable {
         this.partSpecification = partSpecification;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
     public String getFigureNumber() {
         return figureNumber;
     }
@@ -173,22 +139,6 @@ public class StorageTable implements Serializable {
         this.location = location;
     }
 
-    public LocalDateTime getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(LocalDateTime updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public String getUpdatedName() {
-        return updatedName;
-    }
-
-    public void setUpdatedName(String updatedName) {
-        this.updatedName = updatedName;
-    }
-
     public String getMark() {
         return mark;
     }
@@ -196,7 +146,6 @@ public class StorageTable implements Serializable {
     public void setMark(String mark) {
         this.mark = mark;
     }
-
 
     @Override
     public String toString() {
@@ -210,9 +159,7 @@ public class StorageTable implements Serializable {
                 ", number=" + number +
                 ", supplier='" + supplier + '\'' +
                 ", location='" + location + '\'' +
-                ", updatedTime=" + updatedTime +
-                ", updatedName='" + updatedName + '\'' +
                 ", mark='" + mark + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

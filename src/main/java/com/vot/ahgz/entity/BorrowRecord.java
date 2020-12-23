@@ -3,6 +3,8 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,9 +19,10 @@ import java.util.Objects;
  * @since 2020-12-08
  */
 
-public class BorrowRecord implements Serializable {
+public class BorrowRecord extends BaseEntity  implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -3683524450621282446L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -35,6 +38,7 @@ public class BorrowRecord implements Serializable {
 
     //  材料
     private String material;
+
     //  图号
     private String figureNumber;
 
@@ -47,47 +51,14 @@ public class BorrowRecord implements Serializable {
     //  借用时间
     private LocalDateTime borrowTime;
 
-    //  系统操作人
-    private String operator;
-
-    //  系统操作时间
-    private LocalDateTime operationTime;
-
     //  所属部门或者客户公司名称
     private String supplier;
 
     //  备注
     private String mark;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BorrowRecord that = (BorrowRecord) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(partName, that.partName) &&
-                Objects.equals(partSpecification, that.partSpecification) &&
-                Objects.equals(category, that.category) &&
-                Objects.equals(material, that.material) &&
-                Objects.equals(figureNumber, that.figureNumber) &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(borrowName, that.borrowName) &&
-                Objects.equals(borrowTime, that.borrowTime) &&
-                Objects.equals(operator, that.operator) &&
-                Objects.equals(operationTime, that.operationTime) &&
-                Objects.equals(supplier, that.supplier) &&
-                Objects.equals(mark, that.mark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, partName, partSpecification, category, material, figureNumber, number, borrowName, borrowTime, operator, operationTime, supplier, mark);
-    }
-
-    public BorrowRecord() {
-    }
-
-    public BorrowRecord(Integer id, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String operator, LocalDateTime operationTime, String supplier, String mark) {
+    public BorrowRecord(String createdName, LocalDate createdTime, String updatedName, LocalDate updateTime, Integer id, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String supplier, String mark) {
+        super(createdName, createdTime, updatedName, updateTime);
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -97,18 +68,8 @@ public class BorrowRecord implements Serializable {
         this.number = number;
         this.borrowName = borrowName;
         this.borrowTime = borrowTime;
-        this.operator = operator;
-        this.operationTime = operationTime;
         this.supplier = supplier;
         this.mark = mark;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public Integer getId() {
@@ -143,6 +104,14 @@ public class BorrowRecord implements Serializable {
         this.category = category;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
     public String getFigureNumber() {
         return figureNumber;
     }
@@ -175,22 +144,6 @@ public class BorrowRecord implements Serializable {
         this.borrowTime = borrowTime;
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public LocalDateTime getOperationTime() {
-        return operationTime;
-    }
-
-    public void setOperationTime(LocalDateTime operationTime) {
-        this.operationTime = operationTime;
-    }
-
     public String getSupplier() {
         return supplier;
     }
@@ -207,7 +160,6 @@ public class BorrowRecord implements Serializable {
         this.mark = mark;
     }
 
-
     @Override
     public String toString() {
         return "BorrowRecord{" +
@@ -220,10 +172,8 @@ public class BorrowRecord implements Serializable {
                 ", number=" + number +
                 ", borrowName='" + borrowName + '\'' +
                 ", borrowTime=" + borrowTime +
-                ", operator='" + operator + '\'' +
-                ", operationTime=" + operationTime +
                 ", supplier='" + supplier + '\'' +
                 ", mark='" + mark + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

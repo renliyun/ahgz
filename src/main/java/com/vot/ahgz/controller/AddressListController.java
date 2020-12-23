@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/addressList")
-@Api("地址列表的api")
+@Api("通讯录的api")
 public class AddressListController {
 
     private static final Logger logger=  LoggerFactory.getLogger(AddressListController.class);
