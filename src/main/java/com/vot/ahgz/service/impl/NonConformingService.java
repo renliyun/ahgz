@@ -29,7 +29,7 @@ public class NonConformingService implements INonConformingService {
     @Override
     public List<NonConforming> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return nonConformingMapper.selectList(queryWrapper);
     }
 

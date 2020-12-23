@@ -36,7 +36,7 @@ public class InRecordService implements IInRecordService {
     @Override
     public List<InRecord> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return inRecordMapper.selectList(queryWrapper);
     }
 

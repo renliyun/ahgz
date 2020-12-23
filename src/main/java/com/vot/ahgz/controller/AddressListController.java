@@ -37,12 +37,16 @@ public class AddressListController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取全部的地址列表")
     public CommonResult<List<AddressList>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iAddressListService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+        try{
+            CommonResult commonResult = new CommonResult();
+            commonResult.setData(iAddressListService.getAll());
+            commonResult.setCode(ResultCode.SUCCESS.getCode());
+            commonResult.setMessage("获取数据成功！");
+            return commonResult;
+        }catch (Exception e){
+            logger.error("获取地址列表错误！");
+        }
+        return null;
     }
 
     @GetMapping("/getOne")

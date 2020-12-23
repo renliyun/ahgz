@@ -62,6 +62,7 @@ public class StorageTableController {
 
     @PostMapping("/deleteByName")
     @ApiOperation(value = "删除name库存")
+    @ApiIgnore()
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iStorageTableService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");

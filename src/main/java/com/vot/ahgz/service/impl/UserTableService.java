@@ -12,47 +12,47 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author renlirong
  * @since 2020-12-08
  */
 @Service
-public class UserTableService  implements IUserTableService {
+public class UserTableService implements IUserTableService {
 
     @Autowired
     private UserTableMapper userTableMapper;
 
     public static QueryWrapper<UserTable> queryWrapper = null;
+
     @Override
     public List<UserTable> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id",1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return userTableMapper.selectList(queryWrapper);
     }
 
     @Override
     public UserTable getById(Integer id) {
-
         return userTableMapper.selectById(id);
     }
 
     @Override
     public List<UserTable> getByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",name);
+        queryWrapper.eq("username", name);
         return userTableMapper.selectList(queryWrapper);
     }
 
     @Override
     public Integer insertUserTable(UserTable userTable) {
-        queryWrapper  = new QueryWrapper<>();
-        queryWrapper.eq("username",userTable.getUsername());
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", userTable.getUsername());
         UserTable userTable1 = userTableMapper.selectOne(queryWrapper);
-        if (null == userTable1){
+        if (null == userTable1) {
             return userTableMapper.insert(userTable);
-        }else {
+        } else {
             return 0;
         }
     }
@@ -60,7 +60,7 @@ public class UserTableService  implements IUserTableService {
     @Override
     public Integer deleteByName(String name) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",name);
+        queryWrapper.eq("username", name);
         return userTableMapper.delete(queryWrapper);
     }
 

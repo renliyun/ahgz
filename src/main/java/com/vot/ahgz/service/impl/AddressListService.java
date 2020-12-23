@@ -31,7 +31,7 @@ public class AddressListService implements IAddressListService {
     @Override
     public List<AddressList> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return addressListMapper.selectList(queryWrapper);
     }
 

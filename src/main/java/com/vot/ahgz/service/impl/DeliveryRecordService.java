@@ -42,7 +42,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
     @Override
     public List<DeliveryRecord> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return deliveryRecordMapper.selectList(queryWrapper);
     }
 

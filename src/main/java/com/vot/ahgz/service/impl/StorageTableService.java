@@ -29,7 +29,7 @@ public class StorageTableService implements IStorageTableService {
     @Override
     public List<StorageTable> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return storageTableMapper.selectList(queryWrapper);
     }
 

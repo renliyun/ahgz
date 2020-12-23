@@ -51,14 +51,12 @@ public class BorrowRecordController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条借用信息")
-    @ApiIgnore()
     public CommonResult<Integer> insertAddressList(@ModelAttribute BorrowRecord borrowRecord) {
         return CommonResult.sucess(iBorrowRecordService.insertBorrowRecord(borrowRecord), "用户数据插入成功");
     }
 
     @PostMapping("/deleteByName")
     @ApiOperation(value = "删除name的所有借用记录")
-    @ApiIgnore()
     public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
         Integer result = iBorrowRecordService.deleteByName(name);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");

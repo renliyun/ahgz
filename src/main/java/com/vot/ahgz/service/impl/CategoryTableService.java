@@ -31,7 +31,7 @@ public class CategoryTableService implements ICategoryTableService {
     @Override
     public List<CategoryTable> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return categoryTableMapper.selectList(queryWrapper);
     }
 

@@ -34,7 +34,7 @@ public class OutRecordService implements IOutRecordService {
     @Override
     public List<OutRecord> getAll() {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", 1000);
+        queryWrapper.le("id", Integer.MAX_VALUE);
         return outRecordMapper.selectList(queryWrapper);
     }
 
