@@ -14,8 +14,14 @@ spring:
   web:
     resources:
       static-locations: classpath:/
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix:
+    - classpath:/templates
 
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
+
 
