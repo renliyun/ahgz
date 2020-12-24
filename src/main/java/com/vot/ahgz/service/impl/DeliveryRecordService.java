@@ -1,7 +1,6 @@
 package com.vot.ahgz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.vot.ahgz.entity.CategoryTable;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.StorageTable;
@@ -9,7 +8,8 @@ import com.vot.ahgz.mapper.DeliveryRecordMapper;
 import com.vot.ahgz.mapper.OutRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IDeliveryRecordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,8 @@ import java.util.List;
 public class DeliveryRecordService implements IDeliveryRecordService {
 
     public static QueryWrapper<DeliveryRecord> queryWrapper = null;
+
+    private static final Logger logger=  LoggerFactory.getLogger(DeliveryRecordService.class);
 
     @Autowired
     private DeliveryRecordMapper deliveryRecordMapper;
@@ -90,7 +92,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setSupplier(deliveryRecord.getSupplier());
                 // 应该是当前登陆用户  可以传递用户id过来或者从session中获取
                 outRecord.setUpdatedName(deliveryRecord.getCreatedName());
-                outRecord.setUpdateTime(new Date().toString());
+                outRecord.setupdatedTime(new Date().toString());
                 // 保存发货记录
                 Integer result = outRecordMapper.insert(outRecord);
                 if (result < 0) {

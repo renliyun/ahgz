@@ -6,7 +6,8 @@ import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.mapper.OutRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IOutRecordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ import java.util.List;
  */
 @Service
 public class OutRecordService implements IOutRecordService {
+
+    private static final Logger logger=  LoggerFactory.getLogger(OutRecordService.class);
 
     @Autowired
     private OutRecordMapper outRecordMapper;
@@ -59,12 +62,14 @@ public class OutRecordService implements IOutRecordService {
         queryWrapper.eq("figure_number", outRecord.getFigureNumber());
         StorageTable storageTable = storageTableMapper.selectOne(queryWrapper);
         if (null == storageTable || storageTable.getNumber() < outRecord.getNumber()) {
+            logger.info("库存不足！无法出库");
             return 0;
         } else {
             // 减库存 出库
             storageTable.setNumber(storageTable.getNumber() - outRecord.getNumber());
             storageTableMapper.updateById(storageTable);
             // 插入出库记录
+            logger.info("出库成功！出库数量为"+outRecord.getNumber());
             return outRecordMapper.insert(outRecord);
         }
     }

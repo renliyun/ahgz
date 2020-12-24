@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.mapper.NonConformingMapper;
 import com.vot.ahgz.service.INonConformingService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ import java.util.List;
  */
 @Service
 public class NonConformingService implements INonConformingService {
+
+    private static final Logger logger=  LoggerFactory.getLogger(NonConformingService.class);
 
     @Autowired
     private NonConformingMapper nonConformingMapper;

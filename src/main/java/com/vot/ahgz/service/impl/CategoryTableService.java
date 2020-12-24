@@ -1,12 +1,11 @@
 package com.vot.ahgz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.vot.ahgz.entity.AddressList;
 import com.vot.ahgz.entity.CategoryTable;
-import com.vot.ahgz.mapper.AddressListMapper;
 import com.vot.ahgz.mapper.CategoryTableMapper;
-import com.vot.ahgz.service.IAddressListService;
 import com.vot.ahgz.service.ICategoryTableService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,8 @@ import java.util.List;
  */
 @Service
 public class CategoryTableService implements ICategoryTableService {
+
+    private static final Logger logger=  LoggerFactory.getLogger(CategoryTableService.class);
 
     @Autowired
     private CategoryTableMapper categoryTableMapper;

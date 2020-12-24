@@ -6,7 +6,8 @@ import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.mapper.BorrowRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IBorrowRecordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ import java.util.List;
 @Service
 public class BorrowRecordService implements IBorrowRecordService {
 
+
+    private static final Logger logger=  LoggerFactory.getLogger(BorrowRecordService.class);
 
     @Autowired
     private BorrowRecordMapper borrowRecordMapper;

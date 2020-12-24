@@ -56,9 +56,9 @@ public class AddressList implements Serializable {
     private String updatedName;
 
     //  更新时间
-    private String updateTime;
+    private String updatedTime;
 
-    public AddressList(Integer id, String name, String telephone, String address, String mark, Integer sex, String company, String createdName, String createdTime, String updatedName, String updateTime) {
+    public AddressList(Integer id, String name, String telephone, String address, String mark, Integer sex, String company, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.name = name;
         this.telephone = telephone;
@@ -69,7 +69,7 @@ public class AddressList implements Serializable {
         this.createdName = createdName;
         this.createdTime = createdTime;
         this.updatedName = updatedName;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     public static long getSerialVersionUID() {
@@ -157,12 +157,12 @@ public class AddressList implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getupdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setupdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -178,7 +178,7 @@ public class AddressList implements Serializable {
                 ", createdName='" + createdName + '\'' +
                 ", createdTime=" + createdTime +
                 ", updatedName='" + updatedName + '\'' +
-                ", updateTime=" + updateTime +
+                ", updatedTime=" + updatedTime +
                 '}';
     }
 }

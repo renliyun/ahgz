@@ -53,7 +53,8 @@ public class InRecordController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条入库记录")
-    public CommonResult<Integer> insertAddressList(@ModelAttribute InRecord inRecord) {
+    public CommonResult<Integer> insertInRecord(@ModelAttribute InRecord inRecord) {
+        System.out.println("请求参数=================="+inRecord);
         return CommonResult.sucess(iInRecordService.insertInRecord(inRecord), "用户数据插入成功");
     }
 

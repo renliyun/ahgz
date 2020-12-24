@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 /**
@@ -54,16 +52,16 @@ public class InRecord  implements Serializable {
     //  创建人
     private String createdName;
 
-    // 创建时间
+    // 创建时间  createdTime
     private String createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updateTime;
+    private String updatedTime;
 
-    public InRecord(Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
+    public InRecord(Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -77,7 +75,7 @@ public class InRecord  implements Serializable {
         this.createdName = createdName;
         this.createdTime = createdTime;
         this.updatedName = updatedName;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     public static long getSerialVersionUID() {
@@ -188,12 +186,12 @@ public class InRecord  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -212,7 +210,7 @@ public class InRecord  implements Serializable {
                 ", createdName='" + createdName + '\'' +
                 ", createdTime=" + createdTime +
                 ", updatedName='" + updatedName + '\'' +
-                ", updateTime=" + updateTime +
+                ", updatedTime=" + updatedTime +
                 '}';
     }
 }

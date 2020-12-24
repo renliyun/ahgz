@@ -76,9 +76,9 @@ public class DeliveryRecord  implements Serializable {
     private String updatedName;
 
     //  更新时间
-    private String updateTime;
+    private String updatedTime;
 
-    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
+    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.partName = partName;
         this.partSpecification = partSpecification;
@@ -96,7 +96,7 @@ public class DeliveryRecord  implements Serializable {
         this.createdName = createdName;
         this.createdTime = createdTime;
         this.updatedName = updatedName;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     public static long getSerialVersionUID() {
@@ -239,12 +239,12 @@ public class DeliveryRecord  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getupdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setupdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -267,7 +267,7 @@ public class DeliveryRecord  implements Serializable {
                 ", createdName='" + createdName + '\'' +
                 ", createdTime=" + createdTime +
                 ", updatedName='" + updatedName + '\'' +
-                ", updateTime=" + updateTime +
+                ", updatedTime=" + updatedTime +
                 '}';
     }
 }

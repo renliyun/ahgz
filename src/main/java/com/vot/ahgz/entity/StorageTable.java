@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -57,18 +56,18 @@ public class StorageTable  implements Serializable {
     private String createdName;
 
     // 创建时间
-    private String createdTime;
+    private Date createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updateTime;
+    private Date updatedTime;
 
     public StorageTable() {
     }
 
-    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, String createdTime, String updatedName, String updateTime) {
+    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
         this.id = id;
         this.partName = partName;
         this.category = category;
@@ -82,7 +81,7 @@ public class StorageTable  implements Serializable {
         this.createdName = createdName;
         this.createdTime = createdTime;
         this.updatedName = updatedName;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     public static long getSerialVersionUID() {
@@ -177,11 +176,11 @@ public class StorageTable  implements Serializable {
         this.createdName = createdName;
     }
 
-    public String getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -193,12 +192,12 @@ public class StorageTable  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -217,7 +216,7 @@ public class StorageTable  implements Serializable {
                 ", createdName='" + createdName + '\'' +
                 ", createdTime=" + createdTime +
                 ", updatedName='" + updatedName + '\'' +
-                ", updateTime=" + updateTime +
+                ", updatedTime=" + updatedTime +
                 '}';
     }
 }

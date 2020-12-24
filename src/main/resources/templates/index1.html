@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆界面</title>
+    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/iconfont.css" >
+
+
+</head>
+
+<body>
+<div id="login-box">
+    <form id="form1">
+        <h1>登陆</h1>
+        <div class="input-box">
+            <i class="iconfont">&#xe609;</i>
+            <input type="text" id="username" placeholder="用户名" />
+        </div>
+        <div class="input-box">
+            <i class="iconfont">&#xe605;</i>
+            <input type="password" id="password" placeholder="密码" />
+        </div>
+        <button id="btn">登陆</button>
+    </form>
+</div>
+</body>
+
+<style>
+    body{
+        background-image: url(../static/picture/background.jpg);
+        background-repeat: repeat;
+        background-size:100%;
+        background-position: 0px -50px;
+    }
+    #login-box{
+        background-color: #00000068;
+        border-radius: 13px;
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 80px;
+        width: 350px;
+        height: 400px;
+    }
+
+    #login-box h1{
+        padding-top: 60px;
+        color: #ffffff;
+    }
+
+    #login-box .input-box{
+        margin-top: 30px;
+    }
+    #login-box .input-box input{
+        border: none;
+        background: none;
+        border-bottom: #FFFFFF 2px solid;
+        padding: 5px 10px;
+        outline: none;
+        color: #FFFFFF;
+    }
+
+    #login-box button{
+        line-height:30px;
+        margin-top: 30px;
+        width: 130px;
+        height: 30px;
+        border-radius:13px ;
+        outline: none;
+        border: none;
+        background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+        color: #FFFFFF;
+    }
+
+    #login-box button:hover{
+        background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    }
+    #login-box .input-box i{
+        color: #FFFFFF;
+    }
+</style>
+
+<script src="webjars/bootstrap/js/bootstrap.js" ></script>
+<script src="webjars/jquery/jquery.js" ></script>
+<script>
+
+    $(document).ready(function(){
+        $("#btn").click(function(){
+            var username=$("#username").val();
+            var password=$("#password").val();
+
+            var error="";
+            if (username=="") {
+                error+="用户名不能为空！";
+                error+="\n";
+            }else if (password==""){
+                error+="密码不能为空！";
+                error+="\n";
+            }
+            if (error!="") {
+                alert(error);
+            } else {
+                $.ajax({
+                    type:'GET',
+                    dataType:'json',
+                    url:'http://localhost:8080/addressList/add',
+                    contentType:'application/json;charset=UTF-8',
+                    data:JSON.stringify({"username":username,"password":password}),
+                    success:function(data1){//返回结果
+                        if(data1){
+                            window.location.href="success.html?userName="+username;
+                            //data.username
+                        }
+                        else {
+                            //debugger;
+                            alert("用户名或密码错误");
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+
+</html>

@@ -6,12 +6,13 @@ import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.mapper.InRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IInRecordService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,8 @@ import java.util.List;
  */
 @Service
 public class InRecordService implements IInRecordService {
+
+    private static final Logger logger=  LoggerFactory.getLogger(InRecordService.class);
 
     @Autowired
     private InRecordMapper inRecordMapper;
@@ -68,7 +71,7 @@ public class InRecordService implements IInRecordService {
                 storageTable1.setNumber(inRecord.getQuantity());
                 storageTable1.setCategory(inRecord.getCategory());
                 storageTable1.setCreatedName(inRecord.getCreatedName());
-                storageTable1.setCreatedTime(new Date().toString());
+                storageTable1.setCreatedTime(new Date(System.currentTimeMillis()));
                 storageTable1.setFigureNumber(null == inRecord.getFigureNumber() ? null : inRecord.getFigureNumber());
                 storageTable1.setLocation(inRecord.getLocation());
                 storageTable1.setMark(null == inRecord.getMark() ? null : inRecord.getMark());
@@ -77,16 +80,20 @@ public class InRecordService implements IInRecordService {
                 storageTable1.setPartSpecification(null == inRecord.getPartSpecification() ? null : inRecord.getPartSpecification());
                 storageTable1.setSupplier(null == inRecord.getSupplier() ? null : inRecord.getSupplier());
                 storageTable1.setUpdatedName(inRecord.getUpdatedName());
-                storageTable1.setUpdateTime(new Date().toString());
+                storageTable1.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.insert(storageTable1);
+                logger.info("保存入库成功！",storageTable1);
             } else {
                 // 在原来的基础上增加库存
                 storageTable.setNumber(storageTable.getNumber() + inRecord.getQuantity());
+                storageTable.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.updateById(storageTable);
+                logger.info("更新库存成功",storageTable);
             }
+            inRecord.setUpdatedTime(new Date(System.currentTimeMillis()).toString());
             return inRecordMapper.insert(inRecord);
         } catch (Exception e) {
-            System.out.println("入库失败！");
+            logger.error("入库存在位置异常！");
             e.printStackTrace();
         }
         return 0;
