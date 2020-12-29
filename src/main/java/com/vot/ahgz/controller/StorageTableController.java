@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -34,14 +35,20 @@ public class StorageTableController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的库存信息")
-    public CommonResult<List<StorageTable>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iStorageTableService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public ModelAndView getAll() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("storeageList",iStorageTableService.getAll());
+        modelAndView.setViewName("index.html");
+        return modelAndView;
+//        System.out.println("进入controller层了！");
+//        CommonResult commonResult = new CommonResult();
+//        commonResult.setData(iStorageTableService.getAll());
+//        commonResult.setCode(ResultCode.SUCCESS.getCode());
+//        commonResult.setMessage("获取数据成功！");
+//        return commonResult;
     }
+
+
 
 
     @GetMapping("/getOneByName")

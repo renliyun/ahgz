@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>登陆界面</title>
@@ -138,7 +139,7 @@
 
                 </div>
             </div>
-            <div id="inStorage">
+            <div id="inStorage1">
                 <h1>
                     入库
                 </h1>
@@ -190,7 +191,7 @@
                             <div class="col-lg-6  col-md-offset-3">
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-addon" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                                    <select id="category" >
+                                    <select id="category2" >
                                         <option value="1">外购件</option>
                                         <option value="2">镜头</option>
                                         <option value="3">镜片</option>
@@ -251,7 +252,7 @@
 
 
 <!--            出库记录-->
-            <div id="inRecord">
+            <div id="inRecord1">
                 <h1>
                     出库记录
                 </h1>
@@ -551,8 +552,8 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    <table class="table table-hover">
+                <div class="storage">
+                    <table id="t2" class="table table-hover">
                         <tr>
                             <th>序号</th>
                             <th>零部件名称</th>
@@ -567,76 +568,22 @@
                             <th>创建时间</th>
                             <th>备注</th>
                         </tr>
-                        <tr>
+                        <tr th:each="storeage:${storeageList}">
                             <th>1</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
+                            <th th:text="${storeage.partName}">25mm/1.0消热差镜头</th>
+                            <th th:text="${storeage.partSpecification}">325/1.0</th>
+                            <th th:text="${storeage.figureNumber}">XDJ-2043</th>
+                            <th th:text="${storeage.material}">AL27</th>
+                            <th th:text="${storeage.supplier}">安徽光智</th>
+                            <th th:text="${storeage.category}">镜头</th>
+                            <th th:text="${storeage.number}">1</th>
+                            <th th:text="${storeage.location}">G2</th>
+                            <th th:text="${storeage.createdName}">任利荣</th>
+                            <th th:text="${storeage.createdTime}">2012-12-13</th>
+                            <th th:text="${storeage.mark}">备注</th>
                         </tr>
-                        <tr>
-                            <th>2</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
+
+
 
                     </table>
 
@@ -662,7 +609,7 @@
         text-align: center;
     }
 
-     #storage {
+     .storage {
         text-align: center;
     }
 
@@ -682,6 +629,10 @@
         height: 45px;
         border: chartreuse;
         border-radius: 2px;
+    }
+
+    table{
+        border: solid 3px  chartreuse;
     }
 </style>
 
