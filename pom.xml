@@ -83,31 +83,14 @@
         </dependency>
         <!--   ===================================     -->
 
-        <!--   ==========整合bootstrap和jquery===========     -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.7</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.32</version>
-        </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.4.1</version>
         </dependency>
+
+
+
 
         <!--   ==========整合日志===========     -->
         <dependency>

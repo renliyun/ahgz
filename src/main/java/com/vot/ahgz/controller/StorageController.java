@@ -38,7 +38,7 @@ public class StorageController {
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("storeageList",iStorageTableService.getAll());
-        modelAndView.setViewName("index.html");
+        modelAndView.setViewName("storage");
         return modelAndView;
 //        System.out.println("进入controller层了！");
 //        CommonResult commonResult = new CommonResult();
