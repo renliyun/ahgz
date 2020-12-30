@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/inRecord")
 @Api("入库信息")
-public class InRecordController {
+public class InController {
 
     @Autowired
     private IInRecordService iInRecordService;

@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/deliveryRecord")
 @Api(value = "发货表格")
-public class DeliveryRecordController {
+public class DeliveryController {
 
     @Autowired
     private IDeliveryRecordService iDeliveryRecordService;

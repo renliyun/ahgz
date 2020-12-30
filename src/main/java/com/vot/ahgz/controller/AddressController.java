@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
 import java.util.List;
 
 /**
@@ -27,9 +25,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/addressList")
 @Api("通讯录的api")
-public class AddressListController {
+public class AddressController {
 
-    private static final Logger logger=  LoggerFactory.getLogger(AddressListController.class);
+    private static final Logger logger=  LoggerFactory.getLogger(AddressController.class);
 
     @Autowired
     private IAddressListService iAddressListService;

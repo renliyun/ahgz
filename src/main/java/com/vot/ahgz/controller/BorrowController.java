@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/borrowRecord")
 @Api("借用信息表api")
-public class BorrowRecordController {
+public class BorrowController {
 
     @Autowired
     private IBorrowRecordService iBorrowRecordService;

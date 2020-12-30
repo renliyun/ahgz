@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/storageTable")
 @Api("库存列表")
-public class StorageTableController {
+public class StorageController {
 
     @Autowired
     private IStorageTableService iStorageTableService;

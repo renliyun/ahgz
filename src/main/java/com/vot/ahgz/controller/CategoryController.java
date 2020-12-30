@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/categoryTable")
 @Api(value = "类别表格")
-public class CategoryTableController {
+public class CategoryController {
 
     @Autowired
     private ICategoryTableService iCategoryTableService;

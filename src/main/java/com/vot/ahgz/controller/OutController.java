@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/outRecord")
 @Api("出库记录")
-public class OutRecordController {
+public class OutController {
 
     @Autowired
     private IOutRecordService iOutRecordService;

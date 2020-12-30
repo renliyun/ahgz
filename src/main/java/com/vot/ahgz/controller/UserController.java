@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/userTable")
 @Api("用户信息")
-public class UserTableController {
+public class UserController {
 
     @Autowired
     private IUserTableService iUserTableService;
