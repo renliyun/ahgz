@@ -12,7 +12,7 @@
 <body>
 
 
-<div id="body1">
+<div id="body1" class="container">
 
 
     <!--头部-->
@@ -137,7 +137,7 @@
                     <th>备注</th>
                     <th>操作</th>
                 </tr>
-                <tr th:each="storeage,storeageStatus :${storeageList}">
+                <tr th:each="storeage,storeageStatus :${page.pageData}">
                     <td th:text="${storeageStatus.index + 1}"></td>
                     <td th:text="${storeage.figureNumber}"></td>
                     <td th:text="${storeage.partName}"></td>
@@ -157,6 +157,26 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="page-normal">
+                <span class="page-prev">&lt;</span>
+                <!-- 数字1 代表当前页面-->
+                <span class="page-current">1</span>
+                <button href="#">2</button>
+                <button href="#">3</button>
+                <button href="#">4</button>
+                <button href="#">5</button>
+                <button href="#">6</button>
+                <button href="#">7</button>
+                <button href="#">8</button>
+                <button href="#">9</button>
+                ……
+                <button href="#">199</button>
+                <button href="#">200</button>
+                <button href="#">&gt;</button>
+                <span>共<span th:text="${page.pageTotal}"></span>条数据，现在第<span th:text="${page.pageNum}"></span>页。</span>
+            </div>
+
 
         </div>
     </div>
@@ -187,8 +207,46 @@
         height: 45px;
         border: chartreuse;
         border-radius: 2px;
-
     }
+
+    /*设置 a 标签的css样式*/
+    .page-normal button{
+        border: 1px solid #ff6500;
+        padding: 5px 7px;
+        color: #ff6500;
+        margin-left: 10px;/*设置标签 a 之间的间隔*/
+        text-decoration: none;/*去除页码数字下面的下划线*/
+    }
+    /*设置鼠标经过时 a 标签的css样式*/
+    .page-normal button:hover{
+        background-color: #120801;
+    }
+
+    /*设置整个div的css样式,该样式主要用于设置网页内的省略号 …… 的样式，并且同时设置内容居中显示*/
+    .page-normal{
+        color: #3070b5;
+        text-align: right;
+        margin-right: 20px;
+    }
+
+    /*设置当前页面的css样式*/
+    .page-normal .page-current{
+        color: #ffffff;
+        background-color: #ff6500;
+    }
+
+    /*设置左单括号 < 的css样式*/
+    .page-normal .page-prev{
+        color: #ffe3c6;
+    }
+
+    /*进行代码优化，将不同css样式中共有的属性放在一起，有助于提高运行效率*/
+    .page-normal button, .page-normal button:hover, .page-normal .page-prev, .page-normal .page-current{
+        border: 1px solid #e3dedb;
+        padding: 5px 7px;
+    }
+
+
 
 </style>
 

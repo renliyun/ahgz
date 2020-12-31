@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -43,6 +44,13 @@ public class InController {
         return commonResult;
     }
 
+    @GetMapping("/in")
+    @ApiOperation(value = "请求空页面")
+    public ModelAndView getIn(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("inRecord");
+        return modelAndView;
+    }
 
     @GetMapping("/getOneByName")
     @ApiOperation(value = "获取零件name的所有入库记录")

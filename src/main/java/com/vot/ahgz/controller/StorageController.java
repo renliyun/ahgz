@@ -4,6 +4,7 @@ package com.vot.ahgz.controller;
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.OutRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IStorageTableService;
 import io.swagger.annotations.Api;
@@ -37,7 +38,13 @@ public class StorageController {
     @ApiOperation(value = "获取所有的库存信息")
     public ModelAndView getAll() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("storeageList",iStorageTableService.getAll());
+        Page page = new Page();
+        List<StorageTable> storageTables = iStorageTableService.getAll();
+        page.setPageNum(storageTables.size()/20+1);
+        page.setPageTotal(storageTables.size());
+        page.setPageData(storageTables);
+        modelAndView.addObject("page",page);
+        System.out.println(page);
         modelAndView.setViewName("storage");
         return modelAndView;
 //        System.out.println("进入controller层了！");
