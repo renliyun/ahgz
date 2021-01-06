@@ -9,17 +9,18 @@ import com.vot.ahgz.service.IInRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
+
 
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -46,9 +47,11 @@ public class InController {
 
     @GetMapping("/in")
     @ApiOperation(value = "请求空页面")
-    public ModelAndView getIn(){
+    public ModelAndView getIn(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("inRecord");
+        modelAndView.addObject("inRecord", new InRecord());
+        // model.addAttribute();
         return modelAndView;
     }
 
@@ -62,7 +65,8 @@ public class InController {
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条入库记录")
     public CommonResult<Integer> insertInRecord(@ModelAttribute InRecord inRecord) {
-        System.out.println("请求参数=================="+inRecord);
+        System.out.println("请求参数==================" + inRecord);
+
         return CommonResult.sucess(iInRecordService.insertInRecord(inRecord), "用户数据插入成功");
     }
 
@@ -77,7 +81,7 @@ public class InController {
     @ApiOperation(value = "更新零部件的入库记录")
     public CommonResult<Integer> updateByName(@ModelAttribute InRecord inRecord) {
         iInRecordService.updateByName(inRecord);
-        return CommonResult.sucess(iInRecordService.updateByName(inRecord),"用户数据修改成功");
+        return CommonResult.sucess(iInRecordService.updateByName(inRecord), "用户数据修改成功");
     }
 }
 

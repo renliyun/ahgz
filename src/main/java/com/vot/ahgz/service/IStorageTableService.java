@@ -18,7 +18,7 @@ public interface IStorageTableService  {
 
 
     //获取全部数据
-    List<StorageTable> getAll();
+    List<StorageTable> getAll(StorageTable storageTable);
 
     //  根据id获取地址
     StorageTable getById(Integer id);

@@ -78,6 +78,9 @@ public class InRecord  implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public InRecord() {
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

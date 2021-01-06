@@ -30,9 +30,36 @@ public class StorageTableService implements IStorageTableService {
     public static QueryWrapper<StorageTable> queryWrapper = null;
 
     @Override
-    public List<StorageTable> getAll() {
+    public List<StorageTable> getAll(StorageTable storageTable) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", Integer.MAX_VALUE);
+
+        if (null != storageTable){
+            //将查询条件放入
+          if ("" !=  storageTable.getPartName()){
+              System.out.println("========================================"+storageTable.getPartName());
+              queryWrapper.eq("part_name",storageTable.getPartName());
+          }
+          if ("" != storageTable.getFigureNumber()){
+              queryWrapper.eq("figure_number",storageTable.getFigureNumber());
+          }
+          if ("" != storageTable.getSupplier()){
+              queryWrapper.eq("supplier",storageTable.getSupplier());
+          }
+          if ("" != storageTable.getLocation()){
+              queryWrapper.eq("location",storageTable.getLocation());
+          }
+          if ("" != storageTable.getCreatedName()){
+              queryWrapper.eq("created_name",storageTable.getCreatedName());
+          }
+          if ("" != storageTable.getPartSpecification()){
+              queryWrapper.eq("part_specification",storageTable.getPartSpecification());
+          }
+          if ("" != storageTable.getCategory()){
+              queryWrapper.eq("category",storageTable.getCategory());
+          }
+        }else {
+            queryWrapper.le("id", Integer.MAX_VALUE);
+        }
         return storageTableMapper.selectList(queryWrapper);
     }
 

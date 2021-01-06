@@ -36,14 +36,15 @@ public class StorageController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的库存信息")
-    public ModelAndView getAll() {
+    public ModelAndView getAll(@ModelAttribute StorageTable storageTable) {
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
-        List<StorageTable> storageTables = iStorageTableService.getAll();
+        List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
         page.setPageNum(storageTables.size()/20+1);
         page.setPageTotal(storageTables.size());
         page.setPageData(storageTables);
         modelAndView.addObject("page",page);
+        modelAndView.addObject("storage",new StorageTable());
         System.out.println(page);
         modelAndView.setViewName("storage");
         return modelAndView;
