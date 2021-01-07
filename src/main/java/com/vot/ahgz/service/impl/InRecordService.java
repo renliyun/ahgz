@@ -62,7 +62,8 @@ public class InRecordService implements IInRecordService {
         try {
             // 判断库存是否有原始物料记录
             QueryWrapper<StorageTable> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper1.eq("part_name", inRecord.getPartName());
+            //需要确认数据的唯一性 图号+零部件名称是唯一还是图号是唯一
+//            queryWrapper1.eq("part_name", inRecord.getPartName());
             queryWrapper1.eq("figure_number", inRecord.getFigureNumber());
             StorageTable storageTable = storageTableMapper.selectOne(queryWrapper1);
             if (null == storageTable) {
@@ -81,6 +82,7 @@ public class InRecordService implements IInRecordService {
                 storageTable1.setSupplier(null == inRecord.getSupplier() ? null : inRecord.getSupplier());
                 storageTable1.setUpdatedName(inRecord.getUpdatedName());
                 storageTable1.setUpdatedTime(new Date(System.currentTimeMillis()));
+                storageTable1.setCreatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.insert(storageTable1);
                 logger.info("保存入库成功！",storageTable1);
             } else {

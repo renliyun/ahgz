@@ -64,10 +64,16 @@ public class InController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条入库记录")
-    public CommonResult<Integer> insertInRecord(@ModelAttribute InRecord inRecord) {
-        System.out.println("请求参数==================" + inRecord);
-
-        return CommonResult.sucess(iInRecordService.insertInRecord(inRecord), "用户数据插入成功");
+    public ModelAndView insertInRecord(@ModelAttribute InRecord inRecord) {
+        Integer result = iInRecordService.insertInRecord(inRecord);
+        ModelAndView modelAndView = new ModelAndView();
+        if (result > 0) {
+            modelAndView.setViewName("sucess");
+            return modelAndView;
+        } else {
+            modelAndView.setViewName("error");
+            return modelAndView;
+        }
     }
 
     @PostMapping("/deleteByName")

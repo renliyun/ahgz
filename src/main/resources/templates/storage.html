@@ -20,11 +20,11 @@
         <div>
             <!-- 导航条右侧内容 -->
 
-            <a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;入库</a>
+            <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>&nbsp;入库</a>
 
             <a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;出库</a>
 
-            <a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
+            <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
 
             <a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
 
@@ -78,8 +78,9 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                            <select id="category1" th:field="*{category}">
+<!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
+                            类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}">
+                                <option value=""></option>
                                 <option value="外购件">外购件</option>
                                 <option value="镜头">镜头</option>
                                 <option value="镜片">镜片</option>
@@ -205,7 +206,7 @@
 
         width: 251px;
         height: 45px;
-        border: chartreuse;
+        border: 2px;
         border-radius: 2px;
     }
 
@@ -256,10 +257,12 @@
     function update(id)
     {
         alert(id+"  修改");
+        // 跳转页面进行修改和保存
     };
     function del(id)
     {
         alert(id+"  删除");
+    //    删除，然后重新刷新页面
     };
 
 
