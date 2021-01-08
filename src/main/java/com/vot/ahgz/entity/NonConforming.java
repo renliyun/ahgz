@@ -26,6 +26,9 @@ public class NonConforming  implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    //  物料号
+    private Integer matnr;
+
     //  零部件名称
     private String partName;
 
@@ -62,8 +65,9 @@ public class NonConforming  implements Serializable {
     //  更新时间
     private String updatedTime;
 
-    public NonConforming(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Long quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+    public NonConforming(Integer id, Integer matnr, String partName, String category, String partSpecification, String material, String figureNumber, Long quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
+        this.matnr = matnr;
         this.partName = partName;
         this.category = category;
         this.partSpecification = partSpecification;
@@ -80,6 +84,22 @@ public class NonConforming  implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Integer getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(Integer matnr) {
+        this.matnr = matnr;
+    }
+
+    public String getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public Integer getId() {

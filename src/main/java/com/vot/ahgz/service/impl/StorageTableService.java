@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
 @Service
 public class StorageTableService implements IStorageTableService {
 
-    private static final Logger logger=  LoggerFactory.getLogger(StorageTableService.class);
+    private static final Logger logger = LoggerFactory.getLogger(StorageTableService.class);
 
     @Autowired
     private StorageTableMapper storageTableMapper;
@@ -32,32 +33,36 @@ public class StorageTableService implements IStorageTableService {
     @Override
     public List<StorageTable> getAll(StorageTable storageTable) {
         queryWrapper = new QueryWrapper<>();
-
-        if (null != storageTable){
+        System.out.println("请求数据===================" + storageTable);
+        if (null != storageTable) {
             //将查询条件放入
-          if ("" !=  storageTable.getPartName()){
-              System.out.println("========================================"+storageTable.getPartName());
-              queryWrapper.eq("part_name",storageTable.getPartName());
-          }
-          if ("" != storageTable.getFigureNumber()){
-              queryWrapper.eq("figure_number",storageTable.getFigureNumber());
-          }
-          if ("" != storageTable.getSupplier()){
-              queryWrapper.eq("supplier",storageTable.getSupplier());
-          }
-          if ("" != storageTable.getLocation()){
-              queryWrapper.eq("location",storageTable.getLocation());
-          }
-          if ("" != storageTable.getCreatedName()){
-              queryWrapper.eq("created_name",storageTable.getCreatedName());
-          }
-          if ("" != storageTable.getPartSpecification()){
-              queryWrapper.eq("part_specification",storageTable.getPartSpecification());
-          }
-          if ("" != storageTable.getCategory()){
-              queryWrapper.eq("category",storageTable.getCategory());
-          }
-        }else {
+            if (!StringUtils.isEmpty(storageTable.getPartName())) {
+                System.out.println("========================================" + storageTable.getPartName());
+                queryWrapper.eq("part_name", storageTable.getPartName());
+            }
+            if (null != storageTable.getMatnr()) {
+                System.out.println("========================================" + storageTable.getPartName());
+                queryWrapper.eq("matnr", storageTable.getMatnr());
+            }
+            if (!StringUtils.isEmpty(storageTable.getFigureNumber())) {
+                queryWrapper.eq("figure_number", storageTable.getFigureNumber());
+            }
+            if (!StringUtils.isEmpty(storageTable.getSupplier())) {
+                queryWrapper.eq("supplier", storageTable.getSupplier());
+            }
+            if (!StringUtils.isEmpty(storageTable.getLocation())) {
+                queryWrapper.eq("location", storageTable.getLocation());
+            }
+            if (!StringUtils.isEmpty(storageTable.getCreatedName())) {
+                queryWrapper.eq("created_name", storageTable.getCreatedName());
+            }
+            if (!StringUtils.isEmpty(storageTable.getPartSpecification())) {
+                queryWrapper.eq("part_specification", storageTable.getPartSpecification());
+            }
+            if (!StringUtils.isEmpty(storageTable.getCategory())) {
+                queryWrapper.eq("category", storageTable.getCategory());
+            }
+        } else {
             queryWrapper.le("id", Integer.MAX_VALUE);
         }
         return storageTableMapper.selectList(queryWrapper);

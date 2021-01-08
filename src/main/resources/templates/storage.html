@@ -39,20 +39,27 @@
             库存查询
         </h1>
         <div>
-            <form action="#" th:action="@{/storageTable/getAll}" th:object="${storage}"  method="get" >
+            <form action="#" th:action="@{/storageTable/getAll}" th:object="${storage}" method="get">
                 <!--                        -->
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
+                            <span class="input-group-addon">物料号</span>
+                            <input type="text" th:field="*{matnr}" class="form-control" placeholder="物料号"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
                             <span class="input-group-addon">零部件名称</span>
-                            <input type="text" th:field="*{partName}"  class="form-control" placeholder="零部件名称"
+                            <input type="text" th:field="*{partName}" class="form-control" placeholder="零部件名称"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">零部件规格</span>
-                            <input type="text"  th:field="*{partSpecification}"  class="form-control" placeholder="零部件规格"
+                            <input type="text" th:field="*{partSpecification}" class="form-control" placeholder="零部件规格"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
@@ -64,58 +71,53 @@
                         </div>
                     </div><!-- /.col-lg-6 -->
 
-                    <div class="col-lg-3">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{supplier}" class="form-control" placeholder="供货商"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-
-                </div>
-
-
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="input-group input-group-lg">
-<!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
-                            类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{supplier}" class="form-control" placeholder="供货商"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
+                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}">
                                 <option value=""></option>
                                 <option value="外购件">外购件</option>
                                 <option value="镜头">镜头</option>
                                 <option value="镜片">镜片</option>
                                 <option value="镜头机械部分">镜头机械部分</option>
                             </select>
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{location}" class="form-control" placeholder="库位"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{createdName}" class="form-control" value="王美林"
+                                       placeholder="创建人"
+                                       aria-describedby="sizing-addon1">
+                            </div>
                         </div><!-- /.col-lg-6 -->
                     </div>
 
-                    <div class="col-lg-3">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                            <input type="text"  th:field="*{location}" class="form-control" placeholder="库位"
-                                   aria-describedby="sizing-addon1">
-                        </div>
 
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{createdName}" class="form-control" value="王美林" placeholder="创建人"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="input-group input-group-lg">-->
-<!--                            <span class="input-group-addon">&nbsp&nbsp创建时间&nbsp</span>-->
-<!--                            <input type="date" th:field="*{createdTime}" class="form-control" placeholder="创建时间"-->
-<!--                                   aria-describedby="sizing-addon1">-->
-<!--                        </div>-->
-<!--                    </div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
+                    <!--                    <div class="col-lg-3">-->
+                    <!--                        <div class="input-group input-group-lg">-->
+                    <!--                            <span class="input-group-addon">&nbsp&nbsp创建时间&nbsp</span>-->
+                    <!--                            <input type="date" th:field="*{createdTime}" class="form-control" placeholder="创建时间"-->
+                    <!--                                   aria-describedby="sizing-addon1">-->
+                    <!--                        </div>-->
+                    <!--                    </div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
                 </div>
-
-
                 <div class="row">
                     <button type="submit" value="Submit" class="btn btn-info">查询</button>
                 </div>
@@ -125,6 +127,7 @@
             <table id="t2" class="table table-hover">
                 <tr>
                     <th>序号</th>
+                    <th>物料号</th>
                     <th>图号</th>
                     <th>零部件规格</th>
                     <th>零部件名称</th>
@@ -140,10 +143,10 @@
                 </tr>
                 <tr th:each="storeage,storeageStatus :${page.pageData}">
                     <td th:text="${storeageStatus.index + 1}"></td>
+                    <td th:text="${storeage.matnr}"></td>
                     <td th:text="${storeage.figureNumber}"></td>
-                    <td th:text="${storeage.partName}"></td>
                     <td th:text="${storeage.partSpecification}"></td>
-
+                    <td th:text="${storeage.partName}"></td>
                     <td th:text="${storeage.material}"></td>
                     <td th:text="${storeage.supplier}"></td>
                     <td th:text="${storeage.category}"></td>
@@ -153,8 +156,11 @@
                     <td th:text="${storeage.createdTime}"></td>
                     <td th:text="${storeage.mark}"></td>  <!-- 需要传递id -->
                     <td>
-                        <button class="btn-default" th:onclick="'javascript:update('+${storeage.id}+')' ">修改</button>
-                        <button class="btn-danger" th:onclick="'javascript:del('+${storeage.id}+')' ">删除</button>
+                        <button class="btn-default" type="submit" th:onclick="'javascript:update('+${storeage.id}+')' ">
+                            修改
+                        </button>
+                        <button class="btn-danger" type="submit" th:onclick="'javascript:del('+${storeage.id}+')' ">删除
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -211,42 +217,42 @@
     }
 
     /*设置 a 标签的css样式*/
-    .page-normal button{
+    .page-normal button {
         border: 1px solid #ff6500;
         padding: 5px 7px;
         color: #ff6500;
-        margin-left: 10px;/*设置标签 a 之间的间隔*/
-        text-decoration: none;/*去除页码数字下面的下划线*/
+        margin-left: 10px; /*设置标签 a 之间的间隔*/
+        text-decoration: none; /*去除页码数字下面的下划线*/
     }
+
     /*设置鼠标经过时 a 标签的css样式*/
-    .page-normal button:hover{
+    .page-normal button:hover {
         background-color: #120801;
     }
 
     /*设置整个div的css样式,该样式主要用于设置网页内的省略号 …… 的样式，并且同时设置内容居中显示*/
-    .page-normal{
+    .page-normal {
         color: #3070b5;
         text-align: right;
         margin-right: 20px;
     }
 
     /*设置当前页面的css样式*/
-    .page-normal .page-current{
+    .page-normal .page-current {
         color: #ffffff;
         background-color: #ff6500;
     }
 
     /*设置左单括号 < 的css样式*/
-    .page-normal .page-prev{
+    .page-normal .page-prev {
         color: #ffe3c6;
     }
 
     /*进行代码优化，将不同css样式中共有的属性放在一起，有助于提高运行效率*/
-    .page-normal button, .page-normal button:hover, .page-normal .page-prev, .page-normal .page-current{
+    .page-normal button, .page-normal button:hover, .page-normal .page-prev, .page-normal .page-current {
         border: 1px solid #e3dedb;
         padding: 5px 7px;
     }
-
 
 
 </style>
@@ -254,15 +260,31 @@
 
 <script>
 
-    function update(id)
-    {
-        alert(id+"  修改");
+    function update(id) {
+        alert(id + "  修改");
         // 跳转页面进行修改和保存
+
+
     };
-    function del(id)
-    {
-        alert(id+"  删除");
-    //    删除，然后重新刷新页面
+
+    function del(id) {
+        $.ajax({
+            url: "/storageTable/deleteByd",
+            type: "get",
+            data: {
+                id: id,
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.data == 1) {
+                    alert("数据删除成功！");
+                    window.location.reload();
+                } else {
+                    alert("数据删除失败！")
+                }
+            }
+        })
+
     };
 
 

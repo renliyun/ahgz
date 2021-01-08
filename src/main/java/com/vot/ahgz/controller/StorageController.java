@@ -37,6 +37,7 @@ public class StorageController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的库存信息")
     public ModelAndView getAll(@ModelAttribute StorageTable storageTable) {
+        System.out.println("请求数据==================="+storageTable);
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
         List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
@@ -75,11 +76,11 @@ public class StorageController {
         return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
     }
 
-    @PostMapping("/deleteByName")
+    @GetMapping("/deleteByd")
     @ApiOperation(value = "删除name库存")
     @ApiIgnore()
-    public CommonResult<Integer> deleteByName(@RequestParam("name") String name) {
-        Integer result = iStorageTableService.deleteByName(name);
+    public CommonResult<Integer> deleteByName(@RequestParam("id") Integer id) {
+        Integer result = iStorageTableService.deleteById(id);
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");
     }
 

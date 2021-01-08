@@ -64,12 +64,14 @@ public class InRecordService implements IInRecordService {
             QueryWrapper<StorageTable> queryWrapper1 = new QueryWrapper<>();
             //需要确认数据的唯一性 图号+零部件名称是唯一还是图号是唯一
 //            queryWrapper1.eq("part_name", inRecord.getPartName());
-            queryWrapper1.eq("figure_number", inRecord.getFigureNumber());
+            // 物料号作为唯一
+            queryWrapper1.eq("matnr", inRecord.getMatnr());
             StorageTable storageTable = storageTableMapper.selectOne(queryWrapper1);
             if (null == storageTable) {
                 //保存入库存  需要创建新的
                 StorageTable storageTable1 = new StorageTable();
                 storageTable1.setNumber(inRecord.getQuantity());
+                storageTable1.setMatnr(inRecord.getMatnr());
                 storageTable1.setCategory(inRecord.getCategory());
                 storageTable1.setCreatedName(inRecord.getCreatedName());
                 storageTable1.setCreatedTime(new Date(System.currentTimeMillis()));

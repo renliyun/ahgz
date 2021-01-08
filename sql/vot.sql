@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `borrow_record`;
 
 CREATE TABLE `borrow_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(20) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
@@ -71,6 +72,7 @@ DROP TABLE IF EXISTS `delivery_record`;
 
 CREATE TABLE `delivery_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(20) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
@@ -98,6 +100,7 @@ DROP TABLE IF EXISTS `in_record`;
 
 CREATE TABLE `in_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `figure_number` varchar(50) DEFAULT NULL COMMENT '图号',
@@ -114,20 +117,13 @@ CREATE TABLE `in_record` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `in_record` WRITE;
 
-INSERT INTO `in_record` VALUES
-    (1,'50mm/1.0消热差镜头镜筒机械组','50mm/1.0','XDJ-2043','AL24','三和康瑞','外购件',2,'T1','任利荣','2021-01-00','任利荣',NULL,NULL),
-    (2,'25mm/1.0消热差镜头镜筒机械组','25mm/1.0','XDJ-2042','AL24','三和康瑞','外购件',2,'T1','任利荣','2021-01-00','任利荣',NULL,NULL),
-    (3,'20mm/1.0消热差镜头镜筒机械组','20mm/1.0','XDJ-2041','AL24','三和康瑞','外购件',2,'T1','任利荣',NULL,'任利荣','2020-12-24',NULL),
-    (4,'19mm/1.0消热差镜头镜筒机械组','19mm/1.0','XDJ-2040','AL24','三和康瑞','外购件',2,'T1','任利荣',NULL,'任利荣','2020-12-24',NULL),
-    (5,'19mm/1.0消热差镜头镜筒机械组','19mm/1.0','XDJ-2040','AL24','三和康瑞','外购件',2,'T1','任利荣',NULL,'任利荣','2020-12-24',NULL);
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `non_conforming`;
 
 CREATE TABLE `non_conforming` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
@@ -149,6 +145,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `out_record`;
 CREATE TABLE `out_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
@@ -166,16 +163,13 @@ CREATE TABLE `out_record` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `out_record` WRITE;
-INSERT INTO `out_record` VALUES
-    (1,'19mm/1.0消热差镜头镜筒机械组','外购件','19mm/1.0','XDJ-2040',NULL,0000000003,'霍亚敏',NULL,'任利荣',NULL,'任利荣',NULL,'安徽光智',NULL),
-    (2,'19mm/1.0消热差镜头镜筒机械组','外购件','19mm/1.0','XDJ-2040',NULL,0000000001,'霍亚敏',NULL,'任利荣',NULL,'任利荣',NULL,'安徽光智',NULL);
-UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS `storage_table`;
 
 CREATE TABLE `storage_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `matnr` int(8) unique NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `category` varchar(20) DEFAULT NULL COMMENT '类别',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
@@ -192,13 +186,7 @@ CREATE TABLE `storage_table` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-LOCK TABLES `storage_table` WRITE;
-INSERT INTO `storage_table` VALUES
-    (1,'50mm/1.0消热差镜头镜筒机械组','外购件','50mm/1.0','AL24','XDJ-2043',0000000002,'三和康瑞','T1','任利荣','2020-12-24','任利荣','2020-12-24',NULL),
-    (2,'25mm/1.0消热差镜头镜筒机械组','外购件','25mm/1.0','AL24','XDJ-2042',0000000002,'三和康瑞','T1','任利荣','2020-12-24','任利荣','2020-12-24',NULL),
-    (3,'20mm/1.0消热差镜头镜筒机械组','外购件','20mm/1.0','AL24','XDJ-2041',0000000002,'三和康瑞','T1','任利荣','2020-12-24','任利荣','2020-12-24',NULL),
-    (4,'19mm/1.0消热差镜头镜筒机械组','外购件','19mm/1.0','AL24','XDJ-2040',0000000000,'三和康瑞','T1','任利荣','2020-12-24','任利荣','2020-12-24',NULL);
-UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS `user_table`;
 

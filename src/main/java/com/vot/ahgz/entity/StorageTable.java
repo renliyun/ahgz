@@ -3,6 +3,7 @@ package com.vot.ahgz.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.models.auth.In;
 
 import java.sql.Date;
 import java.io.Serializable;
@@ -24,6 +25,9 @@ public class StorageTable  implements Serializable {
     private static final long serialVersionUID = -8078691461613221658L;
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
+    // 物料号
+    private Integer matnr;
 
     //  零部件名称
     private String partName;
@@ -67,8 +71,9 @@ public class StorageTable  implements Serializable {
     public StorageTable() {
     }
 
-    public StorageTable(Integer id, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
+    public StorageTable(Integer id, Integer matnr, String partName, String category, String partSpecification, String material, String figureNumber, Integer number, String supplier, String location, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
         this.id = id;
+        this.matnr = matnr;
         this.partName = partName;
         this.category = category;
         this.partSpecification = partSpecification;
@@ -86,6 +91,14 @@ public class StorageTable  implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Integer getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(Integer matnr) {
+        this.matnr = matnr;
     }
 
     public Integer getId() {
@@ -204,6 +217,7 @@ public class StorageTable  implements Serializable {
     public String toString() {
         return "StorageTable{" +
                 "id=" + id +
+                ", matnr=" + matnr +
                 ", partName='" + partName + '\'' +
                 ", category='" + category + '\'' +
                 ", partSpecification='" + partSpecification + '\'' +

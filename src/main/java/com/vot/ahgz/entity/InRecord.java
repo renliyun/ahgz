@@ -23,6 +23,9 @@ public class InRecord  implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    //  物料号
+    private Integer matnr;
+
     //  零部件名称
     private String partName;
 
@@ -61,8 +64,9 @@ public class InRecord  implements Serializable {
     //  更新时间
     private String updatedTime;
 
-    public InRecord(Integer id, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+    public InRecord(Integer id, Integer matnr, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
+        this.matnr = matnr;
         this.partName = partName;
         this.partSpecification = partSpecification;
         this.figureNumber = figureNumber;
@@ -79,6 +83,14 @@ public class InRecord  implements Serializable {
     }
 
     public InRecord() {
+    }
+
+    public Integer getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(Integer matnr) {
+        this.matnr = matnr;
     }
 
     public static long getSerialVersionUID() {

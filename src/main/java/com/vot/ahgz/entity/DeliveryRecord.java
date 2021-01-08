@@ -27,6 +27,8 @@ public class DeliveryRecord  implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    //  物料号
+    private Integer matnr;
     //  零部件名称
     private String partName;
 
@@ -78,8 +80,9 @@ public class DeliveryRecord  implements Serializable {
     //  更新时间
     private String updatedTime;
 
-    public DeliveryRecord(Integer id, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+    public DeliveryRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
+        this.matnr = matnr;
         this.partName = partName;
         this.partSpecification = partSpecification;
         this.category = category;
@@ -101,6 +104,22 @@ public class DeliveryRecord  implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Integer getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(Integer matnr) {
+        this.matnr = matnr;
+    }
+
+    public String getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public Integer getId() {
