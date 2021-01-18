@@ -5,7 +5,9 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.InRecord;
+import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IInRecordService;
+import com.vot.ahgz.service.IStorageTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 /**
@@ -33,6 +39,9 @@ public class InController {
 
     @Autowired
     private IInRecordService iInRecordService;
+
+    @Autowired
+    private IStorageTableService iStorageTableService;
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的入库记录")
@@ -55,6 +64,41 @@ public class InController {
         return modelAndView;
     }
 
+    @GetMapping("/checkIn")    // 暂时不做
+    @ApiOperation(value = "请求空页面")
+    public CommonResult checkIn(Integer matnr, HttpServletResponse response) {
+
+        InRecord inRecord = new InRecord();
+        if (null == matnr) {
+            try {
+                response.sendRedirect("http://localhost:8080/inRecord/in");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // 需要根据matnr查询数据
+            StorageTable storageTable1 = new StorageTable();
+            storageTable1.setMatnr(matnr);
+            List<StorageTable> storageTable = iStorageTableService.getAll(storageTable1);
+            if (storageTable.size() > 0) {
+                StorageTable storageTable2 = storageTable.get(0);
+                System.out.println(storageTable2);
+                // 将数据转到InRecord
+                inRecord.setMatnr(null != storageTable2.getMatnr() ? storageTable2.getMatnr() : null);
+                inRecord.setPartName(!StringUtils.isEmpty(storageTable2.getPartName()) ? storageTable2.getPartName() : null);
+                inRecord.setPartSpecification(!StringUtils.isEmpty(storageTable2.getPartSpecification()) ? storageTable2.getPartSpecification() : null);
+                inRecord.setFigureNumber(!StringUtils.isEmpty(storageTable2.getFigureNumber()) ? storageTable2.getFigureNumber() : null);
+                inRecord.setMaterial(!StringUtils.isEmpty(storageTable2.getMaterial()) ? storageTable2.getMaterial() : "");
+                inRecord.setCategory(!StringUtils.isEmpty(storageTable2.getCategory()) ? storageTable2.getCategory() : "");
+                inRecord.setLocation(!StringUtils.isEmpty(storageTable2.getLocation()) ? storageTable2.getLocation() : "");
+                inRecord.setSupplier(!StringUtils.isEmpty(storageTable2.getSupplier()) ? storageTable2.getSupplier() : "");
+                System.out.println("inRecord======================" + inRecord);
+                return CommonResult.sucess(inRecord);
+            }
+        }
+        return CommonResult.sucess(null);
+    }
+
     @GetMapping("/getOneByName")
     @ApiOperation(value = "获取零件name的所有入库记录")
     @ApiIgnore("TRUE")
@@ -67,11 +111,15 @@ public class InController {
     public ModelAndView insertInRecord(@ModelAttribute InRecord inRecord) {
         Integer result = iInRecordService.insertInRecord(inRecord);
         ModelAndView modelAndView = new ModelAndView();
+        String message = "";
         if (result > 0) {
+            message = "数据插入成功！";
             modelAndView.setViewName("sucess");
+            modelAndView.addObject("message", message);
             return modelAndView;
         } else {
             modelAndView.setViewName("error");
+            message = "发生未知异常，请检出数据！";
             return modelAndView;
         }
     }

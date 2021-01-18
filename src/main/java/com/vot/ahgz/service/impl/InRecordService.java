@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 public class InRecordService implements IInRecordService {
 
-    private static final Logger logger=  LoggerFactory.getLogger(InRecordService.class);
+    private static final Logger logger = LoggerFactory.getLogger(InRecordService.class);
 
     @Autowired
     private InRecordMapper inRecordMapper;
@@ -67,6 +67,7 @@ public class InRecordService implements IInRecordService {
             // 物料号作为唯一
             queryWrapper1.eq("matnr", inRecord.getMatnr());
             StorageTable storageTable = storageTableMapper.selectOne(queryWrapper1);
+            String message = "";
             if (null == storageTable) {
                 //保存入库存  需要创建新的
                 StorageTable storageTable1 = new StorageTable();
@@ -86,19 +87,22 @@ public class InRecordService implements IInRecordService {
                 storageTable1.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTable1.setCreatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.insert(storageTable1);
-                logger.info("保存入库成功！",storageTable1);
+                logger.info("保存入库成功！", storageTable1);
+                return 1;
             } else {
-                // 在原来的基础上增加库存
+                // 在原来的基础上增加库存   但是需要判断其余信息是否准确  哪几个字段
+
+                // TODO
                 storageTable.setNumber(storageTable.getNumber() + inRecord.getQuantity());
                 storageTable.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.updateById(storageTable);
-                logger.info("更新库存成功",storageTable);
+                logger.info("更新库存成功", storageTable);
+                inRecord.setUpdatedTime(new Date(System.currentTimeMillis()).toString());
+                return inRecordMapper.insert(inRecord);
             }
-            inRecord.setUpdatedTime(new Date(System.currentTimeMillis()).toString());
-            return inRecordMapper.insert(inRecord);
         } catch (Exception e) {
             logger.error("入库存在位置异常！");
-            e.printStackTrace();
+            System.out.println("入库数据异常！");
         }
         return 0;
     }

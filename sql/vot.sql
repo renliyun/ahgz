@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `borrow_record`;
 
 CREATE TABLE `borrow_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matnr` int(8) unique NOT NULL COMMENT '物料号',
+  `matnr` int(8)  NOT NULL COMMENT '物料号',
   `part_name` varchar(20) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `delivery_record`;
 
 CREATE TABLE `delivery_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matnr` int(8) unique NOT NULL COMMENT '物料号',
+  `matnr` int(8)  NOT NULL COMMENT '物料号',
   `part_name` varchar(20) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `in_record`;
 
 CREATE TABLE `in_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matnr` int(8) unique NOT NULL COMMENT '物料号',
+  `matnr` int(8)  NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
   `figure_number` varchar(50) DEFAULT NULL COMMENT '图号',
@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `non_conforming`;
 
 CREATE TABLE `non_conforming` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matnr` int(8) unique NOT NULL COMMENT '物料号',
+  `matnr` int(8)  NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
@@ -145,7 +145,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `out_record`;
 CREATE TABLE `out_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `matnr` int(8) unique NOT NULL COMMENT '物料号',
+  `matnr` int(8)  NOT NULL COMMENT '物料号',
   `part_name` varchar(50) DEFAULT NULL COMMENT '零部件名称',
   `category` varchar(20) DEFAULT NULL COMMENT '所属类别',
   `part_specification` varchar(50) DEFAULT NULL COMMENT '规格',
