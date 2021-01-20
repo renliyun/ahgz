@@ -103,4 +103,9 @@ public class StorageTableService implements IStorageTableService {
     public Integer updateByName(StorageTable storageTable) {
         return storageTableMapper.updateById(storageTable);
     }
+
+    @Override
+    public StorageTable updateById(Integer id) {
+        return storageTableMapper.selectById(id);
+    }
 }

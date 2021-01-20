@@ -2,17 +2,18 @@ package com.vot.ahgz.controller;
 
 
 import com.vot.ahgz.common.CommonResult;
-import com.vot.ahgz.common.ResultCode;
-import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IStorageTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+
+
+import org.springframework.ui.Model;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -37,21 +38,19 @@ public class StorageController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的库存信息")
     public ModelAndView getAll(@ModelAttribute StorageTable storageTable) {
-        System.out.println("请求数据==================="+storageTable);
+        System.out.println("请求数据===================" + storageTable);
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
         List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
 //        page.setPageNum(storageTables.size()/20+1);
 //        page.setPageTotal(storageTables.size());
         page.setPageData(storageTables);
-        modelAndView.addObject("page",page);
-        modelAndView.addObject("storage",new StorageTable());
+        modelAndView.addObject("page", page);
+        modelAndView.addObject("storage", new StorageTable());
         System.out.println(page);
         modelAndView.setViewName("storage");
         return modelAndView;
     }
-
-
 
 
     @GetMapping("/getOneByName")
@@ -59,6 +58,7 @@ public class StorageController {
     public CommonResult<List<StorageTable>> getByName(@RequestParam("name") String name) {
         return CommonResult.sucess(iStorageTableService.getByName(name), "获取用户" + name + "数据成功");
     }
+
     /*
     1、需要增加导出、导入excel表格
     2、需要增加根据类别、图号、材料等的查询方法
@@ -70,7 +70,7 @@ public class StorageController {
         return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
     }
 
-    @GetMapping("/deleteByd")
+    @GetMapping("/deleteById")
     @ApiOperation(value = "删除name库存")
     @ApiIgnore()
     public CommonResult<Integer> deleteByName(@RequestParam("id") Integer id) {
@@ -83,7 +83,29 @@ public class StorageController {
     @ApiIgnore()
     public CommonResult<Integer> updateByName(@ModelAttribute StorageTable storageTable) {
         iStorageTableService.updateByName(storageTable);
-        return CommonResult.sucess(iStorageTableService.updateByName(storageTable),"用户数据修改成功");
+        return CommonResult.sucess(iStorageTableService.updateByName(storageTable), "用户数据修改成功");
+    }
+
+    @GetMapping("/updateById")
+    @ApiOperation(value = "更新一条记录")
+    @ResponseBody
+    public ModelAndView updateById(Integer id) {
+        StorageTable storageTable = iStorageTableService.updateById(id);
+        ModelAndView modelAndView = new ModelAndView();
+        // 将数据返给页面让其进行修改
+
+        modelAndView.addObject("storageTable", storageTable);
+        modelAndView.setViewName("storageUpdate");
+        return modelAndView;
+    }
+
+    @GetMapping("/update")
+    @ApiOperation(value = "更新一条记录")
+    public ModelAndView update() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("storageUpdate");
+        modelAndView.addObject("storageTable", new StorageTable());
+        return modelAndView;
     }
 }
 

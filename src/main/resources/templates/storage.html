@@ -277,15 +277,26 @@
 <script>
 
     function update(id) {
-        alert(id + "  修改");
+        // alert(id + "  修改");
         // 跳转页面进行修改和保存
 
+        $.ajax({
+            url: "/storageTable/updateById",
+            type: "get",
+            data: {
+                id: id,
+            },
+            success: function (res) {
+                console.log(res)
+
+            }
+        })
 
     };
 
     function del(id) {
         $.ajax({
-            url: "/storageTable/deleteByd",
+            url: "/storageTable/deleteById",
             type: "get",
             data: {
                 id: id,
@@ -304,7 +315,7 @@
     };
 
 
-    // 开始
+    // 开始  分页 内容
     $(function () {
         tabPage({
             pageMain: '#pageMain',
@@ -405,8 +416,6 @@
             })
         }
     })
-
-
     // 结束
 
 

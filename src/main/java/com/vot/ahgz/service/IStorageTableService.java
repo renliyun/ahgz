@@ -38,4 +38,7 @@ public interface IStorageTableService  {
     //  更新用户数据
     Integer updateByName(StorageTable storageTable);
 
+    //  更新用户数据
+    StorageTable updateById(Integer id);
+
 }
