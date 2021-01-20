@@ -47,7 +47,9 @@
                             <span class="input-group-addon">物料号</span>
                             <input id="matnr" name="matnr" required type="text"
                                    th:field="*{matnr}" class="form-control"
-                                   placeholder="零部件名称" aria-describedby="sizing-addon1">
+                                   placeholder="零部件物料号，输入完成请点击回车进行查询校验"
+
+                                   aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
                 </div>
@@ -226,6 +228,7 @@
     function del() {
         alert("删除");
     };
+
 
 
     $(function () {

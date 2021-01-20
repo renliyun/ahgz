@@ -41,20 +41,14 @@ public class StorageController {
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
         List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
-        page.setPageNum(storageTables.size()/20+1);
-        page.setPageTotal(storageTables.size());
+//        page.setPageNum(storageTables.size()/20+1);
+//        page.setPageTotal(storageTables.size());
         page.setPageData(storageTables);
         modelAndView.addObject("page",page);
         modelAndView.addObject("storage",new StorageTable());
         System.out.println(page);
         modelAndView.setViewName("storage");
         return modelAndView;
-//        System.out.println("进入controller层了！");
-//        CommonResult commonResult = new CommonResult();
-//        commonResult.setData(iStorageTableService.getAll());
-//        commonResult.setCode(ResultCode.SUCCESS.getCode());
-//        commonResult.setMessage("获取数据成功！");
-//        return commonResult;
     }
 
 

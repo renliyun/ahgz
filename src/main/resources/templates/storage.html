@@ -109,14 +109,6 @@
                         </div><!-- /.col-lg-6 -->
                     </div>
 
-
-                    <!--                    <div class="col-lg-3">-->
-                    <!--                        <div class="input-group input-group-lg">-->
-                    <!--                            <span class="input-group-addon">&nbsp&nbsp创建时间&nbsp</span>-->
-                    <!--                            <input type="date" th:field="*{createdTime}" class="form-control" placeholder="创建时间"-->
-                    <!--                                   aria-describedby="sizing-addon1">-->
-                    <!--                        </div>-->
-                    <!--                    </div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
                 </div>
                 <div class="row">
                     <button type="submit" value="Submit" class="btn btn-info">查询</button>
@@ -124,7 +116,8 @@
             </form>
         </div>
         <div class="storage">
-            <table id="t2" class="table table-hover">
+            <table class="table table-hover">
+                <thead style="border-bottom: none">
                 <tr>
                     <th>序号</th>
                     <th>物料号</th>
@@ -141,6 +134,8 @@
                     <th>备注</th>
                     <th>操作</th>
                 </tr>
+                </thead>
+                <tbody id="pageMain">
                 <tr th:each="storeage,storeageStatus :${page.pageData}">
                     <td th:text="${storeageStatus.index + 1}"></td>
                     <td th:text="${storeage.matnr}"></td>
@@ -163,45 +158,23 @@
                         </button>
                     </td>
                 </tr>
+                </tbody>
+
             </table>
-
-            <div class="page-normal">
-                <span class="page-prev">&lt;</span>
-                <!-- 数字1 代表当前页面  需要把点钱的库存信息和页面信息传递给后台 -->
-                <span class="page-current">1</span>
-                <button href="#">2</button>
-                <button href="#">3</button>
-                <button href="#">4</button>
-                <button href="#">5</button>
-                <button href="#">6</button>
-                <button href="#">7</button>
-                <button href="#">8</button>
-                <button href="#">9</button>
-                ……
-                <button href="#">199</button>
-                <button href="#">200</button>
-                <button href="#">&gt;</button>
-                <span>共<span th:text="${page.pageTotal}"></span>条数据，现在第<span th:text="${page.pageNum}"></span>页。</span>
+            <div id="pageBox">
+                <span id="prev">上一页</span>
+                <ul id="pageNav"></ul>
+                <span id="next" >下一页</span>
             </div>
-
-
         </div>
     </div>
 </div>
-
 </div>
-
 </div>
-
-<!--<button id="btn" class="btn-danger">按钮</button>-->
-
-
 </div>
 </body>
 
 <style>
-
-
     body {
         /*background-color: #30cfd0;*/
         text-align: center;
@@ -255,6 +228,49 @@
     }
 
 
+    #pageBox {
+        padding: 10px 0 0 0;
+    }
+
+    #pageBox span {
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        color: #fff;
+        background: #08a586;
+
+    }
+
+    #pageNav {
+        display: inline-block;
+    }
+
+    #pageNav a {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        color: #3a87ad;
+        text-decoration: none;
+    }
+
+    #pageNav a.active, #pageNav a:hover {
+        background: #3a87ad;
+        color: #EFEFEF;
+    }
+
+    #prev:hover {
+        cursor: pointer;
+    }
+
+    #next:hover {
+        cursor: pointer;
+    }
+
+
 </style>
 
 
@@ -286,6 +302,112 @@
         })
 
     };
+
+
+    // 开始
+    $(function () {
+        tabPage({
+            pageMain: '#pageMain',
+            pageNav: '#pageNav',
+            pagePrev: '#prev',
+            pageNext: '#next',
+            curNum: 20, /*每页显示的条数*/
+            activeClass: 'active', /*高亮显示的class*/
+            ini: 0/*初始化显示的页面*/
+        });
+
+        function tabPage(tabPage) {
+            var pageMain = $(tabPage.pageMain);
+            /*获取内容列表*/
+            var pageNav = $(tabPage.pageNav);
+            /*获取分页*/
+            var pagePrev = $(tabPage.pagePrev);
+            /*上一页*/
+            var pageNext = $(tabPage.pageNext);
+            /*下一页*/
+
+
+            var curNum = tabPage.curNum;
+            /*每页显示数*/
+            var len = Math.ceil(pageMain.find("tr").length / curNum);
+            /*计算总页数*/
+            console.log(len);
+            var pageList = '';
+            /*生成页码*/
+            var iNum = 0;
+            /*当前的索引值*/
+
+            for (var i = 0; i < len; i++) {
+                pageList += '<a href="javascript:;">' + (i + 1) + '</a>';
+            }
+            pageNav.html(pageList);
+            /*头一页加高亮显示*/
+            pageNav.find("a:first").addClass(tabPage.activeClass);
+
+            /*******标签页的点击事件*******/
+            pageNav.find("a").each(function () {
+                $(this).click(function () {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    $(this).addClass(tabPage.activeClass);
+                    iNum = $(this).index();
+                    $(pageMain).find("tr").hide();
+                    for (var i = ($(this).html() - 1) * curNum; i < ($(this).html()) * curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+
+                });
+            })
+
+
+            $(pageMain).find("tr").hide();
+            /************首页的显示*********/
+            for (var i = 0; i < curNum; i++) {
+                $(pageMain).find("tr").eq(i).show()
+            }
+
+
+            /*下一页*/
+            pageNext.click(function () {
+                $(pageMain).find("tr").hide();
+                if (iNum == len - 1) {
+                    alert('已经是最后一页');
+                    for (var i = (len - 1) * curNum; i < len * curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+                    return false;
+                } else {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    iNum++;
+                    pageNav.find("a").eq(iNum).addClass(tabPage.activeClass);
+//                    ini(iNum);
+                }
+                for (var i = iNum * curNum; i < (iNum + 1) * curNum; i++) {
+                    $(pageMain).find("tr").eq(i).show()
+                }
+            });
+            /*上一页*/
+            pagePrev.click(function () {
+                $(pageMain).find("tr").hide();
+                if (iNum == 0) {
+                    alert('当前是第一页');
+                    for (var i = 0; i < curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+                    return false;
+                } else {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    iNum--;
+                    pageNav.find("a").eq(iNum).addClass(tabPage.activeClass);
+                }
+                for (var i = iNum * curNum; i < (iNum + 1) * curNum; i++) {
+                    $(pageMain).find("tr").eq(i).show()
+                }
+            })
+        }
+    })
+
+
+    // 结束
 
 
     $(document).ready(function () {
@@ -326,6 +448,7 @@
             // }
         });
     })
+
 
 </script>
 
