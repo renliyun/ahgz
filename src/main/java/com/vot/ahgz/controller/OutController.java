@@ -3,15 +3,18 @@ package com.vot.ahgz.controller;
 
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
+import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.service.IOutRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -42,6 +45,16 @@ public class OutController {
         return commonResult;
     }
 
+
+    @GetMapping("/out")
+    @ApiOperation(value = "请求空页面")
+    public ModelAndView getIn(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("outRecord");
+        modelAndView.addObject("outRecord", new OutRecord());
+        // model.addAttribute();
+        return modelAndView;
+    }
 
     @GetMapping("/getOneByName")
     @ApiOperation(value = "获取零部件name的所有出库记录")

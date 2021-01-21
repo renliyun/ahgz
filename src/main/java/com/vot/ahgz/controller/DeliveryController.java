@@ -5,13 +5,16 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.DeliveryRecord;
+import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.service.IDeliveryRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -40,6 +43,17 @@ public class DeliveryController {
         commonResult.setCode(ResultCode.SUCCESS.getCode());
         commonResult.setMessage("获取数据成功！");
         return commonResult;
+    }
+
+
+    @GetMapping("/delivery")
+    @ApiOperation(value = "请求空页面")
+    public ModelAndView getIn(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("delivery");
+        modelAndView.addObject("deliveryRecord", new DeliveryRecord());
+        // model.addAttribute();
+        return modelAndView;
     }
 
 

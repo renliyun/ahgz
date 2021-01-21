@@ -4,13 +4,16 @@ package com.vot.ahgz.controller;
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
+import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.service.IBorrowRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -41,6 +44,16 @@ public class BorrowController {
         commonResult.setMessage("获取数据成功！");
         return commonResult;
     }
+
+    @GetMapping("/borrow")
+    @ApiOperation(value = "请求空页面")
+    public ModelAndView getIn(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("borrow");
+        modelAndView.addObject("borrowRecord", new BorrowRecord());
+        return modelAndView;
+    }
+
 
 
     @GetMapping("/getOneByName")

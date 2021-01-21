@@ -80,6 +80,9 @@ public class DeliveryRecord  implements Serializable {
     //  更新时间
     private String updatedTime;
 
+    public DeliveryRecord() {
+    }
+
     public DeliveryRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.matnr = matnr;

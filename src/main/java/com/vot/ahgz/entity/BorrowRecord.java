@@ -72,6 +72,9 @@ public class BorrowRecord  implements Serializable {
     //  更新时间
     private String updatedTime;
 
+    public BorrowRecord() {
+    }
+
     public BorrowRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.matnr = matnr;
