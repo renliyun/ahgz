@@ -100,7 +100,8 @@ public class StorageTableService implements IStorageTableService {
     }
 
     @Override
-    public Integer updateByName(StorageTable storageTable) {
+    public Integer updateOne(StorageTable storageTable) {
+        System.out.println(storageTable);
         return storageTableMapper.updateById(storageTable);
     }
 

@@ -10,9 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.ui.Model;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
@@ -53,22 +50,22 @@ public class StorageController {
     }
 
 
-    @GetMapping("/getOneByName")
-    @ApiOperation(value = "获取name的库存信息")
-    public CommonResult<List<StorageTable>> getByName(@RequestParam("name") String name) {
-        return CommonResult.sucess(iStorageTableService.getByName(name), "获取用户" + name + "数据成功");
-    }
+//    @GetMapping("/getOneByName")
+//    @ApiOperation(value = "获取name的库存信息")
+//    public CommonResult<List<StorageTable>> getByName(@RequestParam("name") String name) {
+//        return CommonResult.sucess(iStorageTableService.getByName(name), "获取用户" + name + "数据成功");
+//    }
 
     /*
     1、需要增加导出、导入excel表格
     2、需要增加根据类别、图号、材料等的查询方法
      */
-    @PostMapping("/insertDate")
-    @ApiOperation(value = "入库")
-    @ApiIgnore()
-    public CommonResult<Integer> insertAddressList(@ModelAttribute StorageTable storageTable) {
-        return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
-    }
+//    @PostMapping("/insertDate")
+//    @ApiOperation(value = "入库")
+//    @ApiIgnore()
+//    public CommonResult<Integer> insertAddressList(@ModelAttribute StorageTable storageTable) {
+//        return CommonResult.sucess(iStorageTableService.insertStorageTable(storageTable), "用户数据插入成功");
+//    }
 
     @GetMapping("/deleteById")
     @ApiOperation(value = "删除name库存")
@@ -78,34 +75,30 @@ public class StorageController {
         return result > 0 ? CommonResult.sucess(1) : CommonResult.failed("用户数据删除失败！");
     }
 
-    @PatchMapping("/updateByName")
+    @PostMapping("/updateOne")
     @ApiOperation(value = "更新一条记录")
-    @ApiIgnore()
-    public CommonResult<Integer> updateByName(@ModelAttribute StorageTable storageTable) {
-        iStorageTableService.updateByName(storageTable);
-        return CommonResult.sucess(iStorageTableService.updateByName(storageTable), "用户数据修改成功");
+    public CommonResult<Integer> updateByName(@RequestBody StorageTable storageTable) {
+        System.out.println(storageTable);
+        iStorageTableService.updateOne(storageTable);
+        return CommonResult.sucess(iStorageTableService.updateOne(storageTable), "本条数据修改成功！");
     }
 
     @GetMapping("/updateById")
     @ApiOperation(value = "更新一条记录")
     @ResponseBody
-    public ModelAndView updateById(Integer id) {
+    public CommonResult updateById(Integer id) {
+        // 不存在没有数据的
         StorageTable storageTable = iStorageTableService.updateById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        // 将数据返给页面让其进行修改
-
-        modelAndView.addObject("storageTable", storageTable);
-        modelAndView.setViewName("storageUpdate");
-        return modelAndView;
+        return CommonResult.sucess(storageTable);
     }
 
-    @GetMapping("/update")
-    @ApiOperation(value = "更新一条记录")
-    public ModelAndView update() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("storageUpdate");
-        modelAndView.addObject("storageTable", new StorageTable());
-        return modelAndView;
-    }
+//    @GetMapping("/update")
+//    @ApiOperation(value = "更新一条记录")
+//    public ModelAndView update() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("storageUpdate");
+//        modelAndView.addObject("storageTable", new StorageTable());
+//        return modelAndView;
+//    }
 }
 
