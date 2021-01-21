@@ -65,6 +65,7 @@ public class OutController {
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条出库记录")
     public CommonResult<Integer> insertAddressList(@ModelAttribute OutRecord outRecord) {
+
         return CommonResult.sucess(iOutRecordService.insertOutRecord(outRecord), "用户数据插入成功");
     }
 
