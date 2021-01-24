@@ -110,9 +110,9 @@ CREATE TABLE `in_record` (
   `quantity` int(11) DEFAULT NULL COMMENT '入库数量',
   `location` varchar(20) DEFAULT NULL COMMENT '库位',
   `created_name` varchar(20) DEFAULT NULL COMMENT '创建人',
-  `created_time` date DEFAULT NULL COMMENT '创建时间',
+  `created_time` DATA DEFAULT NULL COMMENT '创建时间',
   `updated_name` varchar(20) DEFAULT NULL COMMENT '更新人',
-  `updated_time` date DEFAULT NULL COMMENT '更新时间',
+  `updated_time` DATA DEFAULT NULL COMMENT '更新时间',
   `mark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;

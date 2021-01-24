@@ -82,7 +82,7 @@
                         <div class="col-lg-3">
                             <div class="input-group input-group-lg">
                                 <!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
-                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}">
+                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}" >
                                 <option value=""></option>
                                 <option value="外购件">外购件</option>
                                 <option value="镜头">镜头</option>
@@ -426,6 +426,10 @@
         cursor: pointer;
     }
 
+    .input-group-addon{
+        margin-top: 10px;
+        margin-right: 5px;
+    }
 
 </style>
 

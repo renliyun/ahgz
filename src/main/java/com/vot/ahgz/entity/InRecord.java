@@ -56,15 +56,15 @@ public class InRecord  implements Serializable {
     private String createdName;
 
     // 创建时间  createdTime
-    private String createdTime;
+    private Date createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updatedTime;
+    private Date updatedTime;
 
-    public InRecord(Integer id, Integer matnr, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+    public InRecord(Integer id, Integer matnr, String partName, String partSpecification, String figureNumber, String material, String supplier, String category, Integer quantity, String location, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
         this.id = id;
         this.matnr = matnr;
         this.partName = partName;
@@ -185,13 +185,7 @@ public class InRecord  implements Serializable {
         this.createdName = createdName;
     }
 
-    public String getCreatedTime() {
-        return createdTime;
-    }
 
-    public void setCreatedTime(String createdTime) {
-        this.createdTime = createdTime;
-    }
 
     public String getUpdatedName() {
         return updatedName;
@@ -201,11 +195,19 @@ public class InRecord  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getUpdatedTime() {
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
         return updatedTime;
     }
 
-    public void setUpdatedTime(String updatedTime) {
+    public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
 

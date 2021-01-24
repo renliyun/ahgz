@@ -115,13 +115,13 @@ public class InController {
         if (result > 0) {
             message = "数据插入成功！";
             modelAndView.setViewName("sucess");
-            modelAndView.addObject("message", message);
-            return modelAndView;
+
         } else {
             modelAndView.setViewName("error");
             message = "发生未知异常，请检出数据！";
-            return modelAndView;
         }
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 
     @PostMapping("/deleteByName")

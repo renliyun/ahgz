@@ -2,15 +2,17 @@ package com.vot.ahgz.controller;
 
 
 import com.vot.ahgz.common.CommonResult;
+import com.vot.ahgz.common.ResultCode;
+import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IStorageTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -18,7 +20,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ *  前端控制器
  * </p>
  *
  * @author renlirong
