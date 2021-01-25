@@ -98,11 +98,7 @@ public class InRecordService implements IInRecordService {
                 storageTableMapper.updateById(storageTable);
                 logger.info("更新库存成功", storageTable);
                 inRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
-                inRecord.setCreatedTime(new Date(System.currentTimeMillis()));
-                System.out.println(inRecord);
-                inRecord.setCreatedName(inRecord.getCreatedName());
-                inRecordMapper.insert(inRecord);
-                return 1;
+                return inRecordMapper.insert(inRecord);
             }
         } catch (Exception e) {
             logger.error("入库存在位置异常！");
