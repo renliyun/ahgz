@@ -1,13 +1,9 @@
 package com.vot.ahgz.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.util.Objects;
+import java.sql.Date;
 
 
 /**
@@ -52,7 +48,7 @@ public class BorrowRecord  implements Serializable {
     private String borrowName;
 
     //  借用时间
-    private LocalDateTime borrowTime;
+    private Date borrowTime;
 
     //  所属部门或者客户公司名称
     private String supplier;
@@ -64,34 +60,15 @@ public class BorrowRecord  implements Serializable {
     private String createdName;
 
     // 创建时间
-    private String createdTime;
+    private Date createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updatedTime;
+    private Date updatedTime;
 
     public BorrowRecord() {
-    }
-
-    public BorrowRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, LocalDateTime borrowTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
-        this.id = id;
-        this.matnr = matnr;
-        this.partName = partName;
-        this.partSpecification = partSpecification;
-        this.category = category;
-        this.material = material;
-        this.figureNumber = figureNumber;
-        this.number = number;
-        this.borrowName = borrowName;
-        this.borrowTime = borrowTime;
-        this.supplier = supplier;
-        this.mark = mark;
-        this.createdName = createdName;
-        this.createdTime = createdTime;
-        this.updatedName = updatedName;
-        this.updatedTime = updatedTime;
     }
 
     public static long getSerialVersionUID() {
@@ -102,24 +79,16 @@ public class BorrowRecord  implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getMatnr() {
         return matnr;
     }
 
     public void setMatnr(Integer matnr) {
         this.matnr = matnr;
-    }
-
-    public String getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(String updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getPartName() {
@@ -178,11 +147,11 @@ public class BorrowRecord  implements Serializable {
         this.borrowName = borrowName;
     }
 
-    public LocalDateTime getBorrowTime() {
+    public Date getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(LocalDateTime borrowTime) {
+    public void setBorrowTime(Date borrowTime) {
         this.borrowTime = borrowTime;
     }
 
@@ -210,11 +179,11 @@ public class BorrowRecord  implements Serializable {
         this.createdName = createdName;
     }
 
-    public String getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -226,11 +195,11 @@ public class BorrowRecord  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getupdatedTime() {
+    public Date getUpdatedTime() {
         return updatedTime;
     }
 
-    public void setupdatedTime(String updatedTime) {
+    public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
 
@@ -238,6 +207,7 @@ public class BorrowRecord  implements Serializable {
     public String toString() {
         return "BorrowRecord{" +
                 "id=" + id +
+                ", matnr=" + matnr +
                 ", partName='" + partName + '\'' +
                 ", partSpecification='" + partSpecification + '\'' +
                 ", category='" + category + '\'' +
@@ -253,5 +223,24 @@ public class BorrowRecord  implements Serializable {
                 ", updatedName='" + updatedName + '\'' +
                 ", updatedTime=" + updatedTime +
                 '}';
+    }
+
+    public BorrowRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String material, String figureNumber, Integer number, String borrowName, Date borrowTime, String supplier, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
+        this.id = id;
+        this.matnr = matnr;
+        this.partName = partName;
+        this.partSpecification = partSpecification;
+        this.category = category;
+        this.material = material;
+        this.figureNumber = figureNumber;
+        this.number = number;
+        this.borrowName = borrowName;
+        this.borrowTime = borrowTime;
+        this.supplier = supplier;
+        this.mark = mark;
+        this.createdName = createdName;
+        this.createdTime = createdTime;
+        this.updatedName = updatedName;
+        this.updatedTime = updatedTime;
     }
 }

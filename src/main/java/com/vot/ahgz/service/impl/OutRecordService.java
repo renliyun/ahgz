@@ -73,7 +73,7 @@ public class OutRecordService implements IOutRecordService {
             // 插入出库记录
             logger.info("出库成功！出库数量为"+outRecord.getNumber());
             outRecord.setUpdatedName(outRecord.getCreatedName());
-            outRecord.setUpdatedTime(new Date(System.currentTimeMillis()).toString());
+            outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
             return outRecordMapper.insert(outRecord);
         }
     }

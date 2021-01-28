@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -50,7 +51,7 @@ public class OutRecord  implements Serializable{
     private String receiveName;
 
     //  领用时间
-    private String receiveTime;
+    private Date receiveTime;
 
     //  供货商
     private String supplier;
@@ -62,19 +63,20 @@ public class OutRecord  implements Serializable{
     private String createdName;
 
     // 创建时间
-    private String createdTime;
+    private Date createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updatedTime;
+    private Date updatedTime;
 
 
     public OutRecord() {
     }
 
-    public OutRecord(Integer id, Integer matnr, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, String receiveTime, String supplier, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+
+    public OutRecord(Integer id, Integer matnr, String partName, String category, String partSpecification, String figureNumber, String material, Integer number, String receiveName, Date receiveTime, String supplier, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
         this.id = id;
         this.matnr = matnr;
         this.partName = partName;
@@ -93,24 +95,30 @@ public class OutRecord  implements Serializable{
         this.updatedTime = updatedTime;
     }
 
+    @Override
+    public String toString() {
+        return "OutRecord{" +
+                "id=" + id +
+                ", matnr=" + matnr +
+                ", partName='" + partName + '\'' +
+                ", category='" + category + '\'' +
+                ", partSpecification='" + partSpecification + '\'' +
+                ", figureNumber='" + figureNumber + '\'' +
+                ", material='" + material + '\'' +
+                ", number=" + number +
+                ", receiveName='" + receiveName + '\'' +
+                ", receiveTime=" + receiveTime +
+                ", supplier='" + supplier + '\'' +
+                ", mark='" + mark + '\'' +
+                ", createdName='" + createdName + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedName='" + updatedName + '\'' +
+                ", updatedTime=" + updatedTime +
+                '}';
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public Integer getMatnr() {
-        return matnr;
-    }
-
-    public void setMatnr(Integer matnr) {
-        this.matnr = matnr;
-    }
-
-    public String getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(String updatedTime) {
-        this.updatedTime = updatedTime;
     }
 
     public Integer getId() {
@@ -119,6 +127,14 @@ public class OutRecord  implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getMatnr() {
+        return matnr;
+    }
+
+    public void setMatnr(Integer matnr) {
+        this.matnr = matnr;
     }
 
     public String getPartName() {
@@ -177,11 +193,11 @@ public class OutRecord  implements Serializable{
         this.receiveName = receiveName;
     }
 
-    public String getReceiveTime() {
+    public Date getReceiveTime() {
         return receiveTime;
     }
 
-    public void setReceiveTime(String receiveTime) {
+    public void setReceiveTime(Date receiveTime) {
         this.receiveTime = receiveTime;
     }
 
@@ -209,11 +225,11 @@ public class OutRecord  implements Serializable{
         this.createdName = createdName;
     }
 
-    public String getCreatedTime() {
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -225,32 +241,11 @@ public class OutRecord  implements Serializable{
         this.updatedName = updatedName;
     }
 
-    public String getupdatedTime() {
+    public Date getUpdatedTime() {
         return updatedTime;
     }
 
-    public void setupdatedTime(String updatedTime) {
+    public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    @Override
-    public String toString() {
-        return "OutRecord{" +
-                "id=" + id +
-                ", partName='" + partName + '\'' +
-                ", category='" + category + '\'' +
-                ", partSpecification='" + partSpecification + '\'' +
-                ", figureNumber='" + figureNumber + '\'' +
-                ", material='" + material + '\'' +
-                ", number=" + number +
-                ", receiveName='" + receiveName + '\'' +
-                ", receiveTime=" + receiveTime +
-                ", supplier='" + supplier + '\'' +
-                ", mark='" + mark + '\'' +
-                ", createdName='" + createdName + '\'' +
-                ", createdTime=" + createdTime +
-                ", updatedName='" + updatedName + '\'' +
-                ", updatedTime=" + updatedTime +
-                '}';
     }
 }

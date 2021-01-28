@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -77,9 +78,10 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 // 增加出库记录
                 OutRecord outRecord = new OutRecord();
                 outRecord.setCategory(null == deliveryRecord.getCategory() ? null : deliveryRecord.getCategory());
+                outRecord.setMatnr(null == deliveryRecord.getMatnr() ? null : deliveryRecord.getMatnr());
                 //应该是当前登陆用户  可以传递用户id过来
                 outRecord.setCreatedName(null == deliveryRecord.getCreatedName() ? null : deliveryRecord.getCreatedName());
-                outRecord.setCreatedTime(new Date().toString());
+                outRecord.setCreatedTime(new Date(System.currentTimeMillis()));
                 outRecord.setFigureNumber(null == deliveryRecord.getFigureNumber() ? null : deliveryRecord.getFigureNumber());
                 outRecord.setMark(null == deliveryRecord.getMark() ? null : deliveryRecord.getMark());
                 // 发货不需要写材料
@@ -88,11 +90,12 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setPartName(deliveryRecord.getPartName());
                 outRecord.setPartSpecification(null == deliveryRecord.getPartSpecification() ? null : deliveryRecord.getPartSpecification());
                 outRecord.setReceiveName(deliveryRecord.getBorrowName());
-                outRecord.setReceiveTime(new Date().toString());
+                outRecord.setReceiveTime(new Date(System.currentTimeMillis()));
                 outRecord.setSupplier(deliveryRecord.getSupplier());
                 // 应该是当前登陆用户  可以传递用户id过来或者从session中获取
                 outRecord.setUpdatedName(deliveryRecord.getCreatedName());
-                outRecord.setupdatedTime(new Date().toString());
+                outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
+
                 // 保存发货记录
                 Integer result = outRecordMapper.insert(outRecord);
                 if (result < 0) {

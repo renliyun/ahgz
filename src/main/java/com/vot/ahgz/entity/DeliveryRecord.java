@@ -1,14 +1,9 @@
 package com.vot.ahgz.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.models.auth.In;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.util.Objects;
+import java.sql.Date;
 
 
 /**
@@ -51,7 +46,7 @@ public class DeliveryRecord  implements Serializable {
     private String deliveryAddress;
 
     //  发货时间
-    private String deliveryTime;
+    private Date deliveryTime;
 
     //  收货人姓名
     private String borrowName;
@@ -72,18 +67,18 @@ public class DeliveryRecord  implements Serializable {
     private String createdName;
 
     // 创建时间
-    private String createdTime;
+    private Date createdTime;
 
     // 更新人
     private String updatedName;
 
     //  更新时间
-    private String updatedTime;
+    private Date updatedTime;
 
     public DeliveryRecord() {
     }
 
-    public DeliveryRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, String deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
+    public DeliveryRecord(Integer id, Integer matnr, String partName, String partSpecification, String category, String figureNumber, Integer number, String deliveryName, String deliveryAddress, Date deliveryTime, String borrowName, String telephone, String supplier, String borrowAddress, String mark, String createdName, Date createdTime, String updatedName, Date updatedTime) {
         this.id = id;
         this.matnr = matnr;
         this.partName = partName;
@@ -117,13 +112,6 @@ public class DeliveryRecord  implements Serializable {
         this.matnr = matnr;
     }
 
-    public String getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(String updatedTime) {
-        this.updatedTime = updatedTime;
-    }
 
     public Integer getId() {
         return id;
@@ -189,13 +177,7 @@ public class DeliveryRecord  implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public String getDeliveryTime() {
-        return deliveryTime;
-    }
 
-    public void setDeliveryTime(String deliveryTime) {
-        this.deliveryTime = deliveryTime;
-    }
 
     public String getBorrowName() {
         return borrowName;
@@ -245,11 +227,19 @@ public class DeliveryRecord  implements Serializable {
         this.createdName = createdName;
     }
 
-    public String getCreatedTime() {
+    public Date getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(Date deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public Date getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(String createdTime) {
+    public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
@@ -261,11 +251,11 @@ public class DeliveryRecord  implements Serializable {
         this.updatedName = updatedName;
     }
 
-    public String getupdatedTime() {
+    public Date getUpdatedTime() {
         return updatedTime;
     }
 
-    public void setupdatedTime(String updatedTime) {
+    public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
 

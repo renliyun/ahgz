@@ -1,676 +1,115 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>登陆界面</title>
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/iconfont.css">
-
-
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
+    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script src="../static/js/jquery-3.5.1/jquery-3.5.1.js"></script>
 </head>
 
 <body>
-
-<div class="container">
-
-    <!--头部-->
-    <header class="header">
-        <div class="row">
-            <div class="col-md-3">
-
-            </div>
-            <!--快捷选项-->
-            <div class="col-md-9 top-item">
-                <ul class="list-inline pull-right">
-                    <li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;入库</a></li>
-                    <li class="li-split">|</li>
-                    <li><a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;出库</a></li>
-                    <li class="li-split">|</li>
-                    <li><a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a></li>
-                    <li class="li-split">|</li>
-                    <li><a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a></li>
-                    <li class="li-split">|</li>
-                    <li><a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a></li>
-                    <li>
-                    </li>
-                    <li class="li-split">|</li>
-<!--                    <li><a href="login.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>-->
-                </ul>
-            </div>
+<div id="login-box">
+    <form id="form1">
+        <h1>登陆</h1>
+        <div class="input-box">
+            <i class="iconfont">&#xe609;</i>
+            <input type="text" id="username" placeholder="用户名" />
         </div>
-    </header>
-
-
-    <div class="row">
-        <div class="col-md-12 col-md-offset-0">
-            <div id="inRecord">
-                <h1>
-                    入库记录
-                </h1>
-                <div>
-                    <table class="table table-hover">
-                        <tr>
-                            <th>序号</th>
-                            <th>零部件名称</th>
-                            <th>零部件规格</th>
-                            <th>图号</th>
-                            <th>材料</th>
-                            <th>供货商</th>
-                            <th>类别</th>
-                            <th>数量</th>
-                            <th>库位</th>
-                            <th>创建人</th>
-                            <th>创建时间</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-
-                    </table>
-
-                </div>
-            </div>
-            <div id="inStorage1">
-                <h1>
-                    入库
-                </h1>
-                <div>
-                    <form>
-<!--                        -->
-
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" >零部件名称</span>
-                                    <input type="text" class="form-control" placeholder="零部件名称" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">零部件规格</span>
-                                    <input type="text" class="form-control" placeholder="零部件规格" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="图号" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp材料&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="材料" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="供货商" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                                    <select id="category2" >
-                                        <option value="1">外购件</option>
-                                        <option value="2">镜头</option>
-                                        <option value="3">镜片</option>
-                                        <option value="4">镜头机械部分</option>
-                                    </select>
-
-
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp数量&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="数量" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="库位" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" >&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" value="王美林" placeholder="创建人" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp创建时间&nbsp</span>
-                                    <input type="datetime-local" class="form-control" placeholder="创建时间" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp备注&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="备注" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <button type="submit">保存</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
-<!--            出库记录-->
-            <div id="inRecord1">
-                <h1>
-                    出库记录
-                </h1>
-                <div>
-                    <table class="table table-hover">
-                        <tr>
-                            <th>序号</th>
-                            <th>零部件名称</th>
-                            <th>零部件规格</th>
-                            <th>图号</th>
-                            <th>材料</th>
-                            <th>供货商</th>
-                            <th>类别</th>
-                            <th>数量</th>
-                            <th>库位</th>
-                            <th>创建人</th>
-                            <th>创建时间</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <th>25mm/1.0消热差镜头</th>
-                            <th>325/1.0</th>
-                            <th>XDJ-2043</th>
-                            <th>AL27</th>
-                            <th>安徽光智</th>
-                            <th>镜头</th>
-                            <th>1</th>
-                            <th>G2</th>
-                            <th>任利荣</th>
-                            <th>2012-12-13</th>
-                            <th>备注</th>
-                        </tr>
-
-                    </table>
-
-                </div>
-            </div>
-
-<!--            出库记录-->
-<!--            出库-->
-
-            <div id="inStorage">
-                <h1>
-                    出库
-                </h1>
-                <div>
-                    <form>
-                        <!--                        -->
-
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">零部件名称</span>
-                                    <input type="text" class="form-control" placeholder="零部件名称" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">零部件规格</span>
-                                    <input type="text" class="form-control" placeholder="零部件规格" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="图号" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp材料&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="材料" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="供货商" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                                    <select id="category" >
-                                        <option value="1">外购件</option>
-                                        <option value="2">镜头</option>
-                                        <option value="3">镜片</option>
-                                        <option value="4">镜头机械部分</option>
-                                    </select>
-
-
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp数量&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="数量" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="库位" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" value="王美林" placeholder="创建人" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp创建时间&nbsp</span>
-                                    <input type="date" class="form-control" placeholder="创建时间" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6  col-md-offset-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp备注&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="备注" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-                        <div class="row">
-                            <button type="submit">保存</button>
-                        </div>
-
-
-
-                        <!--                        -->
-
-                    </form>
-                </div>
-            </div>
-
-<!--            出库-->
-<!--       库存查询     -->
-
-            <div id="storage">
-
-                <h1>
-                    库存查询
-                </h1>
-                <div>
-                    <form>
-                        <!--                        -->
-
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">零部件名称</span>
-                                    <input type="text" class="form-control" placeholder="零部件名称" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">零部件规格</span>
-                                    <input type="text" class="form-control" placeholder="零部件规格" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="图号" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="供货商" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                                    <select id="category1" >
-                                        <option value="1">外购件</option>
-                                        <option value="2">镜头</option>
-                                        <option value="3">镜片</option>
-                                        <option value="4">镜头机械部分</option>
-                                    </select>
-                                </div><!-- /.col-lg-6 -->
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" placeholder="库位" aria-describedby="sizing-addon1">
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                                    <input type="text" class="form-control" value="王美林" placeholder="创建人" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-
-                            <div class="col-lg-3">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-addon" id="sizing-addon2">&nbsp&nbsp创建时间&nbsp</span>
-                                    <input type="date" class="form-control" placeholder="创建时间" aria-describedby="sizing-addon1">
-                                </div>
-                            </div><!-- /.col-lg-6 -->
-                        </div>
-
-
-
-
-                        <div class="row">
-                            <button type="button" class="btn btn-info">查询</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="storage">
-                    <table id="t2" class="table table-hover">
-                        <tr>
-                            <th>序号</th>
-                            <th>零部件名称</th>
-                            <th>零部件规格</th>
-                            <th>图号</th>
-                            <th>材料</th>
-                            <th>供货商</th>
-                            <th>类别</th>
-                            <th>数量</th>
-                            <th>库位</th>
-                            <th>创建人</th>
-                            <th>创建时间</th>
-                            <th>备注</th>
-                        </tr>
-                        <tr th:each="storeage:${storeageList}">
-                            <th>1</th>
-                            <th th:text="${storeage.partName}">25mm/1.0消热差镜头</th>
-                            <th th:text="${storeage.partSpecification}">325/1.0</th>
-                            <th th:text="${storeage.figureNumber}">XDJ-2043</th>
-                            <th th:text="${storeage.material}">AL27</th>
-                            <th th:text="${storeage.supplier}">安徽光智</th>
-                            <th th:text="${storeage.category}">镜头</th>
-                            <th th:text="${storeage.number}">1</th>
-                            <th th:text="${storeage.location}">G2</th>
-                            <th th:text="${storeage.createdName}">任利荣</th>
-                            <th th:text="${storeage.createdTime}">2012-12-13</th>
-                            <th th:text="${storeage.mark}">备注</th>
-                        </tr>
-
-
-
-                    </table>
-
-                </div>
-            </div>
-
-<!--       库存查询     -->
+        <div class="input-box">
+            <i class="iconfont">&#xe605;</i>
+            <input type="password" id="password" placeholder="密码" />
         </div>
-
-    </div>
-
-
+        <button id="btn">登陆</button>
+    </form>
 </div>
-
 </body>
 
 <style>
-    #inStorage {
-        text-align: center;
-    }
-
-    #inRecord  {
-        text-align: center;
-    }
-
-     .storage {
-        text-align: center;
-    }
-
-
-
-    .inR{
-        width: 90px;
-    }
-    #category{
-        width: 430px;
-        height: 45px;
-        border: none;
-    }
-
-    #category1{
-        width: 135px;
-        height: 45px;
-        border: chartreuse;
-        border-radius: 2px;
-    }
-
-    table{
-        border: solid 3px  chartreuse;
-    }
-
     body{
-        background-color: #30cfd0;
+        background-image: url(../static/img/login-background.jpg);
+        background-repeat: repeat;
+        background-size:100%;
+        background-position: 0px -50px;
+    }
+    #login-box{
+        background-color: #00000068;
+        border-radius: 13px;
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 80px;
+        width: 350px;
+        height: 400px;
+    }
+
+    #login-box h1{
+        padding-top: 60px;
+        color: #ffffff;
+    }
+
+    #login-box .input-box{
+        margin-top: 30px;
+    }
+    #login-box .input-box input{
+        border: none;
+        background: none;
+        border-bottom: #FFFFFF 2px solid;
+        padding: 5px 10px;
+        outline: none;
+        color: #FFFFFF;
+    }
+
+    #login-box button{
+        line-height:30px;
+        margin-top: 30px;
+        width: 130px;
+        height: 30px;
+        border-radius:13px ;
+        outline: none;
+        border: none;
+        background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+        color: #FFFFFF;
+    }
+
+    #login-box button:hover{
+        background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    }
+    #login-box .input-box i{
+        color: #FFFFFF;
     }
 </style>
 
-<script src="webjars/bootstrap/js/bootstrap.js"></script>
-<script src="webjars/jquery/jquery.js"></script>
+
 <script>
 
-    $(document).ready(function () {
-        $("#btn").click(function () {
-            var username = $("#username").val();
-            var password = $("#password").val();
+    $(document).ready(function(){
+        $("#btn").click(function(){
+            var username=$("#username").val();
+            var password=$("#password").val();
 
-            var error = "";
-            if (username == "") {
-                error += "用户名不能为空！";
-                error += "\n";
-            } else if (password == "") {
-                error += "密码不能为空！";
-                error += "\n";
+            var error="";
+            if (username=="") {
+                error+="用户名不能为空！";
+                error+="\n";
+            }else if (password==""){
+                error+="密码不能为空！";
+                error+="\n";
             }
-            if (error != "") {
+            if (error!="") {
                 alert(error);
             } else {
                 $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: 'http://localhost:8080/addressList/add',
-                    contentType: 'application/json;charset=UTF-8',
-                    data: JSON.stringify({"username": username, "password": password}),
-                    success: function (data1) {//返回结果
-                        if (data1) {
-                            window.location.href = "success.html?userName=" + username;
+                    type:'GET',
+                    dataType:'json',
+                    url:'http://localhost:8080/addressList/add',
+                    contentType:'application/json;charset=UTF-8',
+                    data:JSON.stringify({"username":username,"password":password}),
+                    success:function(data1){//返回结果
+                        if(data1){
+                            window.location.href="success.html?userName="+username;
                             //data.username
-                        } else {
+                        }
+                        else {
                             //debugger;
                             alert("用户名或密码错误");
                         }

@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2020-12-08
  */
 @RestController
-@RequestMapping("/userTable")
+@RequestMapping("/admin")
 @Api("用户信息")
 public class UserController {
 

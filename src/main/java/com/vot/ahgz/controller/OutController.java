@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -64,9 +64,21 @@ public class OutController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条出库记录")
-    public CommonResult<Integer> insertAddressList(@ModelAttribute OutRecord outRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute OutRecord outRecord) {
 
-        return CommonResult.sucess(iOutRecordService.insertOutRecord(outRecord), "用户数据插入成功");
+        Integer result = iOutRecordService.insertOutRecord(outRecord);
+        ModelAndView modelAndView = new ModelAndView();
+        String message = "";
+        if (result > 0) {
+            message = "数据插入成功！";
+            modelAndView.setViewName("sucess");
+
+        } else {
+            modelAndView.setViewName("error");
+            message = "库存不足或者发生未知异常，请检查！";
+        }
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 
     @PostMapping("/deleteByName")
@@ -80,7 +92,7 @@ public class OutController {
     @ApiOperation(value = "更新name的出库记录")
     public CommonResult<Integer> updateByName(@ModelAttribute OutRecord outRecord) {
         iOutRecordService.updateByName(outRecord);
-        return CommonResult.sucess(iOutRecordService.updateByName(outRecord),"用户数据修改成功");
+        return CommonResult.sucess(iOutRecordService.updateByName(outRecord), "用户数据修改成功");
     }
 }
 
