@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private static final List<String> EXCLUDE_PATH = Arrays.asList("/", "/css/**", "/js/**", "/img/**", "/media/**", "/vendors/**");
+    private static final List<String> EXCLUDE_PATH = Arrays.asList("/","/index.html", "/static/css/**", "/static/js/**", "/static/img/**");
 
     @Autowired
     private LoginInterceptor loginInterceptor;
