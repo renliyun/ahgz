@@ -48,14 +48,17 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "登陆")
     public Integer login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
-
         System.out.println("用户名：" + username + "；密码为：" + password);
         UserTable userTable = iUserTableService.getByName(username);
-        httpSession.setAttribute("user", userTable);
+        if (null == userTable) {
+            System.out.println("该用户不存在！");
+            return 0;
+        } else {
+            httpSession.setAttribute("user", userTable);
+            System.out.println("用户名：" + username + "；密码为：" + password);
 
-        System.out.println("用户名：" + username + "；密码为：" + password);
-
-        return 1;
+            return 1;
+        }
     }
 
 

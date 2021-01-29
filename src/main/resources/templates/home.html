@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆界面</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
+    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script src="../static/js/jquery-3.5.1/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+
+
+<div class="container">
+
+
+    <!--头部-->
+    <h2>
+        <div>
+            <!-- 导航条右侧内容 -->
+
+            <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>&nbsp;入库</a>
+
+            <a th:href="@{/outRecord/out}"><span class="fa fa-file-text"></span>&nbsp;出库</a>
+
+            <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
+
+            <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
+
+            <a th:href="@{/deliveryRecord/delivery}"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a>
+
+        </div>
+    </h2>
+
+</div>
+</body>
+
+<style>
+
+
+    body {
+        /*background-color: #30cfd0;*/
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .div1 {
+        text-align: center;
+        margin-left: 200px;
+        width: 500px;
+        height: 1200px;
+        margin: 0 auto;
+    }
+
+    .input-group-addon {
+        margin-top: 10px;
+        width: 100px;
+        text-align: center;
+    }
+
+</style>
+
+
+<script>
+
+
+</script>
+
+</html>
