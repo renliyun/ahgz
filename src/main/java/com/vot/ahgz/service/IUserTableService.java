@@ -23,7 +23,7 @@ public interface IUserTableService {
     UserTable getById(Integer id);
 
     //  根据用户名 name名称获取
-    List<UserTable> getByName(String name);
+    UserTable getByName(String name);
 
     //  插入用户快递
     Integer insertUserTable(UserTable userTable);

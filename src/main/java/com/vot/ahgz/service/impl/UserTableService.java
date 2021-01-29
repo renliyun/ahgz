@@ -42,10 +42,10 @@ public class UserTableService implements IUserTableService {
     }
 
     @Override
-    public List<UserTable> getByName(String name) {
+    public UserTable getByName(String name) {
         queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", name);
-        return userTableMapper.selectList(queryWrapper);
+        return userTableMapper.selectOne(queryWrapper);
     }
 
     @Override

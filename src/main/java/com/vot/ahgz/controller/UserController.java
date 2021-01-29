@@ -47,21 +47,23 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登陆")
-    public ModelAndView login(HttpServletRequest request, HttpSession httpSession) {
-        ModelAndView modelAndView = new ModelAndView();
+    public Integer login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
 
+        System.out.println("用户名：" + username + "；密码为：" + password);
+        UserTable userTable = iUserTableService.getByName(username);
+        httpSession.setAttribute("user", userTable);
 
+        System.out.println("用户名：" + username + "；密码为：" + password);
 
-
-        return modelAndView;
+        return 1;
     }
 
 
-    @GetMapping("/getOneByName")
-    @ApiOperation(value = "获取name的用户信息")
-    public CommonResult<List<UserTable>> getByName(@RequestParam("name") String name) {
-        return CommonResult.sucess(iUserTableService.getByName(name), "获取用户" + name + "数据成功");
-    }
+//    @GetMapping("/getOneByName")
+//    @ApiOperation(value = "获取name的用户信息")
+//    public CommonResult<List<UserTable>> getByName(@RequestParam("name") String name) {
+//        return CommonResult.sucess(iUserTableService.getByName(name), "获取用户" + name + "数据成功");
+//    }
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条用户信息")

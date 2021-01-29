@@ -52,6 +52,9 @@ public class UserTable implements Serializable {
     //  更新时间
     private String updatedTime;
 
+    public UserTable() {
+    }
+
     public UserTable(Integer id, String username, String password, String role, String authority, String mark, String createdName, String createdTime, String updatedName, String updatedTime) {
         this.id = id;
         this.username = username;

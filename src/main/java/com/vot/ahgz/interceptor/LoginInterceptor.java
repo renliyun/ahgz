@@ -18,6 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         UserTable userTable = (UserTable) session.getAttribute("user");
+        System.out.println("拦截器数据==============="+userTable);
         if (null == userTable) {
             response.sendRedirect("http://localhost:8080/");
             return false;
