@@ -72,7 +72,6 @@ public class OutController {
         if (result > 0) {
             message = "数据插入成功！";
             modelAndView.setViewName("sucess");
-
         } else {
             modelAndView.setViewName("error");
             message = "库存不足或者发生未知异常，请检查！";

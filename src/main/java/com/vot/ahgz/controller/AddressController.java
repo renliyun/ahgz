@@ -27,7 +27,7 @@ import java.util.List;
 @Api("通讯录的api")
 public class AddressController {
 
-    private static final Logger logger=  LoggerFactory.getLogger(AddressController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
     @Autowired
     private IAddressListService iAddressListService;
@@ -35,13 +35,13 @@ public class AddressController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取全部的地址列表")
     public CommonResult<List<AddressList>> getAll() {
-        try{
+        try {
             CommonResult commonResult = new CommonResult();
             commonResult.setData(iAddressListService.getAll());
             commonResult.setCode(ResultCode.SUCCESS.getCode());
             commonResult.setMessage("获取数据成功！");
             return commonResult;
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("获取地址列表错误！");
         }
         return null;
@@ -81,7 +81,7 @@ public class AddressController {
     @ApiOperation(value = "更新一条一条地址信息")
     public CommonResult<AddressList> updateByName(@ModelAttribute AddressList addressList) {
         iAddressListService.updateByName(addressList);
-        return CommonResult.sucess(iAddressListService.updateByName(addressList),"用户数据修改成功");
+        return CommonResult.sucess(iAddressListService.updateByName(addressList), "用户数据修改成功");
     }
 }
 

@@ -65,9 +65,20 @@ public class DeliveryController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "添加一条发货记录  返回值：1表示发货成功；0表示发货失败")
-    public CommonResult<Integer> insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
+        ModelAndView modelAndView = new ModelAndView();
+        Integer result = iDeliveryRecordService.insertDeliveryRecord(deliveryRecord);
+        String message = "";
+        if (result > 0) {
+            message = "数据插入成功！";
+            modelAndView.setViewName("sucess");
 
-        return CommonResult.sucess(iDeliveryRecordService.insertDeliveryRecord(deliveryRecord), "用户数据插入成功");
+        } else {
+            modelAndView.setViewName("error");
+            message = "发生未知异常，请检出数据！";
+        }
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 
     @PostMapping("/deleteByName")
