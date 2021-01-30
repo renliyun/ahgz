@@ -17,7 +17,7 @@ import java.util.List;
 public interface IOutRecordService  {
 
     //获取全部数据
-    List<OutRecord> getAll();
+    List<OutRecord> getAll(OutRecord outRecord);
 
     //  根据id获取地址
     OutRecord getById( Integer id);

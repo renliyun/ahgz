@@ -17,7 +17,7 @@ import java.util.List;
 public interface IBorrowRecordService  {
 
     //获取全部数据
-    List<BorrowRecord> getAll();
+    List<BorrowRecord> getAll(BorrowRecord borrowRecord);
 
     //  根据name名称获取
     List<BorrowRecord> getByName( String name);

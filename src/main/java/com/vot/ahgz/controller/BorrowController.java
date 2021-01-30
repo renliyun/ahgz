@@ -5,6 +5,7 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.OutRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IBorrowRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,13 +37,11 @@ public class BorrowController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的借用记录")
-    public CommonResult<List<BorrowRecord>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iBorrowRecordService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public Page getAll(@ModelAttribute BorrowRecord borrowRecord) {
+        System.out.println("请求参数：" + borrowRecord);
+        List<BorrowRecord> borrowRecords = iBorrowRecordService.getAll(borrowRecord);
+        Page page = new Page();
+        return page;
     }
 
     @GetMapping("/borrow")

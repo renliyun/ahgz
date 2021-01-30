@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 
 import java.sql.Date;
@@ -31,7 +32,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
 
     public static QueryWrapper<DeliveryRecord> queryWrapper = null;
 
-    private static final Logger logger=  LoggerFactory.getLogger(DeliveryRecordService.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeliveryRecordService.class);
 
     @Autowired
     private DeliveryRecordMapper deliveryRecordMapper;
@@ -43,9 +44,40 @@ public class DeliveryRecordService implements IDeliveryRecordService {
     private OutRecordMapper outRecordMapper;
 
     @Override
-    public List<DeliveryRecord> getAll() {
+    public List<DeliveryRecord> getAll(DeliveryRecord deliveryRecord) {
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", Integer.MAX_VALUE);
+        System.out.println("请求条件数据===================" + deliveryRecord);
+        if (null != deliveryRecord) {
+            //将查询条件放入
+            if (!StringUtils.isEmpty(deliveryRecord.getPartName())) {
+                System.out.println("========================================" + deliveryRecord.getPartName());
+                queryWrapper.eq("part_name", deliveryRecord.getPartName());
+            }
+            if (null != deliveryRecord.getMatnr()) {
+                System.out.println("========================================" + deliveryRecord.getPartName());
+                queryWrapper.eq("matnr", deliveryRecord.getMatnr());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getFigureNumber())) {
+                queryWrapper.eq("figure_number", deliveryRecord.getFigureNumber());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getSupplier())) {
+                queryWrapper.eq("supplier", deliveryRecord.getSupplier());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getCreatedName())) {
+                queryWrapper.eq("created_name", deliveryRecord.getCreatedName());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getPartSpecification())) {
+                queryWrapper.eq("part_specification", deliveryRecord.getPartSpecification());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getCategory())) {
+                queryWrapper.eq("category", deliveryRecord.getCategory());
+            }
+            if (!StringUtils.isEmpty(deliveryRecord.getDeliveryName())) {
+                queryWrapper.eq("deliver_name", deliveryRecord.getDeliveryName());
+            }
+        } else {
+            queryWrapper.le("id", Integer.MAX_VALUE);
+        }
         return deliveryRecordMapper.selectList(queryWrapper);
     }
 

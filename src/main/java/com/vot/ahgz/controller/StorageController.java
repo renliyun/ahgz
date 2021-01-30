@@ -41,8 +41,6 @@ public class StorageController {
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
         List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
-//        page.setPageNum(storageTables.size()/20+1);
-//        page.setPageTotal(storageTables.size());
         page.setPageData(storageTables);
         modelAndView.addObject("page", page);
         modelAndView.addObject("storage", new StorageTable());

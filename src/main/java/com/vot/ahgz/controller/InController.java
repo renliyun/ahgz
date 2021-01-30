@@ -5,6 +5,7 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.InRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IInRecordService;
 import com.vot.ahgz.service.IStorageTableService;
@@ -45,13 +46,22 @@ public class InController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的入库记录")
-    public CommonResult<List<InRecord>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iInRecordService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public Page getAll(@ModelAttribute InRecord inRecord) {
+        System.out.println("入库查询" + inRecord);
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<InRecord> list = iInRecordService.getAll(inRecord);
+        Page page = new Page();
+        page.setPageData(list);
+        modelAndView.addObject("page", page);
+        //  查询库存的条件
+        modelAndView.addObject("inRecord", new InRecord());
+        System.out.println(page); // 入库查询的条件
+        modelAndView.setViewName("inRecord");
+
+
+
+        return page;
     }
 
     @GetMapping("/in")

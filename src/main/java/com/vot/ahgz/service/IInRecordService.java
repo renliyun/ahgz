@@ -17,7 +17,7 @@ import java.util.List;
 public interface IInRecordService {
 
     //获取全部数据
-    List<InRecord> getAll();
+    List<InRecord> getAll(InRecord inRecord);
 
     //  根据id获取地址
     InRecord getById(Integer id);
