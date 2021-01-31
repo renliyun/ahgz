@@ -1,0 +1,589 @@
+package com.bitsun.app.studymaterials.domain.service.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bitsun.app.studymaterials.domain.service.ReceiptFormService;
+import com.bitsun.app.studymaterials.dto.res.ReceiptFormResDto;
+import com.bitsun.app.studymaterials.enums.ClassNameEnum;
+import com.bitsun.app.studymaterials.enums.GradeNameEnum;
+import com.bitsun.app.studymaterials.infrastructure.persistence.dao.*;
+import com.bitsun.app.studymaterials.infrastructure.persistence.po.*;
+import com.bitsun.core.common.persistence.Pager;
+import com.bitsun.core.common.persistence.Query;
+import com.bitsun.core.common.util.DateUtil;
+import com.bitsun.core.common.util.StringUtils;
+import com.bitsun.core.common.web.ResultDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+
+@Slf4j
+@Service
+public class ReceiptFormServiceImpl implements ReceiptFormService {
+
+    @Autowired
+    private OrderLineMapper orderLineMapper;
+
+
+    @Autowired
+    private SchoolMapper schoolMapper;
+
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
+
+    @Autowired
+    private ItemsGroupDetailMapper itemsGroupDetailMapper;
+
+    @Autowired
+    private ItemsGroupMapper itemsGroupMapper;
+
+    @Autowired
+    private StoreMapper storeMapper;
+
+    @Override
+    public ResultDTO<Pager<ReceiptFormResDto>> findReceiptForm(Map<String, Object> params) {
+        if (!params.containsKey("qp-sorter-eq")) {
+            params.put("sorter", "orderNum");
+        }
+        if (null != params.get("qp-eventId-eq")) {
+            params.put("eventId", Long.valueOf(params.get("qp-eventId-eq").toString()));
+        }
+        if (null != params.get("qp-salesmanId-eq")) {
+            params.put("salesmanId", Long.valueOf(params.get("qp-salesmanId-eq").toString()));
+        }
+        if (null != params.get("qp-schoolId-eq")) {
+            params.put("schoolId", Long.valueOf(params.get("qp-schoolId-eq").toString()));
+        }
+        if (null != params.get("qp-storeId-eq")) {
+            params.put("storeId", Long.valueOf(params.get("qp-storeId-eq").toString()));
+        }
+        params.put("gradeId", params.get("qp-gradeId-eq"));
+        Page<ReceiptFormResDto> mapPager = orderLineMapper.findReceiptFormList(new Query<Map>(params).getPage(), params);
+        //補全學校名稱和業務員信息
+        List<ReceiptFormResDto> mapList = mapPager.getRecords();
+        ReceiptFormResDto receiptFormResDto = null;
+        //用來存儲學校業務員id，查詢學校信息
+        //補全學校信息
+        List<Long> idList = new ArrayList<>();
+        for (int i = 0; i < mapList.size(); i++) {
+            receiptFormResDto = mapList.get(i);
+            if (receiptFormResDto.getSchoolId() != null) {
+                idList.add(receiptFormResDto.getSchoolId());
+            }
+        }
+        if (CollectionUtils.isEmpty(idList)) {
+            return ResultDTO.ok();
+        }
+        List<ReceiptFormResDto> resultList = new ArrayList<>();
+        List<SchoolPo> schoolPos = schoolMapper.selectBatchIds(idList);
+        SchoolPo schoolPo = null;
+        for (int i = 0; i < mapList.size(); i++) {
+            receiptFormResDto = mapList.get(i);
+            for (int j = 0; j < schoolPos.size(); j++) {
+                schoolPo = schoolPos.get(j);
+                if (receiptFormResDto.getSchoolId().equals(schoolPo.getId())) {
+                    receiptFormResDto.setSchoolName(schoolPo.getName());
+                    resultList.add(receiptFormResDto);
+                }
+            }
+        }
+        //補全業務員信息
+        for (int i = 0; i < mapList.size(); i++) {
+            receiptFormResDto = mapList.get(i);
+            if (receiptFormResDto.getSalesmanId() != null) {
+                idList.add(receiptFormResDto.getSalesmanId());
+            }
+        }
+        List<SysUserPo> sysUserPos = sysUserMapper.selectBatchIds(idList);
+        List<ReceiptFormResDto> result = new ArrayList<>();
+        SysUserPo sysUserPo = null;
+        for (int i = 0; i < resultList.size(); i++) {
+            receiptFormResDto = resultList.get(i);
+            for (int j = 0; j < sysUserPos.size(); j++) {
+                sysUserPo = sysUserPos.get(j);
+                if (receiptFormResDto.getSalesmanId().equals(sysUserPo.getId())) {
+                    receiptFormResDto.setSalesmanName(sysUserPo.getUsername());
+                    result.add(receiptFormResDto);
+                }
+            }
+        }
+        mapPager.setRecords(result);
+        Pager<ReceiptFormResDto> receiptFormResDtoPager = new Pager<>(mapPager);
+        return ResultDTO.ok(receiptFormResDtoPager);
+
+    }
+
+    @Override
+    public HSSFWorkbook exportReceiptFormList(List<ReceiptFormResDto> receiptFormResDtoList) {
+        if (receiptFormResDtoList == null) return null;
+        Long eventId = receiptFormResDtoList.get(0) != null ? receiptFormResDtoList.get(0).getEventId() : null;
+        Long storeId = receiptFormResDtoList.get(0) != null ? receiptFormResDtoList.get(0).getStoreId() : null;
+        if (eventId == null) return null;
+        //if (storeId == null) return null;
+        //根据storeid和eventId查询所有满足的条件
+        List<ReceiptFormResDto> receiptFormResDtos = orderLineMapper.exportReceiptFormList(eventId, storeId);
+        //整合五个字段方便过滤
+        if (CollectionUtils.isEmpty(receiptFormResDtos)) return null;
+        //存储查询的对象，用来和reqIds进行比较
+        StringBuilder ids = null;
+        //请求对象的
+        List<String> reqIds = new ArrayList<>();
+        for (ReceiptFormResDto receiptFormResDto : receiptFormResDtoList) {
+            if (receiptFormResDto.getEventId() != null && receiptFormResDto.getSalesmanId() != null && receiptFormResDto.getSchoolId() != null &&
+                    receiptFormResDto.getStoreId() != null && receiptFormResDto.getGradeId() != null
+            ) {
+                ids = new StringBuilder(receiptFormResDto.getEventId().toString())
+                        .append("$")
+                        .append(receiptFormResDto.getStoreId().toString())
+                        .append("$")
+                        .append(receiptFormResDto.getSchoolId().toString())
+                        .append("$")
+                        .append(receiptFormResDto.getGradeId())
+                        .append("$")
+                        .append(receiptFormResDto.getSalesmanId().toString());
+                reqIds.add(ids.toString());
+            }
+        }
+        //遍历判断结果，使用迭代器  不满足条件删除
+        Iterator<ReceiptFormResDto> iterator = receiptFormResDtos.iterator();
+        ReceiptFormResDto receiptFormResDto1 = null;
+        while (iterator.hasNext()) {
+            receiptFormResDto1 = iterator.next();
+            if (receiptFormResDto1.getEventId() != null && receiptFormResDto1.getSalesmanId() != null && receiptFormResDto1.getSchoolId() != null &&
+                    receiptFormResDto1.getStoreId() != null && receiptFormResDto1.getGradeId() != null
+            ) {
+                ids = new StringBuilder(receiptFormResDto1.getEventId().toString())
+                        .append("$")
+                        .append(receiptFormResDto1.getStoreId().toString())
+                        .append("$")
+                        .append(receiptFormResDto1.getSchoolId().toString())
+                        .append("$")
+                        .append(receiptFormResDto1.getGradeId())
+                        .append("$")
+                        .append(receiptFormResDto1.getSalesmanId().toString());
+                if (!reqIds.contains(ids)) {
+                    //结果不满足，所有删除
+                    iterator.remove();
+                }
+            }
+        }
+        //将查询结果转换为ReceiptFormResDto  需要输出的数据
+        receiptFormResDtoList = receiptFormResDtos;
+        //准备数据  ,需要先从数组中找到对应的活动id（eventId）、业务员Id（salesmanId）、学校（schoolId）、年级（gradeNo）、班级（classNo）、组套id（suitId）
+        String[] Ids = new String[receiptFormResDtoList.size()];
+        Long[] suitIds = new Long[receiptFormResDtoList.size()];
+        //用来存放学校信息
+        Map<Long, String> schoolName = new HashMap<>();
+        ReceiptFormResDto receiptFormResDto = null;
+        StringBuilder storeName = null;
+        //查找suitid编号
+        if (receiptFormResDtoList.size() > 0) {
+            SchoolPo schoolPo = schoolMapper.selectById(receiptFormResDtoList.get(0).getSchoolId());
+            StorePo storePo = storeMapper.selectById(schoolPo.getStoreId());
+            //店铺肯定是唯一的
+            storeName = new StringBuilder(storePo.getName());
+            for (int k = 0; k < receiptFormResDtoList.size(); k++) {
+                receiptFormResDto = receiptFormResDtoList.get(k);
+                if (receiptFormResDto != null && receiptFormResDto.getSuitId() != null && receiptFormResDto.getSchoolId() != null && receiptFormResDto.getGradeId() != null) {
+                    Ids[k] = new StringBuilder(receiptFormResDto.getSuitId().toString())
+                            .append("$")
+                            .append(receiptFormResDto.getSchoolId())
+                            .append("$")
+                            .append(receiptFormResDto.getGradeId())
+                            .toString();
+                    suitIds[k] = receiptFormResDto.getSuitId();
+                    if (!schoolName.containsKey(receiptFormResDto.getSchoolId())) {
+                        schoolName.put(receiptFormResDto.getSchoolId(), receiptFormResDto.getSchoolName());
+                    }
+                }
+            }
+            //過濾重複的id
+            Object[] ids1 = convotorArr(Ids);
+            String[] ids2 = new String[ids1.length];
+            int i;
+            for (i = 0; i < ids1.length; i++) {
+                ids2[i] = ids1[i].toString();
+            }
+            //过滤重复的套餐id
+            ids1 = convotorArr(suitIds);
+            for (i = 0; i < ids1.length; i++) {
+                suitIds[i] = ids1[i] != null ? (Long) ids1[i] : null;
+            }
+            //根据套餐id获取所有的套餐详情
+            List<ItemsGroupPo> itemsGroupPos = itemsGroupMapper.selectBatchIds(Arrays.asList(suitIds));
+            //转换成map对象进行存储
+            Map<Long, ItemsGroupPo> itemsGroupPoMap = new HashMap<>();
+            for (i = 0; i < suitIds.length; i++) {
+                for (int k = 0; k < itemsGroupPos.size(); k++) {
+                    if (suitIds[i].equals(itemsGroupPos.get(k).getId())) {
+                        itemsGroupPoMap.put(suitIds[i], itemsGroupPos.get(k));
+                    }
+                }
+            }
+            //套餐详情的所有对象，
+            QueryWrapper<ItemsGroupDetailPo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.in("items_group_id", Arrays.asList(suitIds));
+            List<ItemsGroupDetailPo> itemsGroupDetailPos = itemsGroupDetailMapper.selectByGroupIds(queryWrapper);
+            //根据suitId进行分组
+            Map<Long, List<ItemsGroupDetailPo>> longListMap = new HashMap<>();
+            for (i = 0; i < suitIds.length; i++) {
+                List<ItemsGroupDetailPo> itemsGroupDetailPos1 = new ArrayList<>();
+                ItemsGroupDetailPo itemsGroupDetailPo = null;
+                for (int k = 0; k < itemsGroupDetailPos.size(); k++) {
+                    itemsGroupDetailPo = itemsGroupDetailPos.get(k);
+                    if (suitIds[i].equals(itemsGroupDetailPo.getItemsGroupId())) {
+                        itemsGroupDetailPos1.add(itemsGroupDetailPo);
+                    }
+                }
+                longListMap.put(suitIds[i], itemsGroupDetailPos1);
+            }
+            return exportReceiptFormSheet(receiptFormResDtoList, ids2, longListMap, itemsGroupPoMap, schoolName, storeName);
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     * @param receiptFormResDtoList 需要输出的数据   其中itemIds是指该订单下对应的suitId对应的商品id的字符串拼接
+     * @param Ids                   打印输出的表格数量有Ids的长度决定
+     * @param longListMap           每一个suitId对应的套餐详情
+     * @param itemsGroupPoMap       套餐详情
+     * @param schoolName            学校id对应的套餐信息
+     * @param storeName             店铺名称
+     * @return
+     */
+    private HSSFWorkbook exportReceiptFormSheet(List<ReceiptFormResDto> receiptFormResDtoList,
+                                                String[] Ids,
+                                                Map<Long, List<ItemsGroupDetailPo>> longListMap,
+                                                Map<Long, ItemsGroupPo> itemsGroupPoMap,
+                                                Map<Long, String> schoolName,
+                                                StringBuilder storeName
+    ) {
+        if (receiptFormResDtoList.size() > 0 && Ids.length > 0 && !longListMap.isEmpty() && !itemsGroupPoMap.isEmpty() && storeName != null) {
+            //创建workbook，一个excel文件
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            //在workbook中添加一个sheet
+            HSSFSheet sheet = workbook.createSheet("hm_sheet");
+            //设置自适应剧中
+            sheet.autoSizeColumn(1, true);
+            //行号
+            int rowNum = 0;
+            //标记每一个表格内的数据编号
+            int count;
+            //将所有的信息按照顺序写道表格内  //是否返回一个空白表格
+            //根据组套id进行分组
+            String name = null; //标记班级和年级
+            StringBuilder stringBuilder;
+            String title = storeName.append("网上购书签收表").toString();
+            ReceiptFormResDto receiptFormResDto = null;
+            for (int i = 0; i < Ids.length; i++) {
+                String[] arr = Ids[i].split("\\$");
+                Long suitIds = Long.valueOf(arr[0]);
+                Long schoolIds = Long.valueOf(arr[1]);
+                String gradeId = arr[2];
+
+                //行编号，用来记录本suitid下边的行数
+                count = 1;
+                //用来记录suit下对应的统计行
+                int sign = 1;
+                //设置内容样式
+                HSSFCellStyle contentStyle = createContentCellStyle(workbook);
+                //创建标题/合并标题单元格
+                //创建第一行，索引从0开始
+                HSSFRow row0 = sheet.createRow(rowNum++);
+                row0.setHeight((short) 300); //设置行高
+                //String title = "海安县新华书店网上购书签收表";
+                HSSFCell c00 = row0.createCell(0);
+                c00.setCellValue(title);
+                c00.setCellStyle(contentStyle);
+                //合并单元格，参数依次为起始行，结束行，起始列，结束列（索引0开始）
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, (longListMap.get(suitIds).size() + 3)));
+                //先合并然后设置单元格
+                //创建第二行
+                HSSFRow row1 = sheet.createRow(rowNum++);
+                row1.setHeight((short) 300);
+                String[] rowTranscript1 = {"序号", "年级", "班级", itemsGroupPoMap.get(suitIds).getGroupName(), "签名"};
+                //创建新的数组  并将需要合并的单元格使用 ""占位
+                String[] row = new String[rowTranscript1.length + longListMap.get(suitIds).size() - 1];
+                for (int k = 0; k < row.length; k++) {
+                    if (k <= rowTranscript1.length - 2) {
+                        row[k] = rowTranscript1[k];
+                    } else if (k < row.length - 2) {
+                        row[k] = "";
+                    } else {
+                        row[row.length - 1] = rowTranscript1[rowTranscript1.length - 1];
+                    }
+                }
+                // 第二行合并
+                //将值放入行内 ,并设置样式
+                for (int k = 0; k <= row.length - 1; k++) {
+                    HSSFCell tempCell = row1.createCell(k);
+                    tempCell.setCellValue(row[k]);
+                    tempCell.setCellStyle(contentStyle);
+                }
+                //序号
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, (rowNum + 1), 0, 0));
+                //年级
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, (rowNum + 1), 1, 1));
+                //班级
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, (rowNum + 1), 2, 2));
+                //组套名称  因为表格的一列是最小的操作单元，如果为1，则不需要合并
+                if (longListMap.get(suitIds).size() > 1) {
+                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 3, (row.length - 2)));
+                }
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, (rowNum + 1), (row.length - 1), (row.length - 1))); //签名
+
+                //创建第三行
+                HSSFRow row2 = sheet.createRow(rowNum++);
+                ItemsGroupDetailPo itemsGroupDetailPo = null;
+                row2.setHeight((short) 300);
+                for (int k = 3; k < 3 + longListMap.get(suitIds).size(); k++) {
+                    itemsGroupDetailPo = longListMap.get(suitIds).get(k - 3);
+                    HSSFCell tempCell = row2.createCell(k);
+                    tempCell.setCellValue(itemsGroupDetailPo.getItemNo());
+                    tempCell.setCellStyle(contentStyle);
+                }
+
+                //创建第四行
+                HSSFRow row3 = sheet.createRow(rowNum++);
+                row2.setHeight((short) 300);
+                for (int k = 3; k < longListMap.get(suitIds).size() + 3; k++) {
+                    itemsGroupDetailPo = longListMap.get(suitIds).get(k - 3);
+                    HSSFCell tempCell = row3.createCell(k);
+                    tempCell.setCellValue(itemsGroupDetailPo.getItemName());
+                    tempCell.setCellStyle(contentStyle);
+                }
+                //创建其余的数据 一条一条的写进去，根据suitId漏由到不同的表格内
+                //统计合计列表
+                Long orderNumCount = 0L;
+                Map<Integer, Long> cellSum = new HashMap<>();
+                for (int j = 0; j < receiptFormResDtoList.size(); j++) {
+                    receiptFormResDto = receiptFormResDtoList.get(j);
+                    if ((suitIds.equals(receiptFormResDto.getSuitId()) && (gradeId.equals(receiptFormResDto.getGradeId())) && schoolIds.equals(receiptFormResDto.getSchoolId())) && receiptFormResDto.getItemsId() != null) {
+                        //将数据全部写出表格 先创建一行
+                        HSSFRow tempRow = sheet.createRow(rowNum++);
+                        tempRow.setHeight((short) 300);
+                        for (int k = 0; k < (longListMap.get(suitIds).size() + 4); k++) {
+                            HSSFCell tempCell = tempRow.createCell(k);
+                            tempCell.setCellStyle(contentStyle);
+                            if (k == 0) {
+                                tempCell.setCellValue(count);
+                                count++;
+                            } else if (k == 1) {
+                                name = receiptFormResDto.getGradeId() != null ? GradeNameEnum.getNameById(Long.valueOf(receiptFormResDto.getGradeId())) : null;
+                                tempCell.setCellValue(name);
+                            } else if (k == 2) {
+                                name = receiptFormResDto.getClassNo() != null ? ClassNameEnum.getClassNameById(Long.valueOf(receiptFormResDto.getClassNo())) : null;
+                                tempCell.setCellValue(name);
+                            } else if (k > 2 && k < ((longListMap.get(suitIds).size() + 3))) {
+                                if (receiptFormResDto.getItemsId() != null) {
+                                    if (Arrays.asList(receiptFormResDto.getItemsId().split(",")).contains(longListMap.get(suitIds).get(k - 3).getItemsId().toString())) {
+                                        tempCell.setCellValue(receiptFormResDto.getOrderNum());
+                                        orderNumCount += receiptFormResDto.getOrderNum();
+                                        cellSum.put(k, (cellSum.get(k) != null ? cellSum.get(k) : 0L) + receiptFormResDto.getOrderNum());
+                                    } else {
+                                        tempCell.setCellValue(0L);
+                                        cellSum.put(k, (cellSum.get(k) != null ? cellSum.get(k) : 0L) + 0);
+                                    }
+                                }
+                            } else {
+                                tempCell.setCellValue("");
+                            }
+                        }
+                    }
+                }
+                //合计行
+                HSSFRow tempRow = sheet.createRow(rowNum++);
+                tempRow.setHeight((short) 300);
+                HSSFCell tempCell = tempRow.createCell(0);
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 2));//合计
+                tempCell.setCellStyle(contentStyle);
+                tempCell.setCellValue("合计");
+                for (int k = 3; k < (longListMap.get(suitIds).size() + 3); k++) {
+                    tempCell = tempRow.createCell(k);
+                    tempCell.setCellValue(cellSum.get(k));
+                    tempCell.setCellStyle(contentStyle);
+                }
+                //创建第五行
+                HSSFRow row4 = sheet.createRow(rowNum++);
+                //设置行高
+                row0.setHeight((short) 300);
+                //学校:丁所初中   年级:初一  品种数:10 册数:430 统计时间:2019-10-09 11:27:07
+                stringBuilder = new StringBuilder("学校:").
+                        append(schoolName.get(schoolIds)).
+                        append("  年級:").
+                        append(GradeNameEnum.getNameById(Long.valueOf(gradeId))).
+                        append("  品种数量：").
+                        append(longListMap.get(suitIds).size()).
+                        append("  册数:").append(orderNumCount).
+                        append("  统计时间:").append(DateUtil.formatDateTime(new Date()));
+                HSSFCell cell4 = row4.createCell(0);
+                cell4.setCellValue(stringBuilder != null ? stringBuilder.toString() : null);
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, row.length - 1));//年级
+                cell4.setCellStyle(contentStyle);
+                //两张表之间增加一点空隙，设定为两行
+                HSSFRow tempRow0 = sheet.createRow(rowNum++);
+                tempRow0.setHeight((short) 300);
+                HSSFRow tempRow1 = sheet.createRow(rowNum++);
+                tempRow1.setHeight((short) 300);
+            }
+            return workbook;
+        } else {
+            return null;
+        }
+    }
+
+    /* 创建内容样式
+     * @param wb
+     * @return
+     */
+    private static HSSFCellStyle createContentCellStyle(HSSFWorkbook wb) {
+        HSSFCellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);// 垂直居中
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);// 水平居中
+        cellStyle.setWrapText(true);// 设置自动换行
+        HSSFFont font = wb.createFont(); // 生成12号字体
+        font.setColor((short) 0);
+        font.setFontHeightInPoints((short) 12);
+        cellStyle.setFont(font);
+        cellStyle.setFont(font);
+        return cellStyle;
+    }
+
+    @Override
+    public HSSFWorkbook exportAllReceiptForl(List<ReceiptFormResDto> receiptFormResDtoList) {
+
+        if (CollectionUtils.isEmpty(receiptFormResDtoList)) return null;
+        //需要补全业务员姓名
+        receiptFormResDtoList = completeInfo(receiptFormResDtoList);
+        //不需要分表
+        String storeName = receiptFormResDtoList.get(0).getStoreId() != null ? storeMapper.selectById(((Long) receiptFormResDtoList.get(0).getStoreId())).getName() : null;
+        //查找业务员的id对象
+        Map<Long, SysUserPo> salsemanEntity = new HashMap<>();
+        List<Long> salsemanIds = new ArrayList<>();
+        ReceiptFormResDto receiptFormResDto = null;
+        for (int i = 0; i < receiptFormResDtoList.size(); i++) {
+            receiptFormResDto = receiptFormResDtoList.get(i);
+            if (receiptFormResDto != null) {
+                if (!salsemanIds.contains(receiptFormResDto.getSalesmanId())) {
+                    salsemanIds.add(receiptFormResDto.getSalesmanId());
+                }
+            }
+        }
+        if (CollectionUtils.isEmpty(salsemanIds)) return null;
+        List<SysUserPo> sysUserPos = sysUserMapper.selectBatchIds(salsemanIds);
+        if (CollectionUtils.isEmpty(sysUserPos)) return null;
+        for (SysUserPo sysUserPo : sysUserPos) {
+            salsemanEntity.put(sysUserPo.getId(), sysUserPo);
+        }
+        HSSFWorkbook hssfWorkbook = exportAllReceiptResut(receiptFormResDtoList, storeName, salsemanEntity);
+        return hssfWorkbook;
+    }
+
+    private HSSFWorkbook exportAllReceiptResut(List<ReceiptFormResDto> receiptFormResDtoList, String storeName, Map<Long, SysUserPo> salsemanEntity) {
+        if (CollectionUtils.isEmpty(receiptFormResDtoList)) return null;
+        //创建workbook，一个excel文件
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //在workbook中添加一个sheet
+        HSSFSheet sheet = workbook.createSheet("hm_sheet");
+        //设置自适应剧中
+        sheet.autoSizeColumn(1, true);
+
+        HSSFCellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);// 垂直居中
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);// 水平居中
+        //行号
+        int rowNum = 0;
+        //标记每一个表格内的数据编号
+        int count;
+        HSSFRow row0 = sheet.createRow(rowNum++);
+        row0.setHeight((short) 300); //设置行高
+        HSSFCell hssfCell = row0.createCell(0);
+        hssfCell.setCellValue(storeName);
+        hssfCell.setCellStyle(cellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 3));
+
+        row0 = sheet.createRow(rowNum++);
+        hssfCell = row0.createCell(0);
+        hssfCell.setCellValue("业务员名");
+        hssfCell.setCellStyle(cellStyle);
+        hssfCell = row0.createCell(1);
+        hssfCell.setCellValue("学校名");
+        hssfCell.setCellStyle(cellStyle);
+        hssfCell = row0.createCell(2);
+        hssfCell.setCellValue("年级名");
+        hssfCell.setCellStyle(cellStyle);
+        hssfCell = row0.createCell(3);
+        hssfCell.setCellValue("订单数量");
+        hssfCell.setCellStyle(cellStyle);
+        ReceiptFormResDto receiptFormResDto = null;
+        for (int i = 0; i < receiptFormResDtoList.size(); i++) {
+            receiptFormResDto = receiptFormResDtoList.get(i);
+            row0 = sheet.createRow(rowNum++);
+            hssfCell = row0.createCell(0);
+            hssfCell.setCellValue(salsemanEntity.get(receiptFormResDto.getSalesmanId()).getUsername());
+            hssfCell.setCellStyle(cellStyle);
+            hssfCell = row0.createCell(1);
+            hssfCell.setCellValue(receiptFormResDto.getSchoolName());
+            hssfCell.setCellStyle(cellStyle);
+            hssfCell = row0.createCell(2);
+            hssfCell.setCellValue(receiptFormResDto.getGradeId() != null ? GradeNameEnum.getNameById(Long.valueOf(receiptFormResDto.getGradeId())) : null);
+            hssfCell.setCellStyle(cellStyle);
+            hssfCell = row0.createCell(3);
+            hssfCell.setCellValue(receiptFormResDto.getOrderNum());
+            hssfCell.setCellStyle(cellStyle);
+        }
+        return workbook;
+    }
+
+    private List<ReceiptFormResDto> completeInfo(List<ReceiptFormResDto> receiptFormResDtos) {
+        List<ReceiptFormResDto> resulList = new ArrayList<>();
+        ReceiptFormResDto receiptFormResDto1 = null;
+        Set<Long> salsemanIds = new HashSet<>();
+        for (ReceiptFormResDto receiptFormResDto : receiptFormResDtos) {
+            if (receiptFormResDto.getSalesmanId() != null) {
+                salsemanIds.add(receiptFormResDto.getSalesmanId());
+            }
+        }
+        if (CollectionUtils.isEmpty(salsemanIds)) return null;
+        List<SysUserPo> sysUserPos = sysUserMapper.selectBatchIds(salsemanIds);
+        for (ReceiptFormResDto receiptFormResDto : receiptFormResDtos) {
+            if (receiptFormResDto != null && receiptFormResDto.getSalesmanId() != null) {
+                receiptFormResDto1 = receiptFormResDto;
+                for (SysUserPo sysUserPo : sysUserPos) {
+                    if (sysUserPo != null && sysUserPo.getId() != null && receiptFormResDto1.getSalesmanId().equals(sysUserPo.getId())) {
+                        receiptFormResDto1.setSalesmanName(sysUserPo.getUsername());
+                        resulList.add(receiptFormResDto1);
+                    }
+                }
+            }
+        }
+        return resulList;
+    }
+
+    private Object[] convotorArr(Object[] arr) {
+        List<Object> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if (!list.contains(arr[i])) {
+                list.add(arr[i]);
+            }
+        }
+        Object[] newArr = new Object[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            newArr[i] = list.get(i);
+        }
+        return newArr;
+    }
+}
