@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆界面</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
+    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script src="../static/js/jquery-3.5.1/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+
+
+<div id="body1" class="container">
+
+
+    <!--头部-->
+    <h2>
+        <div>
+            <!-- 导航条右侧内容 -->
+
+            <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>&nbsp;入库</a>
+
+            <a th:href="@{/outRecord/out}"><span class="fa fa-file-text"></span>&nbsp;出库</a>
+
+            <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
+
+            <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
+
+            <a th:href="@{/deliveryRecord/delivery}"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a>
+
+        </div>
+    </h2>
+
+
+    <div id="storage">
+        <h1>
+            库存查询
+        </h1>
+        <div>
+            <form action="#" th:action="@{/storageTable/getAll}" th:object="${storage}" method="get">
+                <!--                        -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">物料号</span>
+                            <input type="text" th:field="*{matnr}" class="form-control" placeholder="物料号"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">零部件名称</span>
+                            <input type="text" th:field="*{partName}" class="form-control" placeholder="零部件名称"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">零部件规格</span>
+                            <input type="text" th:field="*{partSpecification}" class="form-control" placeholder="零部件规格"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
+                            <input type="text" th:field="*{figureNumber}" class="form-control" placeholder="图号"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{supplier}" class="form-control" placeholder="供货商"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
+                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}" >
+                                <option value=""></option>
+                                <option value="外购件">外购件</option>
+                                <option value="镜头">镜头</option>
+                                <option value="镜片">镜片</option>
+                                <option value="镜头机械部分">镜头机械部分</option>
+                            </select>
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{location}" class="form-control" placeholder="库位"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{createdName}" class="form-control" value="王美林"
+                                       placeholder="创建人"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                        </div><!-- /.col-lg-6 -->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button type="submit" value="Submit" class="btn btn-info">查询</button>
+                </div>
+            </form>
+        </div>
+        <div class="storage">
+            <table class="table table-hover">
+                <thead style="border-bottom: none">
+                <tr>
+                    <th>序号</th>
+                    <th>物料号</th>
+                    <th>图号</th>
+                    <th>零部件规格</th>
+                    <th>零部件名称</th>
+                    <th>材料</th>
+                    <th>供货商</th>
+                    <th>类别</th>
+                    <th>数量</th>
+                    <th>库位</th>
+                    <th>创建人</th>
+                    <th>创建时间</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="pageMain">
+                <tr th:each="storeage,storeageStatus :${page.pageData}">
+                    <td th:text="${storeageStatus.index + 1}"></td>
+                    <td th:text="${storeage.matnr}"></td>
+                    <td th:text="${storeage.figureNumber}"></td>
+                    <td th:text="${storeage.partSpecification}"></td>
+                    <td th:text="${storeage.partName}"></td>
+                    <td th:text="${storeage.material}"></td>
+                    <td th:text="${storeage.supplier}"></td>
+                    <td th:text="${storeage.category}"></td>
+                    <td th:text="${storeage.number}"></td>
+                    <td th:text="${storeage.location}"></td>
+                    <td th:text="${storeage.createdName}"></td>
+                    <td th:text="${storeage.createdTime}"></td>
+                    <td th:text="${storeage.mark}"></td>  <!-- 需要传递id -->
+                    <td>
+                        <button class="btn-default" type="submit" th:onclick="'javascript:update('+${storeage.id}+')' ">
+                            修改
+                        </button>
+                        <button class="btn-danger" type="submit" th:onclick="'javascript:del('+${storeage.id}+')' ">删除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div id="pageBox">
+                <span id="prev">上一页</span>
+                <ul id="pageNav"></ul>
+                <span id="next">下一页</span>
+            </div>
+        </div>
+    </div>
+
+    <!--   修改   -->
+    <div id="update" class="div2" style="display: none">
+        <h1>
+            库存修改
+        </h1>
+
+        <div class="div2">
+
+            <form action="#" th:action="@{/storageTable/updateById}" method="post">
+                <div>
+                    <div style="display: none">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">id</span>
+                            <input id="id" name="id1" required type="text"
+                                   class="form-control"
+                                   placeholder="id"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">物料号</span>
+                            <input id="matnr" name="matnr1" required type="text"
+                                   class="form-control"
+                                   placeholder="零部件物料号"
+
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">零部件名称</span>
+                            <input required type="text" id="partName" name="partName1" class="form-control"
+                                   placeholder="零部件名称" aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">零部件规格</span>
+                            <input required type="text" id="partSpecification" name="partSpecification1"
+                                   class="form-control"
+                                   placeholder="零部件规格"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
+                            <input type="text" name="figureNumber1" id="figureNumber" class="form-control"
+                                   placeholder="图号"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp材料&nbsp&nbsp&nbsp&nbsp</span>
+                            <input type="text" name="material1" id="material" class="form-control"
+                                   placeholder="材料"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
+                            <input required type="text" name="supplier1" id="supplier" class="form-control"
+                                   placeholder="供货商"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
+                            <input required type="text" name="category1" id="category2" class="form-control"
+                                   placeholder="类别"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp数量&nbsp&nbsp&nbsp&nbsp</span>
+                            <input required type="text" name="number1" class="form-control" placeholder="数量"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
+                            <input required type="text" id="location" name="location1" class="form-control"
+                                   placeholder="库位"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp更新人&nbsp&nbsp&nbsp</span>
+                            <input type="text" name="updatedName1" id="updatedName" class="form-control"
+                                   placeholder="更新人"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+
+                <div>
+                    <div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp备注&nbsp&nbsp&nbsp&nbsp</span>
+                            <input type="text" name="mark1" class="form-control" placeholder="备注"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div>
+                    <button type="button" th:onclick="'javascript:saveUpdate()'">保存</button>
+                    <button type="button" th:onclick="'javascript:reset1()'">返回</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--    -->
+
+
+</div>
+</div>
+</div>
+</div>
+</body>
+
+<style>
+    body {
+        /*background-color: #30cfd0;*/
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .div2 {
+        text-align: center;
+        margin-left: 200px;
+        width: 500px;
+        height: 1200px;
+        margin: 0 auto;
+    }
+
+    .input-group-addon {
+        margin-top: 10px;
+        width: 100px;
+        text-align: center;
+    }
+
+    #category1 {
+
+        width: 251px;
+        height: 45px;
+        border: 2px;
+        border-radius: 2px;
+    }
+
+    /*设置 a 标签的css样式*/
+    .page-normal button {
+        border: 1px solid #ff6500;
+        padding: 5px 7px;
+        color: #ff6500;
+        margin-left: 10px; /*设置标签 a 之间的间隔*/
+        text-decoration: none; /*去除页码数字下面的下划线*/
+    }
+
+    /*设置鼠标经过时 a 标签的css样式*/
+    .page-normal button:hover {
+        background-color: #120801;
+    }
+
+    /*设置整个div的css样式,该样式主要用于设置网页内的省略号 …… 的样式，并且同时设置内容居中显示*/
+    .page-normal {
+        color: #3070b5;
+        text-align: right;
+        margin-right: 20px;
+    }
+
+    /*设置当前页面的css样式*/
+    .page-normal .page-current {
+        color: #ffffff;
+        background-color: #ff6500;
+    }
+
+    /*设置左单括号 < 的css样式*/
+    .page-normal .page-prev {
+        color: #ffe3c6;
+    }
+
+    /*进行代码优化，将不同css样式中共有的属性放在一起，有助于提高运行效率*/
+    .page-normal button, .page-normal button:hover, .page-normal .page-prev, .page-normal .page-current {
+        border: 1px solid #e3dedb;
+        padding: 5px 7px;
+    }
+
+
+    #pageBox {
+        padding: 10px 0 0 0;
+    }
+
+    #pageBox span {
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        color: #fff;
+        background: #08a586;
+
+    }
+
+    #pageNav {
+        display: inline-block;
+    }
+
+    #pageNav a {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        color: #3a87ad;
+        text-decoration: none;
+    }
+
+    #pageNav a.active, #pageNav a:hover {
+        background: #3a87ad;
+        color: #EFEFEF;
+    }
+
+    #prev:hover {
+        cursor: pointer;
+    }
+
+    #next:hover {
+        cursor: pointer;
+    }
+
+    .input-group-addon{
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+</style>
+
+
+<script>
+
+
+    function update(id) {
+        // alert(id + "  修改");
+        // 跳转页面进行修改和保存
+        $("#update").show();
+        $("#storage").hide();
+        $.ajax({
+            url: "/storageTable/updateById",
+            type: "get",
+            data: {
+                id: id,
+            },
+            success: function (res) {
+                console.log(res)
+                $("input[name='id1']").val(res.data.id);
+                $("input[name='matnr1']").val(res.data.matnr);
+                $("input[name='partName1']").val(res.data.partName);
+                $("input[name='partSpecification1']").val(res.data.partSpecification);
+                $("input[name='figureNumber1']").val(res.data.figureNumber);
+                $("input[name='material1']").val(res.data.material);
+                $("input[name='supplier1']").val(res.data.supplier);
+                $("input[name='category1']").val(res.data.category);
+                $("input[name='number1']").val(res.data.number);
+                $("input[name='updatedName1']").val(res.data.updatedName);
+                $("input[name='location1']").val(res.data.location);
+                $("input[name='mark1']").val(res.data.mark);
+            }
+        })
+
+    };
+
+    function del(id) {
+        $.ajax({
+            url: "/storageTable/deleteById",
+            type: "get",
+            data: {
+                id: id,
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.data == 1) {
+                    alert("数据删除成功！");
+                    window.location.reload();
+                } else {
+                    alert("数据删除失败！")
+                }
+            }
+        })
+
+    };
+
+
+    // 开始  分页 内容
+    $(function () {
+        tabPage({
+            pageMain: '#pageMain',
+            pageNav: '#pageNav',
+            pagePrev: '#prev',
+            pageNext: '#next',
+            curNum: 20, /*每页显示的条数*/
+            activeClass: 'active', /*高亮显示的class*/
+            ini: 0/*初始化显示的页面*/
+        });
+
+        function tabPage(tabPage) {
+            var pageMain = $(tabPage.pageMain);
+            /*获取内容列表*/
+            var pageNav = $(tabPage.pageNav);
+            /*获取分页*/
+            var pagePrev = $(tabPage.pagePrev);
+            /*上一页*/
+            var pageNext = $(tabPage.pageNext);
+            /*下一页*/
+
+
+            var curNum = tabPage.curNum;
+            /*每页显示数*/
+            var len = Math.ceil(pageMain.find("tr").length / curNum);
+            /*计算总页数*/
+            console.log(len);
+            var pageList = '';
+            /*生成页码*/
+            var iNum = 0;
+            /*当前的索引值*/
+
+            for (var i = 0; i < len; i++) {
+                pageList += '<a href="javascript:;">' + (i + 1) + '</a>';
+            }
+            pageNav.html(pageList);
+            /*头一页加高亮显示*/
+            pageNav.find("a:first").addClass(tabPage.activeClass);
+
+            /*******标签页的点击事件*******/
+            pageNav.find("a").each(function () {
+                $(this).click(function () {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    $(this).addClass(tabPage.activeClass);
+                    iNum = $(this).index();
+                    $(pageMain).find("tr").hide();
+                    for (var i = ($(this).html() - 1) * curNum; i < ($(this).html()) * curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+
+                });
+            })
+
+
+            $(pageMain).find("tr").hide();
+            /************首页的显示*********/
+            for (var i = 0; i < curNum; i++) {
+                $(pageMain).find("tr").eq(i).show()
+            }
+
+
+            /*下一页*/
+            pageNext.click(function () {
+                $(pageMain).find("tr").hide();
+                if (iNum == len - 1) {
+                    alert('已经是最后一页');
+                    for (var i = (len - 1) * curNum; i < len * curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+                    return false;
+                } else {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    iNum++;
+                    pageNav.find("a").eq(iNum).addClass(tabPage.activeClass);
+//                    ini(iNum);
+                }
+                for (var i = iNum * curNum; i < (iNum + 1) * curNum; i++) {
+                    $(pageMain).find("tr").eq(i).show()
+                }
+            });
+            /*上一页*/
+            pagePrev.click(function () {
+                $(pageMain).find("tr").hide();
+                if (iNum == 0) {
+                    alert('当前是第一页');
+                    for (var i = 0; i < curNum; i++) {
+                        $(pageMain).find("tr").eq(i).show()
+                    }
+                    return false;
+                } else {
+                    pageNav.find("a").removeClass(tabPage.activeClass);
+                    iNum--;
+                    pageNav.find("a").eq(iNum).addClass(tabPage.activeClass);
+                }
+                for (var i = iNum * curNum; i < (iNum + 1) * curNum; i++) {
+                    $(pageMain).find("tr").eq(i).show()
+                }
+            })
+        }
+    })
+
+    // 结束
+    function reset1() {
+        $("#update").hide();
+        $("#storage").show();
+        $("input[name='matnr1']").val();
+        $("input[name='partName1']").val();
+        $("input[name='partSpecification1']").val();
+        $("input[name='figureNumber1']").val();
+        $("input[name='material1']").val();
+        $("input[name='supplier1']").val();
+        $("input[name='category1']").val();
+        $("input[name='number1']").val();
+        $("input[name='updatedName1']").val();
+        $("input[name='location1']").val();
+    }
+
+    function saveUpdate() {
+        var id = $("input[name='id1']").val();
+        var matnr = $("input[name='matnr1']").val();
+        var partName = $("input[name='partName1']").val();
+        var partSpecification = $("input[name='partSpecification1']").val();
+        var figureNumber = $("input[name='figureNumber1']").val();
+        var material = $("input[name='material1']").val();
+        var supplier = $("input[name='supplier1']").val();
+        var category = $("input[name='category1']").val();
+        var number = $("input[name='number1']").val();
+        var updatedName = $("input[name='updatedName1']").val();
+        var location = $("input[name='location1']").val();
+        var mark = $("input[name='mark1']").val();
+        $.ajax({
+            url: "/storageTable/updateOne",
+            type: "post",
+            datatype: "json",
+            contentType:"application/json",
+            data: JSON.stringify({
+                id: id,
+                matnr: matnr,
+                partName: partName,
+                partSpecification: partSpecification,
+                figureNumber: figureNumber,
+                material: material,
+                supplier: supplier,
+                category: category,
+                number: number,
+                updatedName: updatedName,
+                location: location,
+                mark: mark,
+            }),
+            success: function (res) {
+                console.log(res);
+                window.location.reload();
+            }
+        })
+
+
+    }
+
+    $(document).ready(function () {
+
+
+        $("#btn").click(function () {
+            alert("未知得操作！")
+            // var username = $("#username").val();
+            // var password = $("#password").val();
+            //
+            // var error = "";
+            // if (username == "") {
+            //     error += "用户名不能为空！";
+            //     error += "\n";
+            // } else if (password == "") {
+            //     error += "密码不能为空！";
+            //     error += "\n";
+            // }
+            // if (error != "") {
+            //     alert(error);
+            // } else {
+            //     $.ajax({
+            //         type: 'GET',
+            //         dataType: 'json',
+            //         url: 'http://localhost:8080/addressList/add',
+            //         contentType: 'application/json;charset=UTF-8',
+            //         data: JSON.stringify({"username": username, "password": password}),
+            //         success: function (data1) {//返回结果
+            //             if (data1) {
+            //                 window.location.href = "success.html?userName=" + username;
+            //                 //data.username
+            //             } else {
+            //                 //debugger;
+            //                 alert("用户名或密码错误");
+            //             }
+            //         }
+            //     });
+            // }
+        });
+    })
+
+
+</script>
+
+</html>

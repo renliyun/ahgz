@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆界面</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
+    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script src="../static/js/jquery-3.5.1/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+<div id="login-box">
+    <form id="form1">
+        <h1>登陆</h1>
+        <div class="input-box">
+            <i class="iconfont">&#xe609;</i>
+            <input type="text" id="username" placeholder="用户名" autocomplete="true"/>
+        </div>
+        <div class="input-box">
+            <i class="iconfont">&#xe605;</i>
+            <input type="password" id="password" placeholder="密码" autocomplete="true"/>
+        </div>
+        <button id="btn">登陆</button>
+    </form>
+</div>
+</body>
+
+<style>
+    body {
+        background-image: url(../static/img/login-background.jpg);
+        background-repeat: repeat;
+        background-size: 100%;
+        background-position: 0px -50px;
+    }
+
+    #login-box {
+        background-color: #00000068;
+        border-radius: 13px;
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 80px;
+        width: 350px;
+        height: 400px;
+    }
+
+    #login-box h1 {
+        padding-top: 60px;
+        color: #ffffff;
+    }
+
+    #login-box .input-box {
+        margin-top: 30px;
+    }
+
+    #login-box .input-box input {
+        border: none;
+        background: none;
+        border-bottom: #FFFFFF 2px solid;
+        padding: 5px 10px;
+        outline: none;
+        color: #FFFFFF;
+    }
+
+    #login-box button {
+        line-height: 30px;
+        margin-top: 30px;
+        width: 130px;
+        height: 30px;
+        border-radius: 13px;
+        outline: none;
+        border: none;
+        background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+        color: #FFFFFF;
+    }
+
+    #login-box button:hover {
+        background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    }
+
+    #login-box .input-box i {
+        color: #FFFFFF;
+    }
+</style>
+
+
+<script>
+
+    $("#btn").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        console.log(username + "=========" + password)
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: 'http://localhost:8080/admin/login',
+            data: {
+                username: username,
+                password: password
+            },
+            success: function (data1) {//返回结果
+                if (data1 = 1) {
+                  location.href="/storageTable/getAll"
+                }
+            }
+        });
+
+    });
+
+    $(document).ready(function () {
+
+    })
+</script>
+
+</html>
