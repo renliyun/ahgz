@@ -6,6 +6,7 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.InRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IDeliveryRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -36,13 +37,11 @@ public class DeliveryController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "所有的发货记录")
-    public CommonResult<List<DeliveryRecord>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iDeliveryRecordService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public Page getAll(@ModelAttribute DeliveryRecord deliveryRecord) {
+        System.out.println("请求数据：" + deliveryRecord);
+        List<DeliveryRecord> list = iDeliveryRecordService.getAll(deliveryRecord);
+        Page page = new Page();
+        return page;
     }
 
 
@@ -65,9 +64,20 @@ public class DeliveryController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "添加一条发货记录  返回值：1表示发货成功；0表示发货失败")
-    public CommonResult<Integer> insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
+        ModelAndView modelAndView = new ModelAndView();
+        Integer result = iDeliveryRecordService.insertDeliveryRecord(deliveryRecord);
+        String message = "";
+        if (result > 0) {
+            message = "数据插入成功！";
+            modelAndView.setViewName("sucess");
 
-        return CommonResult.sucess(iDeliveryRecordService.insertDeliveryRecord(deliveryRecord), "用户数据插入成功");
+        } else {
+            modelAndView.setViewName("error");
+            message = "发生未知异常，请检出数据！";
+        }
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 
     @PostMapping("/deleteByName")
@@ -81,7 +91,7 @@ public class DeliveryController {
     @ApiOperation(value = "更新一条发货记录")
     public CommonResult<Integer> updateByName(@ModelAttribute DeliveryRecord deliveryRecord) {
         iDeliveryRecordService.updateByName(deliveryRecord);
-        return CommonResult.sucess(iDeliveryRecordService.updateByName(deliveryRecord),"用户数据修改成功");
+        return CommonResult.sucess(iDeliveryRecordService.updateByName(deliveryRecord), "用户数据修改成功");
     }
 }
 

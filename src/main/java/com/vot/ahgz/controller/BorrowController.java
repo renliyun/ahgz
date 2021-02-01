@@ -5,6 +5,7 @@ import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.OutRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IBorrowRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -36,13 +37,11 @@ public class BorrowController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的借用记录")
-    public CommonResult<List<BorrowRecord>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iBorrowRecordService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public Page getAll(@ModelAttribute BorrowRecord borrowRecord) {
+        System.out.println("请求参数：" + borrowRecord);
+        List<BorrowRecord> borrowRecords = iBorrowRecordService.getAll(borrowRecord);
+        Page page = new Page();
+        return page;
     }
 
     @GetMapping("/borrow")
@@ -55,7 +54,6 @@ public class BorrowController {
     }
 
 
-
     @GetMapping("/getOneByName")
     @ApiOperation(value = "获取name的所有的借用记录")
     public CommonResult<List<BorrowRecord>> getByName(@RequestParam("name") String name) {
@@ -64,8 +62,19 @@ public class BorrowController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条借用信息")
-    public CommonResult<Integer> insertAddressList(@ModelAttribute BorrowRecord borrowRecord) {
-        return CommonResult.sucess(iBorrowRecordService.insertBorrowRecord(borrowRecord), "用户数据插入成功");
+    public ModelAndView insertAddressList(@ModelAttribute BorrowRecord borrowRecord) {
+        ModelAndView modelAndView = new ModelAndView();
+        Integer result = iBorrowRecordService.insertBorrowRecord(borrowRecord);
+        String message = "";
+        if (result > 0) {
+            message = "数据插入成功！";
+            modelAndView.setViewName("sucess");
+        } else {
+            modelAndView.setViewName("error");
+            message = "发生未知异常，请检出数据！";
+        }
+        modelAndView.addObject("message", message);
+        return modelAndView;
     }
 
     @PostMapping("/deleteByName")
@@ -79,7 +88,7 @@ public class BorrowController {
     @ApiOperation(value = "更新一条借用记录")
     public CommonResult<Integer> updateByName(@ModelAttribute BorrowRecord borrowRecord) {
         iBorrowRecordService.updateByName(borrowRecord);
-        return CommonResult.sucess(iBorrowRecordService.updateByName(borrowRecord),"用户数据修改成功");
+        return CommonResult.sucess(iBorrowRecordService.updateByName(borrowRecord), "用户数据修改成功");
     }
 }
 

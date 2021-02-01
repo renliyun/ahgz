@@ -17,7 +17,7 @@ import java.util.List;
 public interface IDeliveryRecordService  {
 
     //获取全部数据
-    List<DeliveryRecord> getAll();
+    List<DeliveryRecord> getAll(DeliveryRecord deliveryRecord);
 
     //  根据id获取地址
     DeliveryRecord getById( Integer id);

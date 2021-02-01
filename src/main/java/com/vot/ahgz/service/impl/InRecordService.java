@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import java.sql.Date;
 import java.util.List;
@@ -37,9 +38,41 @@ public class InRecordService implements IInRecordService {
     public static QueryWrapper<InRecord> queryWrapper = null;
 
     @Override
-    public List<InRecord> getAll() {
+    public List<InRecord> getAll(InRecord inRecord) {
+
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", Integer.MAX_VALUE);
+        System.out.println("请求条件数据===================" + inRecord);
+        if (null != inRecord) {
+            //将查询条件放入
+            if (!StringUtils.isEmpty(inRecord.getPartName())) {
+                System.out.println("========================================" + inRecord.getPartName());
+                queryWrapper.eq("part_name", inRecord.getPartName());
+            }
+            if (null != inRecord.getMatnr()) {
+                System.out.println("========================================" + inRecord.getPartName());
+                queryWrapper.eq("matnr", inRecord.getMatnr());
+            }
+            if (!StringUtils.isEmpty(inRecord.getFigureNumber())) {
+                queryWrapper.eq("figure_number", inRecord.getFigureNumber());
+            }
+            if (!StringUtils.isEmpty(inRecord.getSupplier())) {
+                queryWrapper.eq("supplier", inRecord.getSupplier());
+            }
+            if (!StringUtils.isEmpty(inRecord.getLocation())) {
+                queryWrapper.eq("location", inRecord.getLocation());
+            }
+            if (!StringUtils.isEmpty(inRecord.getCreatedName())) {
+                queryWrapper.eq("created_name", inRecord.getCreatedName());
+            }
+            if (!StringUtils.isEmpty(inRecord.getPartSpecification())) {
+                queryWrapper.eq("part_specification", inRecord.getPartSpecification());
+            }
+            if (!StringUtils.isEmpty(inRecord.getCategory())) {
+                queryWrapper.eq("category", inRecord.getCategory());
+            }
+        } else {
+            queryWrapper.le("id", Integer.MAX_VALUE);
+        }
         return inRecordMapper.selectList(queryWrapper);
     }
 

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
 public class BorrowRecordService implements IBorrowRecordService {
 
 
-    private static final Logger logger=  LoggerFactory.getLogger(BorrowRecordService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BorrowRecordService.class);
 
     @Autowired
     private BorrowRecordMapper borrowRecordMapper;
@@ -33,11 +34,45 @@ public class BorrowRecordService implements IBorrowRecordService {
     @Autowired
     private StorageTableMapper storageTableMapper;
 
+    public static QueryWrapper<BorrowRecord> queryWrapper = null;
+
     @Override
-    public List<BorrowRecord> getAll() {
+    public List<BorrowRecord> getAll(BorrowRecord borrowRecord) {
         // TODO
-        QueryWrapper<BorrowRecord> queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", Integer.MAX_VALUE);
+        queryWrapper = new QueryWrapper<>();
+        System.out.println("请求数据===================" + borrowRecord);
+        if (null != borrowRecord) {
+            //将查询条件放入
+            if (!StringUtils.isEmpty(borrowRecord.getPartName())) {
+                System.out.println("========================================" + borrowRecord.getPartName());
+                queryWrapper.eq("part_name", borrowRecord.getPartName());
+            }
+            if (null != borrowRecord.getMatnr()) {
+                System.out.println("========================================" + borrowRecord.getPartName());
+                queryWrapper.eq("matnr", borrowRecord.getMatnr());
+            }
+            if (!StringUtils.isEmpty(borrowRecord.getFigureNumber())) {
+                queryWrapper.eq("figure_number", borrowRecord.getFigureNumber());
+            }
+            if (!StringUtils.isEmpty(borrowRecord.getSupplier())) {
+                queryWrapper.eq("supplier", borrowRecord.getSupplier());
+            }
+
+            if (!StringUtils.isEmpty(borrowRecord.getCreatedName())) {
+                queryWrapper.eq("created_name", borrowRecord.getCreatedName());
+            }
+            if (!StringUtils.isEmpty(borrowRecord.getPartSpecification())) {
+                queryWrapper.eq("part_specification", borrowRecord.getPartSpecification());
+            }
+            if (!StringUtils.isEmpty(borrowRecord.getCategory())) {
+                queryWrapper.eq("category", borrowRecord.getCategory());
+            }
+            if (!StringUtils.isEmpty(borrowRecord.getBorrowName())) {
+                queryWrapper.eq("borrow_name", borrowRecord.getBorrowName());
+            }
+        } else {
+            queryWrapper.le("id", Integer.MAX_VALUE);
+        }
         return borrowRecordMapper.selectList(queryWrapper);
     }
 

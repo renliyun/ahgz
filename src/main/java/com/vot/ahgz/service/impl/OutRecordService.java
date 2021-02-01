@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.sql.Date;
 import java.util.List;
@@ -36,10 +37,41 @@ public class OutRecordService implements IOutRecordService {
     public static QueryWrapper<OutRecord> queryWrapper = null;
 
     @Override
-    public List<OutRecord> getAll() {
+    public List<OutRecord> getAll(OutRecord outRecord) {
+
         queryWrapper = new QueryWrapper<>();
-        queryWrapper.le("id", Integer.MAX_VALUE);
+        System.out.println("请求条件数据===================" + outRecord);
+        if (null != outRecord) {
+            //将查询条件放入
+            if (!StringUtils.isEmpty(outRecord.getPartName())) {
+                System.out.println("========================================" + outRecord.getPartName());
+                queryWrapper.eq("part_name", outRecord.getPartName());
+            }
+            if (null != outRecord.getMatnr()) {
+                System.out.println("========================================" + outRecord.getPartName());
+                queryWrapper.eq("matnr", outRecord.getMatnr());
+            }
+            if (!StringUtils.isEmpty(outRecord.getFigureNumber())) {
+                queryWrapper.eq("figure_number", outRecord.getFigureNumber());
+            }
+            if (!StringUtils.isEmpty(outRecord.getSupplier())) {
+                queryWrapper.eq("supplier", outRecord.getSupplier());
+            }
+            if (!StringUtils.isEmpty(outRecord.getCreatedName())) {
+                queryWrapper.eq("created_name", outRecord.getCreatedName());
+            }
+            if (!StringUtils.isEmpty(outRecord.getPartSpecification())) {
+                queryWrapper.eq("part_specification", outRecord.getPartSpecification());
+            }
+            if (!StringUtils.isEmpty(outRecord.getCategory())) {
+                queryWrapper.eq("category", outRecord.getCategory());
+            }
+        } else {
+            queryWrapper.le("id", Integer.MAX_VALUE);
+        }
         return outRecordMapper.selectList(queryWrapper);
+
+
     }
 
     @Override

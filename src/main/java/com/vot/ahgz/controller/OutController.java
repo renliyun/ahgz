@@ -6,6 +6,7 @@ import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.entity.OutRecord;
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IOutRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,13 +37,19 @@ public class OutController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的出库记录")
-    public CommonResult<List<OutRecord>> getAll() {
-        System.out.println("进入controller层了！");
-        CommonResult commonResult = new CommonResult();
-        commonResult.setData(iOutRecordService.getAll());
-        commonResult.setCode(ResultCode.SUCCESS.getCode());
-        commonResult.setMessage("获取数据成功！");
-        return commonResult;
+    public List getAll(@ModelAttribute OutRecord outRecord) {
+        System.out.println("请求参数是：" + outRecord);
+        List<OutRecord> list = iOutRecordService.getAll(outRecord);
+        ModelAndView modelAndView = new ModelAndView();
+        Page page = new Page();
+        page.setPageData(list);
+        modelAndView.addObject("page", page);
+        //  查询库存的条件
+        modelAndView.addObject("outRecord", new OutRecord());
+        System.out.println(page); // 入库查询的条件
+        modelAndView.setViewName("outRecord");
+
+        return list;
     }
 
 
@@ -72,7 +79,6 @@ public class OutController {
         if (result > 0) {
             message = "数据插入成功！";
             modelAndView.setViewName("sucess");
-
         } else {
             modelAndView.setViewName("error");
             message = "库存不足或者发生未知异常，请检查！";
