@@ -36,7 +36,7 @@
 
     <div id="storage">
         <h1>
-            库存查询
+            库存查询/导出
         </h1>
         <div>
             <form action="#" th:action="@{/storageTable/getAll}" th:object="${storage}" method="get">
@@ -45,28 +45,28 @@
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">物料号</span>
-                            <input type="text" th:field="*{matnr}" class="form-control" placeholder="物料号"
+                            <input type="text" th:field="*{matnr}" id="matnr" class="form-control" placeholder="物料号"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">零部件名称</span>
-                            <input type="text" th:field="*{partName}" class="form-control" placeholder="零部件名称"
+                            <input type="text" th:field="*{partName}" id="partName" class="form-control" placeholder="零部件名称"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">零部件规格</span>
-                            <input type="text" th:field="*{partSpecification}" class="form-control" placeholder="零部件规格"
+                            <input type="text" th:field="*{partSpecification}" id="partSpecification" class="form-control" placeholder="零部件规格"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
                     <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{figureNumber}" class="form-control" placeholder="图号"
+                            <input type="text" th:field="*{figureNumber}"  id="figureNumber" class="form-control" placeholder="图号"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
@@ -75,14 +75,14 @@
                         <div class="col-lg-3">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                                <input type="text" th:field="*{supplier}" class="form-control" placeholder="供货商"
+                                <input type="text" th:field="*{supplier}" id="supplier" class="form-control" placeholder="供货商"
                                        aria-describedby="sizing-addon1">
                             </div>
                         </div><!-- /.col-lg-6 -->
                         <div class="col-lg-3">
                             <div class="input-group input-group-lg">
                                 <!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
-                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}" >
+                                类别 &nbsp&nbsp&nbsp <select id="category1"   th:field="*{category}" >
                                 <option value=""></option>
                                 <option value="外购件">外购件</option>
                                 <option value="镜头">镜头</option>
@@ -94,7 +94,7 @@
                         <div class="col-lg-3">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                                <input type="text" th:field="*{location}" class="form-control" placeholder="库位"
+                                <input type="text" th:field="*{location}" id="location" class="form-control" placeholder="库位"
                                        aria-describedby="sizing-addon1">
                             </div>
 
@@ -102,7 +102,7 @@
                         <div class="col-lg-3">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                                <input type="text" th:field="*{createdName}" class="form-control" value="王美林"
+                                <input type="text" th:field="*{createdName}" id="createdName" class="form-control" value="王美林"
                                        placeholder="创建人"
                                        aria-describedby="sizing-addon1">
                             </div>
@@ -111,7 +111,12 @@
 
                 </div>
                 <div class="row">
-                    <button type="submit" value="Submit" class="btn btn-info">查询</button>
+                    <div class="col-lg-1 offset-5">
+                        <button type="submit" value="Submit" class="btn btn-info">查询</button>
+                    </div>
+                    <div class="col-lg-1">
+                        <button   id="btn"  class="btn btn-info">导出</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -434,6 +439,40 @@
 
 
 <script>
+
+    $("#btn").click(function () {
+        let matnr = $("#matnr").val();
+        let partName = $("#partName").val();
+        let partSpecification = $("#partSpecification").val();
+        let figureNumber = $("#figureNumber1").val();
+        let supplier = $("#supplier").val();
+        let category = $("#category1").val();
+        let location = $("#location").val();
+        let createdName = $("#createdName").val();
+        alert("导出！"),
+        $.ajax({
+            type: "post",
+            datatype: "json",
+            url: "/export/storage",
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                matnr :matnr,
+                partName : partName,
+                partSpecification : partSpecification,
+                figureNumber : figureNumber,
+                material  :material,
+                supplier  :supplier,
+                category  :category,
+                location  : location,
+                createdName:createdName,
+            }) ,
+            success: function (res) {
+                console.log("导出成功")
+            }
+        })
+
+    }),
 
 
     function update(id) {

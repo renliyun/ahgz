@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="renderer" content="webkit">
+    <meta name="renderer" content="ie-comp">
+    <meta name="renderer" content="ie-stand">
+
+
+
+
     <title>登陆界面</title>
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
     <script src="../static/js/bootstrap/bootstrap.js"></script>
@@ -98,7 +106,7 @@
                 password: password
             },
             success: function (data1) {//返回结果
-                if (data1 = 1) {
+                if (data1 == 1) {
                   location.href="/storageTable/getAll"
                 }
             }

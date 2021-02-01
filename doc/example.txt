@@ -282,7 +282,8 @@ public class ReceiptFormServiceImpl implements ReceiptFormService {
             int rowNum = 0;
             //标记每一个表格内的数据编号
             int count;
-            //将所有的信息按照顺序写道表格内  //是否返回一个空白表格
+            //将所有的信息按照顺序写道表格内
+            //是否返回一个空白表格
             //根据组套id进行分组
             String name = null; //标记班级和年级
             StringBuilder stringBuilder;
