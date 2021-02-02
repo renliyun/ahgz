@@ -45,6 +45,7 @@ public class ExportServiceImpl implements IExportService {
 
     @Override
     public HSSFWorkbook exportStorage(StorageTable storageTable) {
+        System.out.printf("storage======="+storageTable);
         List<StorageTable> list = iStorageTableService.getAll(storageTable);
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
         HSSFSheet hssfSheet = hssfWorkbook.createSheet("storage");
