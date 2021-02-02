@@ -1,6 +1,7 @@
 package com.vot.ahgz.controller;
 
 
+import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.service.IExportService;
 import com.vot.ahgz.service.IStorageTableService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 
 @RestController
@@ -27,11 +30,13 @@ public class ExportController {
     @Autowired
     private IExportService iExportService;
 
+    @Autowired
+    private IStorageTableService iStorageTableService;
 
     // 库存导出
-    @PostMapping("/storage")
+    @GetMapping("/storage")
     @ApiOperation(value = "库存数据导出")
-    public void exportStorage(@ModelAttribute StorageTable storageTable , HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public ModelAndView exportStorage(@ModelAttribute StorageTable storageTable , HttpServletResponse response, HttpServletRequest request) throws IOException {
         System.out.printf("storage"+storageTable);
         HSSFWorkbook hssfWorkbook =  iExportService.exportStorage(storageTable);
         //输出Excel文件
@@ -45,6 +50,16 @@ public class ExportController {
         hssfWorkbook.write(output);
         output.flush();
         output.close();
+
+        ModelAndView modelAndView = new ModelAndView();
+        Page page = new Page();
+        List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
+        page.setPageData(storageTables);
+        modelAndView.addObject("page", page);
+        modelAndView.addObject("storage", new StorageTable());
+        System.out.println(page);
+        modelAndView.setViewName("storage");
+        return modelAndView;
 
     }
 }

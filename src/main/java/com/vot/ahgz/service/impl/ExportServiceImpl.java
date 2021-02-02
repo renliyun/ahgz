@@ -170,7 +170,7 @@ public class ExportServiceImpl implements IExportService {
             hssfCell = hssfRow.createCell(8);
             hssfCell.setCellValue(storage.getNumber());
             hssfCell.setCellStyle(contentStyle);
-            hssfSheet.setColumnWidth(8,5 * 256);
+            hssfSheet.setColumnWidth(8,10 * 256);
 
             hssfCell = hssfRow.createCell(9);
             hssfCell.setCellValue(storage.getLocation());
