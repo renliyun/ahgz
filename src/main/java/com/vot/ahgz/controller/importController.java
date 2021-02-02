@@ -38,9 +38,9 @@ public class importController {
 
 
     // 库存导出
-    @GetMapping("/storage")
+    @PostMapping("/storage")
     @ApiOperation(value = "库存数据导入 '0'代表格式错误或者数据导入失败 大于0 说明导入数据为该数")
-    public Integer exportStorage(@RequestParam("storage") MultipartFile excelFile) throws IOException {
+    public Integer exportStorage(MultipartFile excelFile) throws IOException {
 
       return iImportService.importStorage(excelFile);
     }
