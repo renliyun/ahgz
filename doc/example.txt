@@ -587,4 +587,59 @@ public class ReceiptFormServiceImpl implements ReceiptFormService {
         }
         return newArr;
     }
+
+
+    @PostMapping("change_avatar")
+    	public JsonResult<String> changeAvatar(@RequestParam("avatar") MultipartFile avatar,HttpSession session){
+    		// 检查上传的文件是否为空
+    		if(avatar.isEmpty()) {
+    			//throw new AvatarIsEmptyException("上传的文件时空的！");
+    			throw new FileEmptyException("上传的文件是空的，请重新上传！");
+    		}
+    		// 检查上传的文件的大小是否过大,限定750k
+
+    		if(avatar.getSize() > Avatar_Max_Size ) {
+    			throw new FileSizeException("上传文件过大，要求文件不得大于："+Avatar_Max_Size/1024+"K");
+    		}
+    		// 检查上传的文件的类型是否正确jpg/png/gif/bmp
+    		String contentType = avatar.getContentType();
+    		System.err.println(contentType);
+    		if(!Avatar_Types.contains(contentType)) {
+    			throw new FileTypeException("文件类型错误，请提交正常的文件类型！要求图片格式为"+Avatar_Types+"！");
+    		}
+    		//获取原始文件名，用来截取文件后缀，便于保存！
+    		String originalFileName = avatar.getOriginalFilename();
+
+    		//文件夹的路径 用来保存上传的头像资料
+    		String parentPath = session.getServletContext().getRealPath("upload");
+    		System.err.println(parentPath);
+    		File parent = new File(parentPath);
+    		if(!parent.exists()) {
+    			parent.mkdirs();
+    		}
+    		//文件名，截取后缀名，有的文件是没有后缀名的
+    		String suffix="";
+    		int beginIndex = originalFileName.lastIndexOf(".");
+    		if(beginIndex > 0) {
+    			suffix = originalFileName.substring(beginIndex );
+    		}
+    		String fileNmae = UUID.randomUUID().toString()+suffix;
+    		//用户存放头像的文件夹
+    		File dest = new File(parent,fileNmae);
+    		try {
+    			avatar.transferTo(dest );
+    		} catch (IllegalStateException e ) {
+    			throw new FileStateException("文件读取失败，请重新上传！");
+    		} catch(IOException e) {
+    			throw new FileIOException("文件读取失败，请重新上传！");
+    		}
+    		//将文件的路径存储到数据表中
+    		String avatarPath ="/upload/"+fileNmae;
+    		Integer uid = getUidFromSession(session);
+    		String username = getUsernameFromSession(session);
+    		userService.changeAvatar(uid, username, avatarPath);
+    		return new JsonResult<>(SUCCESS,avatarPath );
+    	}
+
+
 }

@@ -57,6 +57,11 @@
             <artifactId>poi</artifactId>
             <version>3.16</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.16</version>
+        </dependency>
         <!--   ===================================     -->
 
         <!--   =================引入单元测试==================     -->
@@ -88,8 +93,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.4.1</version>
         </dependency>
-
-
 
 
         <!--   ==========整合日志===========     -->
