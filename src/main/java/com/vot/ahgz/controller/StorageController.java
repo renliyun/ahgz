@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author renlirong
@@ -39,11 +40,28 @@ public class StorageController {
     public ModelAndView getAll(@ModelAttribute StorageTable storageTable) {
         System.out.println("请求数据===================" + storageTable);
         ModelAndView modelAndView = new ModelAndView();
+        List<StorageTable> storageTableList = null;
         Page page = new Page();
-        List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);
-        page.setPageData(storageTables);
+
+        if (null == storageTable.getMatnr()
+                && StringUtils.isEmpty(storageTable.getPartName())
+                && StringUtils.isEmpty(storageTable.getPartSpecification())
+                && StringUtils.isEmpty(storageTable.getFigureNumber())
+                && StringUtils.isEmpty(storageTable.getSupplier())
+                && StringUtils.isEmpty(storageTable.getCategory())
+                && StringUtils.isEmpty(storageTable.getLocation())
+                && StringUtils.isEmpty(storageTable.getCreatedName())
+        ) {
+            storageTableList = iStorageTableService.getAll(storageTable);
+            page.setPageData(storageTableList.subList(0, storageTableList.size() > 0 && storageTableList.size() <= 100 ? storageTableList.size() : 100));
+
+        } else {
+            storageTableList = iStorageTableService.getAll(storageTable);
+            page.setPageData(storageTableList.subList(0, storageTableList.size() > 0 && storageTableList.size() <= 100 ? storageTableList.size() : 100));
+        }
         modelAndView.addObject("page", page);
         modelAndView.addObject("storage", new StorageTable());
+
         System.out.println(page);
         modelAndView.setViewName("storage");
         return modelAndView;

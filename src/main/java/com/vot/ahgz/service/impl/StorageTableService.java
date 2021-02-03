@@ -32,9 +32,10 @@ public class StorageTableService implements IStorageTableService {
 
     @Override
     public List<StorageTable> getAll(StorageTable storageTable) {
-        queryWrapper = new QueryWrapper<>();
+
         System.out.println("请求数据===================" + storageTable);
         if (null != storageTable) {
+            queryWrapper = new QueryWrapper<>();
             //将查询条件放入
             if (!StringUtils.isEmpty(storageTable.getPartName())) {
                 System.out.println("========================================" + storageTable.getPartName());
@@ -62,10 +63,11 @@ public class StorageTableService implements IStorageTableService {
             if (!StringUtils.isEmpty(storageTable.getCategory())) {
                 queryWrapper.eq("category", storageTable.getCategory());
             }
+            return storageTableMapper.selectList(queryWrapper);
         } else {
-            queryWrapper.le("id", Integer.MAX_VALUE);
+            return null;
         }
-        return storageTableMapper.selectList(queryWrapper);
+
     }
 
     @Override

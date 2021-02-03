@@ -19,9 +19,13 @@ spring:
     suffix: .html
     prefix:
     - classpath:/templates
+ ## 设置上传文件大小
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
-

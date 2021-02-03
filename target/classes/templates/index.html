@@ -97,10 +97,11 @@
         var username = $("#username").val();
         var password = $("#password").val();
         console.log(username + "=========" + password)
+        var ip = window.location.host;
         $.ajax({
             type: 'POST',
             dataType: "json",
-            url: 'http://localhost:8080/admin/login',
+            url: 'http://'+ip+'/admin/login',
             data: {
                 username: username,
                 password: password

@@ -9,22 +9,24 @@
 
 <body>
 <div class="container">
-    <h2 style="text-align: center">
+    <!--头部-->
+    <h2>
         <div>
             <!-- 导航条右侧内容 -->
 
             <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>&nbsp;入库</a>
 
-            <a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;出库</a>
+            <a th:href="@{/outRecord/out}"><span class="fa fa-file-text"></span>&nbsp;出库</a>
 
             <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
 
-            <a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
+            <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
 
-            <a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a>
+            <a th:href="@{/deliveryRecord/delivery}"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a>
 
         </div>
     </h2>
+
     <h1 th:text="${message}" style="text-align: center"></h1>
 </div>
 </body>
