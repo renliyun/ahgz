@@ -3,16 +3,12 @@ package com.vot.ahgz.controller;
 
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
-import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.service.INonConformingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
-
 import java.util.List;
 
 /**

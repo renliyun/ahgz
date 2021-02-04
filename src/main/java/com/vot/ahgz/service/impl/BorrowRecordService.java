@@ -3,6 +3,7 @@ package com.vot.ahgz.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.StorageTable;
+import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.mapper.BorrowRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IBorrowRecordService;
@@ -11,7 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -57,7 +59,6 @@ public class BorrowRecordService implements IBorrowRecordService {
             if (!StringUtils.isEmpty(borrowRecord.getSupplier())) {
                 queryWrapper.eq("supplier", borrowRecord.getSupplier());
             }
-
             if (!StringUtils.isEmpty(borrowRecord.getCreatedName())) {
                 queryWrapper.eq("created_name", borrowRecord.getCreatedName());
             }
@@ -83,12 +84,11 @@ public class BorrowRecordService implements IBorrowRecordService {
     }
 
     @Override
-    public Integer insertBorrowRecord(BorrowRecord borrowRecord) {
+    public Integer insertBorrowRecord(BorrowRecord borrowRecord , HttpServletRequest request) {
         // TODO 是否有库存可以借用  涉及出库
         try {
             QueryWrapper<StorageTable> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("part_name", borrowRecord.getPartName());
-            queryWrapper.eq("figure_number", borrowRecord.getFigureNumber());
+            queryWrapper.eq("matnr", borrowRecord.getMatnr());
             StorageTable storageTable = storageTableMapper.selectOne(queryWrapper);
             if (null == storageTable || storageTable.getNumber() < borrowRecord.getNumber()) {
                 return 0; //不可借
@@ -96,6 +96,9 @@ public class BorrowRecordService implements IBorrowRecordService {
                 // 更新库存
                 storageTable.setNumber(storageTable.getNumber() - borrowRecord.getNumber());
                 storageTableMapper.updateById(storageTable);
+                HttpSession httpSession = request.getSession();
+                UserTable userTable  = (UserTable) httpSession.getAttribute("user");
+                logger.info("借用成功，借用物料号为："+borrowRecord.getMatnr()+"得物料"+borrowRecord.getNumber()+"个,借用人"+userTable.getUsername());
                 return borrowRecordMapper.insert(borrowRecord);
             }
         } catch (Exception e) {

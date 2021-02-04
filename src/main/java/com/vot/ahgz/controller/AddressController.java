@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -50,7 +49,6 @@ public class AddressController {
     @GetMapping("/getOne")
     @ApiOperation(value = "根据id获取一条地址信息")
     public CommonResult<AddressList> getOne(@RequestParam("id") Integer id) {
-        System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
         commonResult.setData(iAddressListService.getOne(id));
         commonResult.setCode(ResultCode.SUCCESS.getCode());

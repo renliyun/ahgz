@@ -4,6 +4,7 @@ import com.vot.ahgz.entity.OutRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public interface IOutRecordService  {
     List<OutRecord> getByName(String name);
 
     //  插入用户快递
-    Integer insertOutRecord( OutRecord outRecord);
+    Integer insertOutRecord(OutRecord outRecord , HttpServletRequest request);
 
     //  根据名称删除数据  允许一次删除多个数据
     Integer deleteByName( String name);

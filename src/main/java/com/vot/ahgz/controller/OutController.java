@@ -2,9 +2,6 @@ package com.vot.ahgz.controller;
 
 
 import com.vot.ahgz.common.CommonResult;
-import com.vot.ahgz.common.ResultCode;
-import com.vot.ahgz.entity.InRecord;
-import com.vot.ahgz.entity.NonConforming;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IOutRecordService;
@@ -13,10 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -38,7 +33,6 @@ public class OutController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的出库记录")
     public List getAll(@ModelAttribute OutRecord outRecord) {
-        System.out.println("请求参数是：" + outRecord);
         List<OutRecord> list = iOutRecordService.getAll(outRecord);
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
@@ -48,7 +42,6 @@ public class OutController {
         modelAndView.addObject("outRecord", new OutRecord());
         System.out.println(page); // 入库查询的条件
         modelAndView.setViewName("outRecord");
-
         return list;
     }
 
@@ -59,7 +52,6 @@ public class OutController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("outRecord");
         modelAndView.addObject("outRecord", new OutRecord());
-        // model.addAttribute();
         return modelAndView;
     }
 
@@ -71,17 +63,20 @@ public class OutController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条出库记录")
-    public ModelAndView insertAddressList(@ModelAttribute OutRecord outRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute OutRecord outRecord , HttpServletRequest request) {
 
-        Integer result = iOutRecordService.insertOutRecord(outRecord);
+        Integer result = iOutRecordService.insertOutRecord(outRecord,request);
         ModelAndView modelAndView = new ModelAndView();
         String message = "";
-        if (result > 0) {
-            message = "数据插入成功！";
-            modelAndView.setViewName("sucess");
-        } else {
+        if (result == 0) {
+            message = "库存不足，无法出库！";
             modelAndView.setViewName("error");
-            message = "库存不足或者发生未知异常，请检查！";
+        } else if (result == 1){
+            modelAndView.setViewName("sucess");
+            message = "出库成功！";
+        }else {
+            modelAndView.setViewName("error");
+            message = "发生未知异常，请检查！";
         }
         modelAndView.addObject("message", message);
         return modelAndView;

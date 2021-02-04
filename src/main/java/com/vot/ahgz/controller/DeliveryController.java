@@ -2,10 +2,7 @@ package com.vot.ahgz.controller;
 
 
 import com.vot.ahgz.common.CommonResult;
-import com.vot.ahgz.common.ResultCode;
-import com.vot.ahgz.entity.BorrowRecord;
 import com.vot.ahgz.entity.DeliveryRecord;
-import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IDeliveryRecordService;
 import io.swagger.annotations.Api;
@@ -13,10 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -51,7 +46,6 @@ public class DeliveryController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("delivery");
         modelAndView.addObject("deliveryRecord", new DeliveryRecord());
-        // model.addAttribute();
         return modelAndView;
     }
 
@@ -64,12 +58,15 @@ public class DeliveryController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "添加一条发货记录  返回值：1表示发货成功；0表示发货失败")
-    public ModelAndView insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute DeliveryRecord deliveryRecord , HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        Integer result = iDeliveryRecordService.insertDeliveryRecord(deliveryRecord);
+        Integer result = iDeliveryRecordService.insertDeliveryRecord(deliveryRecord , request);
         String message = "";
-        if (result > 0) {
-            message = "数据插入成功！";
+        if (result == 0) {
+            modelAndView.setViewName("error");
+            message = "库存不足！";
+        } else if (result == 1) {
+            message = "发货成功！";
             modelAndView.setViewName("sucess");
 
         } else {

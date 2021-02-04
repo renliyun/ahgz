@@ -3,18 +3,12 @@ package com.vot.ahgz.controller;
 
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.common.ResultCode;
-import com.vot.ahgz.entity.StorageTable;
 import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.service.IUserTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -37,7 +31,6 @@ public class UserController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有用户")
     public CommonResult<List<UserTable>> getAll() {
-        System.out.println("进入controller层了！");
         CommonResult commonResult = new CommonResult();
         commonResult.setData(iUserTableService.getAll());
         commonResult.setCode(ResultCode.SUCCESS.getCode());
@@ -48,25 +41,14 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "登陆")
     public Integer login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
-        System.out.println("用户名：" + username + "；密码为：" + password);
         UserTable userTable = iUserTableService.getByName(username);
         if (null == userTable) {
-            System.out.println("该用户不存在！");
             return 0;
         } else {
             httpSession.setAttribute("user", userTable);
-            System.out.println("用户名：" + username + "；密码为：" + password);
-
             return 1;
         }
     }
-
-
-//    @GetMapping("/getOneByName")
-//    @ApiOperation(value = "获取name的用户信息")
-//    public CommonResult<List<UserTable>> getByName(@RequestParam("name") String name) {
-//        return CommonResult.sucess(iUserTableService.getByName(name), "获取用户" + name + "数据成功");
-//    }
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条用户信息")

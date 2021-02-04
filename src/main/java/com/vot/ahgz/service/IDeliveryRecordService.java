@@ -4,6 +4,7 @@ import com.vot.ahgz.entity.DeliveryRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public interface IDeliveryRecordService  {
     List<DeliveryRecord> getByName(String name);
 
     //  插入用户快递
-    Integer insertDeliveryRecord( DeliveryRecord deliveryRecord);
+    Integer insertDeliveryRecord( DeliveryRecord deliveryRecord , HttpServletRequest request);
 
     //  根据名称删除数据
     Integer deleteByName( String name);

@@ -4,6 +4,7 @@ import com.vot.ahgz.entity.InRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public interface IInRecordService {
     List<InRecord> getByName(String name);
 
     //  插入用户快递
-    Integer insertInRecord(InRecord inRecord);
+    Integer insertInRecord(InRecord inRecord, HttpServletRequest request);
 
     //  根据名称删除数据
     Integer deleteByName(String name);

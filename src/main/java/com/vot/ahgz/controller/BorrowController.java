@@ -2,9 +2,7 @@ package com.vot.ahgz.controller;
 
 
 import com.vot.ahgz.common.CommonResult;
-import com.vot.ahgz.common.ResultCode;
 import com.vot.ahgz.entity.BorrowRecord;
-import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IBorrowRecordService;
 import io.swagger.annotations.Api;
@@ -12,11 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-import springfox.documentation.annotations.ApiIgnore;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -38,7 +34,6 @@ public class BorrowController {
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的借用记录")
     public Page getAll(@ModelAttribute BorrowRecord borrowRecord) {
-        System.out.println("请求参数：" + borrowRecord);
         List<BorrowRecord> borrowRecords = iBorrowRecordService.getAll(borrowRecord);
         Page page = new Page();
         return page;
@@ -62,14 +57,18 @@ public class BorrowController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条借用信息")
-    public ModelAndView insertAddressList(@ModelAttribute BorrowRecord borrowRecord) {
+    public ModelAndView insertAddressList(@ModelAttribute BorrowRecord borrowRecord, HttpServletRequest request, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
-        Integer result = iBorrowRecordService.insertBorrowRecord(borrowRecord);
+        Integer result = iBorrowRecordService.insertBorrowRecord(borrowRecord,request);
         String message = "";
-        if (result > 0) {
-            message = "数据插入成功！";
+        if (result == 0) {
+            message = "库存不足，不可借用！";
+            modelAndView.setViewName("error");
+        } else if (result == 1){
+            message = "借用成功！";
             modelAndView.setViewName("sucess");
-        } else {
+
+        }else {
             modelAndView.setViewName("error");
             message = "发生未知异常，请检出数据！";
         }

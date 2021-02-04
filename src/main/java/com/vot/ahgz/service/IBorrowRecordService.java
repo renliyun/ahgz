@@ -4,6 +4,8 @@ import com.vot.ahgz.entity.BorrowRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ public interface IBorrowRecordService  {
     List<BorrowRecord> getByName( String name);
 
     //  插入数据
-    Integer insertBorrowRecord( BorrowRecord borrowRecord);
+    Integer insertBorrowRecord(BorrowRecord borrowRecord , HttpServletRequest request);
 
     //  根据借用人名称删除数据
     Integer deleteByName( String name);

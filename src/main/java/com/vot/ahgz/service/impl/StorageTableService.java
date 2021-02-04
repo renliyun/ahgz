@@ -2,6 +2,7 @@ package com.vot.ahgz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.StorageTable;
+import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IStorageTableService;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,8 +35,6 @@ public class StorageTableService implements IStorageTableService {
 
     @Override
     public List<StorageTable> getAll(StorageTable storageTable) {
-
-        System.out.println("请求数据===================" + storageTable);
         if (null != storageTable) {
             queryWrapper = new QueryWrapper<>();
             //将查询条件放入
@@ -85,7 +86,6 @@ public class StorageTableService implements IStorageTableService {
 
     @Override
     public Integer insertStorageTable(StorageTable storageTable) {
-
         return storageTableMapper.insert(storageTable);
     }
 
@@ -97,13 +97,18 @@ public class StorageTableService implements IStorageTableService {
     }
 
     @Override
-    public Integer deleteById(Integer id) {
+    public Integer deleteById(Integer id, HttpServletRequest request) {
+        // 输入日志
+        UserTable userTable = (UserTable) request.getSession().getAttribute("user");
+        logger.info("用户名为：" + userTable.getUsername() + "删除id编号为：" + id + "得库存数据！");
         return storageTableMapper.deleteById(id);
     }
 
     @Override
-    public Integer updateOne(StorageTable storageTable) {
-        System.out.println(storageTable);
+    public Integer updateOne(StorageTable storageTable, HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        UserTable userTable = (UserTable) httpSession.getAttribute("user");
+        logger.info("用户名为:" + userTable.getUsername() + "更新库存信息,数据为：" + storageTable);
         return storageTableMapper.updateById(storageTable);
     }
 

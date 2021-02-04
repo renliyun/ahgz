@@ -11,13 +11,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 
@@ -37,7 +34,6 @@ public class ExportController {
     @GetMapping("/storage")
     @ApiOperation(value = "库存数据导出")
     public ModelAndView exportStorage(@ModelAttribute StorageTable storageTable , HttpServletResponse response, HttpServletRequest request) throws IOException {
-        System.out.printf("storage"+storageTable);
         HSSFWorkbook hssfWorkbook =  iExportService.exportStorage(storageTable);
         //输出Excel文件
         OutputStream output=response.getOutputStream();
@@ -50,7 +46,6 @@ public class ExportController {
         hssfWorkbook.write(output);
         output.flush();
         output.close();
-
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
         List<StorageTable> storageTables = iStorageTableService.getAll(storageTable);

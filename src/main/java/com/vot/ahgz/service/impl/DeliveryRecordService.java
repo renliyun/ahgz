@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.DeliveryRecord;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.StorageTable;
+import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.mapper.DeliveryRecordMapper;
 import com.vot.ahgz.mapper.OutRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
@@ -14,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
-
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 
@@ -46,7 +47,6 @@ public class DeliveryRecordService implements IDeliveryRecordService {
     @Override
     public List<DeliveryRecord> getAll(DeliveryRecord deliveryRecord) {
         queryWrapper = new QueryWrapper<>();
-        System.out.println("请求条件数据===================" + deliveryRecord);
         if (null != deliveryRecord) {
             //将查询条件放入
             if (!StringUtils.isEmpty(deliveryRecord.getPartName())) {
@@ -95,12 +95,11 @@ public class DeliveryRecordService implements IDeliveryRecordService {
 
     @Override
     @Transactional // 增加事物
-    public Integer insertDeliveryRecord(DeliveryRecord deliveryRecord) {
+    public Integer insertDeliveryRecord(DeliveryRecord deliveryRecord , HttpServletRequest request) {
         // TODO 发货需要看库里是否有，然后先出库再进行发货
         try {
             QueryWrapper<StorageTable> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper1.eq("part_name", deliveryRecord.getPartName());
-            queryWrapper1.eq("figure_number", deliveryRecord.getFigureNumber());
+            queryWrapper1.eq("matnr", deliveryRecord.getMatnr());
             StorageTable storageTable = storageTableMapper.selectOne(queryWrapper1);
             if (storageTable.getNumber() > 0 && storageTable.getNumber() >= deliveryRecord.getNumber()) {
                 //可以发货，库存减少1
@@ -128,12 +127,16 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setUpdatedName(deliveryRecord.getCreatedName());
                 outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
 
+                HttpSession httpSession = request.getSession();
+                UserTable userTable = (UserTable)httpSession.getAttribute("user");
                 // 保存发货记录
                 Integer result = outRecordMapper.insert(outRecord);
+
                 if (result < 0) {
                     throw new Exception("保存出库记录失败！");
                 }
                 // 进行发货处理
+                logger.info("发货人:"+userTable.getUsername()+"发货成功，发货物料号："+ outRecord.getMatnr()+"数量为："+deliveryRecord.getNumber()+"。");
                 return deliveryRecordMapper.insert(deliveryRecord);
             }
             return 0;  //没有库存，或者库存不足不能发货

@@ -3,6 +3,7 @@ package com.vot.ahgz.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vot.ahgz.entity.OutRecord;
 import com.vot.ahgz.entity.StorageTable;
+import com.vot.ahgz.entity.UserTable;
 import com.vot.ahgz.mapper.OutRecordMapper;
 import com.vot.ahgz.mapper.StorageTableMapper;
 import com.vot.ahgz.service.IOutRecordService;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
-
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.List;
 
@@ -38,9 +39,7 @@ public class OutRecordService implements IOutRecordService {
 
     @Override
     public List<OutRecord> getAll(OutRecord outRecord) {
-
         queryWrapper = new QueryWrapper<>();
-        System.out.println("请求条件数据===================" + outRecord);
         if (null != outRecord) {
             //将查询条件放入
             if (!StringUtils.isEmpty(outRecord.getPartName())) {
@@ -70,8 +69,6 @@ public class OutRecordService implements IOutRecordService {
             queryWrapper.le("id", Integer.MAX_VALUE);
         }
         return outRecordMapper.selectList(queryWrapper);
-
-
     }
 
     @Override
@@ -88,8 +85,7 @@ public class OutRecordService implements IOutRecordService {
     }
 
     @Override
-    public Integer insertOutRecord(OutRecord outRecord) {
-        // TODO 需要处理库存 库里有才可以出库  根据物料号查询
+    public Integer insertOutRecord(OutRecord outRecord , HttpServletRequest request) {
         QueryWrapper<StorageTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("matnr", outRecord.getMatnr());
         StorageTable storageTable = storageTableMapper.selectOne(queryWrapper);
@@ -97,13 +93,14 @@ public class OutRecordService implements IOutRecordService {
             logger.info("库存不足！无法出库");
             return 0;
         } else {
+            UserTable userTable = (UserTable) request.getSession().getAttribute("user");
             // 减库存 出库
             storageTable.setNumber(storageTable.getNumber() - outRecord.getNumber());
             storageTable.setUpdatedName(outRecord.getCreatedName());
             storageTable.setUpdatedTime(new Date(System.currentTimeMillis()));
             storageTableMapper.updateById(storageTable);
             // 插入出库记录
-            logger.info("出库成功！出库数量为"+outRecord.getNumber());
+            logger.info("出库成功，物料号为："+outRecord.getMatnr()+"得物料出库："+outRecord.getNumber()+"个,出库人"+userTable.getUsername());
             outRecord.setUpdatedName(outRecord.getCreatedName());
             outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
             return outRecordMapper.insert(outRecord);
