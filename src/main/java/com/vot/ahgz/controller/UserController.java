@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "登陆")
     public Integer login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession httpSession) {
-        UserTable userTable = iUserTableService.getByName(username);
+        UserTable userTable = iUserTableService.getByName(username,password);
         if (null == userTable) {
             return 0;
         } else {

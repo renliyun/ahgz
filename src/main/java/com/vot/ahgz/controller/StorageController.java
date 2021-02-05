@@ -39,7 +39,7 @@ public class StorageController {
         Page page = new Page();
         storageTableList = iStorageTableService.getAll(storageTable);
         if (storageTableList.size() > 0) {
-            page.setPageData(storageTableList.subList(0, storageTableList.size() > 0 && storageTableList.size() <= 200 ? storageTableList.size() : 200));
+            page.setPageData(storageTableList.subList(0, storageTableList.size() > 0 && storageTableList.size() <= 50 ? storageTableList.size() : 50));
         } else {
             page.setPageData(null);
         }
