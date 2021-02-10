@@ -51,29 +51,29 @@ public class DeliveryRecordService implements IDeliveryRecordService {
             //将查询条件放入
             if (!StringUtils.isEmpty(deliveryRecord.getPartName())) {
                 System.out.println("========================================" + deliveryRecord.getPartName());
-                queryWrapper.eq("part_name", deliveryRecord.getPartName());
+                queryWrapper.like("part_name", deliveryRecord.getPartName());
             }
             if (null != deliveryRecord.getMatnr()) {
                 System.out.println("========================================" + deliveryRecord.getPartName());
                 queryWrapper.eq("matnr", deliveryRecord.getMatnr());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getFigureNumber())) {
-                queryWrapper.eq("figure_number", deliveryRecord.getFigureNumber());
+                queryWrapper.like("figure_number", deliveryRecord.getFigureNumber());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getSupplier())) {
-                queryWrapper.eq("supplier", deliveryRecord.getSupplier());
+                queryWrapper.like("supplier", deliveryRecord.getSupplier());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getCreatedName())) {
-                queryWrapper.eq("created_name", deliveryRecord.getCreatedName());
+                queryWrapper.like("created_name", deliveryRecord.getCreatedName());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getPartSpecification())) {
-                queryWrapper.eq("part_specification", deliveryRecord.getPartSpecification());
+                queryWrapper.like("part_specification", deliveryRecord.getPartSpecification());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getCategory())) {
-                queryWrapper.eq("category", deliveryRecord.getCategory());
+                queryWrapper.like("category", deliveryRecord.getCategory());
             }
             if (!StringUtils.isEmpty(deliveryRecord.getDeliveryName())) {
-                queryWrapper.eq("deliver_name", deliveryRecord.getDeliveryName());
+                queryWrapper.like("deliver_name", deliveryRecord.getDeliveryName());
             }
         } else {
             queryWrapper.le("id", Integer.MAX_VALUE);
@@ -115,6 +115,8 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setCreatedTime(new Date(System.currentTimeMillis()));
                 outRecord.setFigureNumber(null == deliveryRecord.getFigureNumber() ? null : deliveryRecord.getFigureNumber());
                 outRecord.setMark(null == deliveryRecord.getMark() ? null : deliveryRecord.getMark());
+                HttpSession httpSession = request.getSession();
+                UserTable userTable = (UserTable)httpSession.getAttribute("user");
                 // 发货不需要写材料
                 outRecord.setMaterial(null);
                 outRecord.setNumber(deliveryRecord.getNumber());
@@ -124,11 +126,9 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setReceiveTime(new Date(System.currentTimeMillis()));
                 outRecord.setSupplier(deliveryRecord.getSupplier());
                 // 应该是当前登陆用户  可以传递用户id过来或者从session中获取
-                outRecord.setUpdatedName(deliveryRecord.getCreatedName());
+                outRecord.setUpdatedName(userTable.getUsername());
                 outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
 
-                HttpSession httpSession = request.getSession();
-                UserTable userTable = (UserTable)httpSession.getAttribute("user");
                 // 保存发货记录
                 Integer result = outRecordMapper.insert(outRecord);
 
