@@ -45,29 +45,29 @@ public class InRecordService implements IInRecordService {
             //将查询条件放入
             if (!StringUtils.isEmpty(inRecord.getPartName())) {
                 System.out.println("========================================" + inRecord.getPartName());
-                queryWrapper.eq("part_name", inRecord.getPartName());
+                queryWrapper.like("part_name", inRecord.getPartName());
             }
             if (null != inRecord.getMatnr()) {
                 System.out.println("========================================" + inRecord.getPartName());
                 queryWrapper.eq("matnr", inRecord.getMatnr());
             }
             if (!StringUtils.isEmpty(inRecord.getFigureNumber())) {
-                queryWrapper.eq("figure_number", inRecord.getFigureNumber());
+                queryWrapper.like("figure_number", inRecord.getFigureNumber());
             }
             if (!StringUtils.isEmpty(inRecord.getSupplier())) {
-                queryWrapper.eq("supplier", inRecord.getSupplier());
+                queryWrapper.like("supplier", inRecord.getSupplier());
             }
             if (!StringUtils.isEmpty(inRecord.getLocation())) {
-                queryWrapper.eq("location", inRecord.getLocation());
+                queryWrapper.like("location", inRecord.getLocation());
             }
             if (!StringUtils.isEmpty(inRecord.getCreatedName())) {
-                queryWrapper.eq("created_name", inRecord.getCreatedName());
+                queryWrapper.like("created_name", inRecord.getCreatedName());
             }
             if (!StringUtils.isEmpty(inRecord.getPartSpecification())) {
-                queryWrapper.eq("part_specification", inRecord.getPartSpecification());
+                queryWrapper.like("part_specification", inRecord.getPartSpecification());
             }
             if (!StringUtils.isEmpty(inRecord.getCategory())) {
-                queryWrapper.eq("category", inRecord.getCategory());
+                queryWrapper.like("category", inRecord.getCategory());
             }
         } else {
             queryWrapper.le("id", Integer.MAX_VALUE);

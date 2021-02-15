@@ -44,26 +44,26 @@ public class OutRecordService implements IOutRecordService {
             //将查询条件放入
             if (!StringUtils.isEmpty(outRecord.getPartName())) {
                 System.out.println("========================================" + outRecord.getPartName());
-                queryWrapper.eq("part_name", outRecord.getPartName());
+                queryWrapper.like("part_name", outRecord.getPartName());
             }
             if (null != outRecord.getMatnr()) {
                 System.out.println("========================================" + outRecord.getPartName());
                 queryWrapper.eq("matnr", outRecord.getMatnr());
             }
             if (!StringUtils.isEmpty(outRecord.getFigureNumber())) {
-                queryWrapper.eq("figure_number", outRecord.getFigureNumber());
+                queryWrapper.like("figure_number", outRecord.getFigureNumber());
             }
             if (!StringUtils.isEmpty(outRecord.getSupplier())) {
-                queryWrapper.eq("supplier", outRecord.getSupplier());
+                queryWrapper.like("supplier", outRecord.getSupplier());
             }
             if (!StringUtils.isEmpty(outRecord.getCreatedName())) {
-                queryWrapper.eq("created_name", outRecord.getCreatedName());
+                queryWrapper.like("created_name", outRecord.getCreatedName());
             }
             if (!StringUtils.isEmpty(outRecord.getPartSpecification())) {
-                queryWrapper.eq("part_specification", outRecord.getPartSpecification());
+                queryWrapper.like("part_specification", outRecord.getPartSpecification());
             }
             if (!StringUtils.isEmpty(outRecord.getCategory())) {
-                queryWrapper.eq("category", outRecord.getCategory());
+                queryWrapper.like("category", outRecord.getCategory());
             }
         } else {
             queryWrapper.le("id", Integer.MAX_VALUE);

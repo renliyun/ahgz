@@ -40,29 +40,29 @@ public class StorageTableService implements IStorageTableService {
             //将查询条件放入
             if (!StringUtils.isEmpty(storageTable.getPartName())) {
                 System.out.println("========================================" + storageTable.getPartName());
-                queryWrapper.eq("part_name", storageTable.getPartName());
+                queryWrapper.like("part_name", storageTable.getPartName());
             }
             if (null != storageTable.getMatnr()) {
                 System.out.println("========================================" + storageTable.getPartName());
                 queryWrapper.eq("matnr", storageTable.getMatnr());
             }
             if (!StringUtils.isEmpty(storageTable.getFigureNumber())) {
-                queryWrapper.eq("figure_number", storageTable.getFigureNumber());
+                queryWrapper.like("figure_number", storageTable.getFigureNumber());
             }
             if (!StringUtils.isEmpty(storageTable.getSupplier())) {
-                queryWrapper.eq("supplier", storageTable.getSupplier());
+                queryWrapper.like("supplier", storageTable.getSupplier());
             }
             if (!StringUtils.isEmpty(storageTable.getLocation())) {
-                queryWrapper.eq("location", storageTable.getLocation());
+                queryWrapper.like("location", storageTable.getLocation());
             }
             if (!StringUtils.isEmpty(storageTable.getCreatedName())) {
-                queryWrapper.eq("created_name", storageTable.getCreatedName());
+                queryWrapper.like("created_name", storageTable.getCreatedName());
             }
             if (!StringUtils.isEmpty(storageTable.getPartSpecification())) {
-                queryWrapper.eq("part_specification", storageTable.getPartSpecification());
+                queryWrapper.like("part_specification", storageTable.getPartSpecification());
             }
             if (!StringUtils.isEmpty(storageTable.getCategory())) {
-                queryWrapper.eq("category", storageTable.getCategory());
+                queryWrapper.like("category", storageTable.getCategory());
             }
             return storageTableMapper.selectList(queryWrapper);
         } else {
