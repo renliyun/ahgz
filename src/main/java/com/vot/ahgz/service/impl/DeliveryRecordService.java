@@ -115,6 +115,8 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setCreatedTime(new Date(System.currentTimeMillis()));
                 outRecord.setFigureNumber(null == deliveryRecord.getFigureNumber() ? null : deliveryRecord.getFigureNumber());
                 outRecord.setMark(null == deliveryRecord.getMark() ? null : deliveryRecord.getMark());
+                HttpSession httpSession = request.getSession();
+                UserTable userTable = (UserTable)httpSession.getAttribute("user");
                 // 发货不需要写材料
                 outRecord.setMaterial(null);
                 outRecord.setNumber(deliveryRecord.getNumber());
@@ -124,11 +126,9 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setReceiveTime(new Date(System.currentTimeMillis()));
                 outRecord.setSupplier(deliveryRecord.getSupplier());
                 // 应该是当前登陆用户  可以传递用户id过来或者从session中获取
-                outRecord.setUpdatedName(deliveryRecord.getCreatedName());
+                outRecord.setUpdatedName(userTable.getUsername());
                 outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
 
-                HttpSession httpSession = request.getSession();
-                UserTable userTable = (UserTable)httpSession.getAttribute("user");
                 // 保存发货记录
                 Integer result = outRecordMapper.insert(outRecord);
 
