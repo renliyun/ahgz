@@ -33,136 +33,141 @@
     </h2>
 
 
-    <div class="div1">
+    <!--           查询页面   新增 -->
+
+
+    <div class="div3">
         <h3>
-            <a th:href="@{/inRecord/getAll}"><span class="fa fa-heart"></span>入库记录查询</a>
+            <a th:href="@{/borrowRecord/in}"><span class="fa fa-heart"></span>借用</a>
         </h3>
-
-        <div class="div2">
-
-            <form action="#" th:action="@{/inRecord/insertDate}" th:object="${inRecord}" method="post">
-                <div>
-                    <div>
+        <div>
+            <form th:action="@{/borrowRecord/getAll}" id="form1" th:object="${borrowRecord}" method="get">
+                <!--                        -->
+                <div class="row">
+                    <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">物料号</span>
-                            <input id="matnr" name="matnr" required type="text"
-                                   th:field="*{matnr}" class="form-control"
-                                   placeholder="零部件物料号，输入完成请点击回车进行查询校验"
-
+                            <input type="text" th:field="*{matnr}" class="form-control" placeholder="物料号"
+                                   aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">零部件名称</span>
+                            <input type="text" th:field="*{partName}" class="form-control" placeholder="零部件名称"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">零部件名称</span>
-                            <input required type="text" id="partName" th:field="*{partName}" class="form-control"
-                                   placeholder="零部件名称" aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
+                    <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">零部件规格</span>
-                            <input required type="text" id="partSpecification" th:field="*{partSpecification}"
-                                   class="form-control"
+                            <input type="text" th:field="*{partSpecification}" class="form-control"
                                    placeholder="零部件规格"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
+                    <div class="col-lg-3">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp图号&nbsp&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{figureNumber}" id="figureNumber" class="form-control"
-                                   placeholder="图号"
+                            <input type="text" th:field="*{figureNumber}" class="form-control" placeholder="图号"
                                    aria-describedby="sizing-addon1">
                         </div>
                     </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp材料&nbsp&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{material}" id="material" class="form-control"
-                                   placeholder="材料"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
-                            <input required type="text" th:field="*{supplier}" id="supplier" class="form-control"
-                                   placeholder="供货商"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>
-                            <select id="category2" required th:field="*{category}">
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp供货商&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{supplier}" class="form-control" placeholder="供货商"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类别&nbsp&nbsp&nbsp&nbsp</span>-->
+                                类别 &nbsp&nbsp&nbsp <select id="category1" th:field="*{category}">
                                 <option value=""></option>
                                 <option value="外购件">外购件</option>
                                 <option value="镜头">镜头</option>
-                                <option value="光学镜片">镜片</option>
+                                <option value="镜片">镜片</option>
                                 <option value="镜头机械部分">镜头机械部分</option>
                             </select>
+                            </div><!-- /.col-lg-6 -->
                         </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp数量&nbsp&nbsp&nbsp&nbsp</span>
-                            <input required type="text" th:field="*{quantity}" class="form-control" placeholder="数量"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>
-                            <input required type="text" id="location" th:field="*{location}" class="form-control"
-                                   placeholder="库位"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{createdName}" id="createdName" class="form-control"
-                                   value="王美林"
-                                   placeholder="创建人" aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
+<!--                        <div class="col-lg-3">-->
+<!--                            <div class="input-group input-group-lg">-->
+<!--                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库位&nbsp&nbsp&nbsp&nbsp</span>-->
+<!--                                <input type="text" th:field="*{location}" class="form-control" placeholder="库位"-->
+<!--                                       aria-describedby="sizing-addon1">-->
+<!--                            </div>-->
 
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp备注&nbsp&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{mark}" class="form-control" placeholder="备注"
-                                   aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
+<!--                        </div>-->
+                        <div class="col-lg-3">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
+                                <input type="text" th:field="*{createdName}" class="form-control"
+                                       placeholder="创建人"
+                                       aria-describedby="sizing-addon1">
+                            </div>
+                        </div><!-- /.col-lg-6 -->
+                    </div>
+
                 </div>
-                <div>
-                    <button type="submit" value="Submit">保存</button>
+                <div class="row">
+                    <div class="col-lg-1 offset-5">
+                        <button type="submit" value="submit" class="btn btn-info">查询</button>
+                    </div>
                 </div>
             </form>
         </div>
+        <div class="inRecord">
+            <table class="table table-hover">
+                <thead style="border-bottom: none">
+                <tr>
+                    <th>序号</th>
+                    <th>物料号</th>
+                    <th>图号</th>
+                    <th>零部件规格</th>
+                    <th>零部件名称</th>
+                    <th>材料</th>
+                    <th>供货商</th>
+                    <th>类别</th>
+                    <th>数量</th>
+<!--                    <th>库位</th>-->
+                    <th>创建人</th>
+                    <th>创建时间</th>
+                    <th>备注</th>
+                    <!--                        <th>操作</th>-->
+                </tr>
+                </thead>
+                <tbody id="pageMain">
+                <tr th:if="page != null" th:each="borrowRecord,borrowRecordStatus :${page.pageData}">
+                    <td th:text="${borrowRecordStatus.index + 1}"></td>
+                    <td th:text="${borrowRecord.matnr}"></td>
+                    <td th:text="${borrowRecord.figureNumber}"></td>
+                    <td th:text="${borrowRecord.partSpecification}"></td>
+                    <td th:text="${borrowRecord.partName}"></td>
+                    <td th:text="${borrowRecord.material}"></td>
+                    <td th:text="${borrowRecord.supplier}"></td>
+                    <td th:text="${borrowRecord.category}"></td>
+                    <td th:text="${borrowRecord.number}"></td>
+<!--                    <td th:text="${borrowRecord.location}"></td>-->
+                    <td th:text="${borrowRecord.createdName}"></td>
+                    <td th:text="${borrowRecord.createdTime}"></td>
+                    <td th:text="${borrowRecord.mark}"></td>  <!-- 需要传递id -->
+                </tr>
+                </tbody>
+            </table>
+            <div id="pageBox">
+                <span id="prev">上一页</span>
+                <ul id="pageNav"></ul>
+                <span id="next">下一页</span>
+            </div>
+        </div>
     </div>
 
+
+    <!--           查询页面 新增  -->
 
 </div>
 
@@ -178,17 +183,11 @@
         margin: 0 auto;
     }
 
-    .div1 {
-        text-align: center;
-        margin-left: 200px;
-        width: 500px;
-        margin: 0 auto;
-    }
 
     .div3 {
         text-align: center;
         margin-left: 200px;
-        width: 1000px;
+        /*width: 1000px;*/
         margin: 0 auto;
     }
 
@@ -294,14 +293,6 @@
 
 <script>
 
-    function search1() {
-
-    }
-
-    function export1() {
-
-    }
-
     <!-- 分页 -->
     // 开始  分页 内容
     $(function () {
@@ -357,13 +348,11 @@
                 });
             })
 
-
             $(pageMain).find("tr").hide();
             /************首页的显示*********/
             for (var i = 0; i < curNum; i++) {
                 $(pageMain).find("tr").eq(i).show()
             }
-
 
             /*下一页*/
             pageNext.click(function () {
@@ -384,6 +373,7 @@
                     $(pageMain).find("tr").eq(i).show()
                 }
             });
+
             /*上一页*/
             pagePrev.click(function () {
                 $(pageMain).find("tr").hide();
@@ -429,10 +419,6 @@
         "   </td>"
             );
 
-    };
-
-    function del() {
-        alert("删除");
     };
 
 

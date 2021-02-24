@@ -35,10 +35,9 @@
 
 
     <div class="div1">
-        <h1>
-            借用
-        </h1>
-
+        <h3>
+            <a th:href="@{/borrowRecord/getAll}"><span class="fa fa-heart"></span>借用记录查询</a>
+        </h3>
         <div class="div2">
 
             <form action="#" th:action="@{/borrowRecord/insertDate}" th:object="${borrowRecord}" method="post">

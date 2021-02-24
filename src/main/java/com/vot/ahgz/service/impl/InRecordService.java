@@ -44,11 +44,9 @@ public class InRecordService implements IInRecordService {
         if (null != inRecord) {
             //将查询条件放入
             if (!StringUtils.isEmpty(inRecord.getPartName())) {
-                System.out.println("========================================" + inRecord.getPartName());
                 queryWrapper.like("part_name", inRecord.getPartName());
             }
             if (null != inRecord.getMatnr()) {
-                System.out.println("========================================" + inRecord.getPartName());
                 queryWrapper.eq("matnr", inRecord.getMatnr());
             }
             if (!StringUtils.isEmpty(inRecord.getFigureNumber())) {
@@ -119,7 +117,10 @@ public class InRecordService implements IInRecordService {
                 storageTable1.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTable1.setCreatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.insert(storageTable1);
-                logger.info("用户："+userTable.getUsername()+"创建物料号为："+storageTable.getMatnr()+"物料入库。", storageTable1);
+                // 入库记录
+                inRecord.setCreatedTime(new Date(System.currentTimeMillis()));
+                inRecordMapper.insert(inRecord);
+                logger.info("用户："+userTable.getUsername()+"创建物料号为："+storageTable1.getMatnr()+"物料入库。", storageTable1);
                 return 1;
             } else {
                 // 在原来的基础上增加库存   但是需要判断其余信息是否准确  哪几个字段
@@ -127,10 +128,11 @@ public class InRecordService implements IInRecordService {
                 storageTable.setUpdatedTime(new Date(System.currentTimeMillis()));
                 storageTableMapper.updateById(storageTable);
                 logger.info("用户："+userTable.getUsername()+"更新物料号为："+storageTable.getMatnr()+"物料入库。",storageTable);
-                inRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
+                inRecord.setCreatedTime(new Date(System.currentTimeMillis()));
                 return inRecordMapper.insert(inRecord);
             }
         } catch (Exception e) {
+           e.printStackTrace();
             logger.error("入库存在位置异常！");
         }
         return 0;

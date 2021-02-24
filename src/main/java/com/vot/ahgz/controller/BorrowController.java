@@ -3,6 +3,7 @@ package com.vot.ahgz.controller;
 
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.entity.BorrowRecord;
+import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IBorrowRecordService;
 import io.swagger.annotations.Api;
@@ -33,10 +34,25 @@ public class BorrowController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的借用记录")
-    public Page getAll(@ModelAttribute BorrowRecord borrowRecord) {
-        List<BorrowRecord> borrowRecords = iBorrowRecordService.getAll(borrowRecord);
+    public ModelAndView getAll(@ModelAttribute BorrowRecord borrowRecord) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<BorrowRecord> borrowRecordList = null;
         Page page = new Page();
-        return page;
+        borrowRecordList = iBorrowRecordService.getAll(borrowRecord);
+
+        if (borrowRecordList.size() > 0) {
+            // 目的是控制入库记录得查询条数，防止前端缓存过多数数据
+            page.setPageData(borrowRecordList.subList(0, borrowRecordList.size() > 0 && borrowRecordList.size() <= 50 ? borrowRecordList.size() : 50));
+        } else {
+            page.setPageData(null);
+        }
+
+        modelAndView.addObject("page", page);
+        //  查询库存的条件
+        modelAndView.addObject("borrowRecord", new BorrowRecord());
+        modelAndView.setViewName("borrowRecordList");
+        return modelAndView;
+
     }
 
     @GetMapping("/borrow")

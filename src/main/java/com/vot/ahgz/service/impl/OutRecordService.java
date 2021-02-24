@@ -101,8 +101,8 @@ public class OutRecordService implements IOutRecordService {
             storageTableMapper.updateById(storageTable);
             // 插入出库记录
             logger.info("出库成功，物料号为："+outRecord.getMatnr()+"得物料出库："+outRecord.getNumber()+"个,出库人"+userTable.getUsername());
-            outRecord.setUpdatedName(outRecord.getCreatedName());
-            outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
+            outRecord.setCreatedName(userTable.getUsername());
+            outRecord.setCreatedTime(new Date(System.currentTimeMillis()));
             return outRecordMapper.insert(outRecord);
         }
     }

@@ -126,10 +126,10 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 outRecord.setReceiveTime(new Date(System.currentTimeMillis()));
                 outRecord.setSupplier(deliveryRecord.getSupplier());
                 // 应该是当前登陆用户  可以传递用户id过来或者从session中获取
-                outRecord.setUpdatedName(userTable.getUsername());
-                outRecord.setUpdatedTime(new Date(System.currentTimeMillis()));
+                outRecord.setCreatedName(userTable.getUsername());
+                outRecord.setCreatedTime(new Date(System.currentTimeMillis()));
 
-                // 保存发货记录
+                // 保存发货时得出库记录
                 Integer result = outRecordMapper.insert(outRecord);
 
                 if (result < 0) {
@@ -137,6 +137,7 @@ public class DeliveryRecordService implements IDeliveryRecordService {
                 }
                 // 进行发货处理
                 logger.info("发货人:"+userTable.getUsername()+"发货成功，发货物料号："+ outRecord.getMatnr()+"数量为："+deliveryRecord.getNumber()+"。");
+                deliveryRecord.setCreatedTime(new Date(System.currentTimeMillis()));
                 return deliveryRecordMapper.insert(deliveryRecord);
             }
             return 0;  //没有库存，或者库存不足不能发货

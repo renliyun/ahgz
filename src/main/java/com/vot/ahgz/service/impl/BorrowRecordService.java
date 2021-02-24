@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -99,6 +100,8 @@ public class BorrowRecordService implements IBorrowRecordService {
                 HttpSession httpSession = request.getSession();
                 UserTable userTable  = (UserTable) httpSession.getAttribute("user");
                 logger.info("借用成功，借用物料号为："+borrowRecord.getMatnr()+"得物料"+borrowRecord.getNumber()+"个,借用人"+userTable.getUsername());
+                borrowRecord.setCreatedTime(new Date(System.currentTimeMillis()));
+                borrowRecord.setCreatedName(userTable.getUsername());
                 return borrowRecordMapper.insert(borrowRecord);
             }
         } catch (Exception e) {

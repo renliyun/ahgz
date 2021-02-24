@@ -3,6 +3,7 @@ package com.vot.ahgz.controller;
 
 import com.vot.ahgz.common.CommonResult;
 import com.vot.ahgz.entity.DeliveryRecord;
+import com.vot.ahgz.entity.InRecord;
 import com.vot.ahgz.entity.Page;
 import com.vot.ahgz.service.IDeliveryRecordService;
 import io.swagger.annotations.Api;
@@ -32,11 +33,23 @@ public class DeliveryController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "所有的发货记录")
-    public Page getAll(@ModelAttribute DeliveryRecord deliveryRecord) {
-        System.out.println("请求数据：" + deliveryRecord);
-        List<DeliveryRecord> list = iDeliveryRecordService.getAll(deliveryRecord);
+    public ModelAndView getAll(@ModelAttribute DeliveryRecord deliveryRecord) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<DeliveryRecord> deliveryRecordList = null;
         Page page = new Page();
-        return page;
+        deliveryRecordList = iDeliveryRecordService.getAll(deliveryRecord);
+        if (deliveryRecordList.size() > 0) {
+            // 目的是控制入库记录得查询条数，防止前端缓存过多数数据
+            page.setPageData(deliveryRecordList.subList(0, deliveryRecordList.size() > 0 && deliveryRecordList.size() <= 50 ? deliveryRecordList.size() : 50));
+        } else {
+            page.setPageData(null);
+        }
+
+        modelAndView.addObject("page", page);
+        //  查询库存的条件
+        modelAndView.addObject("deliveryRecord", new DeliveryRecord());
+        modelAndView.setViewName("deliveryRecordList");
+        return modelAndView;
     }
 
 

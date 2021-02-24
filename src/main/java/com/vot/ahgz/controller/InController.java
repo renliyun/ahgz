@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 import springfox.documentation.annotations.ApiIgnore;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -41,17 +42,23 @@ public class InController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的入库记录")
-    public Page getAll(@ModelAttribute InRecord inRecord) {
+    public ModelAndView getAll(@ModelAttribute InRecord inRecord) {
         ModelAndView modelAndView = new ModelAndView();
-        List<InRecord> list = iInRecordService.getAll(inRecord);
+        List<InRecord> inRecordList = null;
         Page page = new Page();
-        page.setPageData(list);
+        inRecordList = iInRecordService.getAll(inRecord);
+        if (inRecordList.size() > 0) {
+            // 目的是控制入库记录得查询条数，防止前端缓存过多数数据
+            page.setPageData(inRecordList.subList(0, inRecordList.size() > 0 && inRecordList.size() <= 50 ? inRecordList.size() : 50));
+        } else {
+            page.setPageData(null);
+        }
+
         modelAndView.addObject("page", page);
         //  查询库存的条件
         modelAndView.addObject("inRecord", new InRecord());
-        System.out.println(page); // 入库查询的条件
-        modelAndView.setViewName("inRecord");
-        return page;
+        modelAndView.setViewName("inRecordList");
+        return modelAndView;
     }
 
     @GetMapping("/in")
@@ -107,8 +114,8 @@ public class InController {
 
     @PostMapping("/insertDate")
     @ApiOperation(value = "插入一条入库记录")
-    public ModelAndView insertInRecord(@ModelAttribute InRecord inRecord , HttpServletRequest request) {
-        Integer result = iInRecordService.insertInRecord(inRecord,request);
+    public ModelAndView insertInRecord(@ModelAttribute InRecord inRecord, HttpServletRequest request) {
+        Integer result = iInRecordService.insertInRecord(inRecord, request);
         ModelAndView modelAndView = new ModelAndView();
         String message = "";
         if (result > 0) {

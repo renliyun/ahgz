@@ -32,17 +32,22 @@ public class OutController {
 
     @GetMapping("/getAll")
     @ApiOperation(value = "获取所有的出库记录")
-    public List getAll(@ModelAttribute OutRecord outRecord) {
-        List<OutRecord> list = iOutRecordService.getAll(outRecord);
+    public ModelAndView getAll(@ModelAttribute OutRecord outRecord) {
+        List<OutRecord> outRecordList = iOutRecordService.getAll(outRecord);
         ModelAndView modelAndView = new ModelAndView();
         Page page = new Page();
-        page.setPageData(list);
+        if (outRecordList.size() > 0) {
+            // 目的是控制入库记录得查询条数，防止前端缓存过多数数据
+            page.setPageData(outRecordList.subList(0, outRecordList.size() > 0 && outRecordList.size() <= 50 ? outRecordList.size() : 50));
+        } else {
+            page.setPageData(null);
+        }
         modelAndView.addObject("page", page);
         //  查询库存的条件
         modelAndView.addObject("outRecord", new OutRecord());
         System.out.println(page); // 入库查询的条件
-        modelAndView.setViewName("outRecord");
-        return list;
+        modelAndView.setViewName("outRecordList");
+        return modelAndView;
     }
 
 
