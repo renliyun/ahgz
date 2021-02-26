@@ -19,7 +19,7 @@
         <ui>
             <li>
                 <div class="dropdown">
-                    <button  class="dropbtn" >入库管理</button>
+                    <button class="dropbtn" >入库管理</button>
                     <div class="dropdown-content">
                         <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>物料入库</a>
                         <a th:href="@{/inRecord/getAll}"><span class="fa fa-heart"></span>入库记录查询</a>
@@ -45,7 +45,7 @@
             </li>
             <li>
                 <div class="dropdown">
-                    <button class="dropbtn">借用管理</button>
+                    <button class="borrowRrcord">借用管理</button>
                     <div class="dropdown-content">
                         <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
                         <a th:href="@{/borrowRecord/getAll}"><span class="fa fa-heart"></span>借用记录查询</a>
@@ -243,8 +243,18 @@
     }
 
     .dropbtn {
-        background-color: #c7d7d7;
+        background-color: #7cb34e;
         color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .borrowRrcord{
+        /*background-color: #b33781;*/
+        color: black;
         padding: 16px;
         font-size: 16px;
         border: none;
@@ -285,13 +295,12 @@
     }
 
     li  {
-        text-align: center;
         list-style-type: none;
         display: inline-block;
         border-radius: 3px;
     }
     li  > button {
-        text-align: center;
+        /*text-align: center;*/
         display: inline-block;
         border-radius: 3px;
     }
@@ -300,6 +309,16 @@
         padding-top: 50px;
         margin: 0 auto;
         text-align: center;
+    }
+
+    .storage{
+        /*background-color: #b33781;*/
+        color: black;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
     }
 </style>
 

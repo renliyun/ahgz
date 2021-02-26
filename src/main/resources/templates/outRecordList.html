@@ -28,7 +28,7 @@
             </li>
             <li>
                 <div class="dropdown">
-                    <button class="dropbtn">出库管理</button>
+                    <button class="outRrcord">出库管理</button>
                     <div class="dropdown-content">
                         <a th:href="@{/outRecord/out}"><span class="fa fa-heart"></span>物料出库</a>
                         <a th:href="@{/outRecord/getAll}"><span class="fa fa-heart"></span>出库记录</a>
@@ -67,9 +67,6 @@
 
 
     <div class="div3">
-        <h3>
-            <a th:href="@{/outRecord/out}"><span class="fa fa-heart"></span>出库</a>
-        </h3>
         <div>
             <form th:action="@{/outRecord/getAll}" id="form1" th:object="${outRecord}" method="get">
                 <!--                        -->
@@ -312,8 +309,18 @@
     /*    分页*/
 
     .dropbtn {
-        background-color: #c7d7d7;
+        background-color: #7cb34e;
         color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .outRrcord{
+        /*background-color: #b33781;*/
+        color: black;
         padding: 16px;
         font-size: 16px;
         border: none;

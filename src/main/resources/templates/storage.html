@@ -38,7 +38,7 @@
             </li>
             <li>
                 <div class="dropdown">
-                    <button class="dropbtn">库存管理</button>
+                    <button class="storage">库存管理</button>
                     <div class="dropdown-content">
                         <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
                     </div>
@@ -466,6 +466,16 @@
     .dropbtn {
         background-color: #7cb34e;
         color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .storage{
+        /*background-color: #b33781;*/
+        color: black;
         padding: 16px;
         font-size: 16px;
         border: none;
