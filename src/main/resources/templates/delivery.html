@@ -14,30 +14,56 @@
 <div class="container">
 
     <!--头部-->
-    <h2>
-        <div>
-            <!-- 导航条右侧内容 -->
-
-            <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>&nbsp;入库</a>
-
-            <a th:href="@{/outRecord/out}"><span class="fa fa-file-text"></span>&nbsp;出库</a>
-
-            <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
-
-            <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
-
-            <a th:href="@{/deliveryRecord/delivery}"><span class="fa fa-cart-plus"></span>&nbsp;发货管理</a>
-
-        </div>
-    </h2>
-    </h2>
-
+    <div id="header">
+        <ui>
+            <li>
+                <div class="dropdown">
+                    <button  class="dropbtn" >入库管理</button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/inRecord/in}"><span class="fa fa-heart"></span>物料入库</a>
+                        <a th:href="@{/inRecord/getAll}"><span class="fa fa-heart"></span>入库记录查询</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">出库管理</button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/outRecord/out}"><span class="fa fa-heart"></span>物料出库</a>
+                        <a th:href="@{/outRecord/getAll}"><span class="fa fa-heart"></span>出库记录</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">库存管理</button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/storageTable/getAll}"><span class="fa fa-cart-plus"></span>&nbsp;库存管理</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">借用管理</button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/borrowRecord/borrow}"><span class="fa fa-cart-plus"></span>&nbsp;借用管理</a>
+                        <a th:href="@{/borrowRecord/getAll}"><span class="fa fa-heart"></span>借用记录查询</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">发货管理</button>
+                    <div class="dropdown-content">
+                        <a th:href="@{/deliveryRecord/delivery}"><span class="fa fa-heart"></span>发货</a>
+                        <a th:href="@{/deliveryRecord/getAll}"><span class="fa fa-heart"></span>发货记录查询</a>
+                    </div>
+                </div>
+            </li>
+        </ui>
+    </div>
 
     <div class="div1">
-        <h3>
-            <a th:href="@{/deliveryRecord/getAll}"><span class="fa fa-heart"></span>发货记录查询</a>
-        </h3>
-
         <div class="div2">
 
             <form action="#" th:action="@{/deliveryRecord/insertDate}" th:object="${deliveryRecord}" method="post">
@@ -161,16 +187,16 @@
                 </div>
 
 
-                <div>
-                    <div>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>
-                            <input type="text" th:field="*{createdName}" id="createdName" class="form-control"
-                                   value="王美林"
-                                   placeholder="创建人" aria-describedby="sizing-addon1">
-                        </div>
-                    </div><!-- /.col-lg-6 -->
-                </div>
+<!--                <div>-->
+<!--                    <div>-->
+<!--                        <div class="input-group input-group-lg">-->
+<!--                            <span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp创建人&nbsp&nbsp&nbsp</span>-->
+<!--                            <input type="text" th:field="*{createdName}" id="createdName" class="form-control"-->
+<!--                                   value="王美林"-->
+<!--                                   placeholder="创建人" aria-describedby="sizing-addon1">-->
+<!--                        </div>-->
+<!--                    </div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
+<!--                </div>-->
 
                 <div>
                     <div>
@@ -214,11 +240,73 @@
         width: 500px;
         height: 1200px;
         margin: 0 auto;
+        padding-top: 100px;
     }
 
     .input-group-addon {
         margin-top: 10px;
         width: 100px;
+        text-align: center;
+    }
+
+    .dropbtn {
+        background-color: #c7d7d7;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+
+    li {
+        text-align: center;
+        list-style-type: none;
+        display: inline-block;
+        border-radius: 3px;
+    }
+
+    li > button {
+        text-align: center;
+        display: inline-block;
+        border-radius: 3px;
+    }
+
+    #header {
+        padding-top: 50px;
+        margin: 0 auto;
         text-align: center;
     }
 
